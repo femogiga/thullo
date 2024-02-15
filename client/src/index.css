@@ -1,0 +1,82 @@
+:root {
+
+  --clr-blue: #2F80ED;
+  --font-sm: .75rem;
+}
+
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.container {
+  padding-inline: 2rem;
+  width: 80%;
+  margin-inline: auto;
+}
+
+img {
+  max-width: 100%
+}
+
+
+/* *************************************Utility ************************************************ */
+
+.flex {
+  display: flex
+}
+
+.grid {
+  display: grid;
+}
+
+.place-items {
+  place-items: center;
+
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+
+.column {
+  flex-direction: column
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.flow-1 {
+  margin-block-end: 1rem
+}
+
+.flow-2 {
+  margin-block-end: 2rem
+}
+
+.flow-3 {
+  margin-block-end: 3rem
+}
+
+.col-gap-05 {
+  column-gap: .5rem;
+}
+
+.col-gap-1 {
+  column-gap: 1rem;
+}
+
+.col-gap-2 {
+  column-gap: 2rem;
+}
+
+.align-item-center {
+  align-items: center;
+}
+.bold{
+  font-weight: bold;
+  
+}
