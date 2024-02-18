@@ -3,11 +3,16 @@
   --clr-blue: #2F80ED;
   --font-sm: .75rem;
 }
+*,::before,::after{
+    box-sizing: border-box;
+    margin:0;
+    padding:0
+}
 
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  box-sizing: border-box;
+
 }
 
 .container {
@@ -78,5 +83,5 @@ img {
 }
 .bold{
   font-weight: bold;
-  
+
 }

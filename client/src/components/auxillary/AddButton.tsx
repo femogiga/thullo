@@ -1,9 +1,16 @@
 import IconButton from '@mui/material/IconButton';
-import { Plus } from '@phosphor-icons/react';
-const AddButton = () => {
+import AddIcon from '@mui/icons-material/Add';
+const AddButton = ({width,height}) => {
   return (
-    <IconButton sx={{ borderRadius: '8px', backgroundColor: '#2F80ED' }}>
-      <Plus size={32} style={{ color: 'white' }} />
+    <IconButton
+      sx={{
+        borderRadius: '8px',
+        backgroundColor: '#2F80ED',
+        width: width,
+        height: height,
+        '&:hover': { backgroundColor: 'blue' },
+      }}>
+      <AddIcon sx={{ fontSize: 16, color: 'white' }} />
     </IconButton>
   );
 };

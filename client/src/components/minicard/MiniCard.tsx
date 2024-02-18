@@ -1,7 +1,6 @@
 import Avatar from '@mui/material/Avatar';
 import { LockKey } from '@phosphor-icons/react';
-const MiniCard = ({src}) => {
-
+const MiniCard = ({ src, width, height }) => {
   return (
     <div>
       {/* <p style={paraStyle}>
@@ -15,7 +14,12 @@ const MiniCard = ({src}) => {
           'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=600'
         }
         variant='square'
-        sx={{ borderRadius: '4px' }}
+        sx={{
+          borderRadius: '4px',
+          width: width,
+          height: height,
+          aspectRatio: 1,
+        }}
       />
     </div>
   );

@@ -2,6 +2,7 @@ import logo from '../../assets/Logo-small.svg';
 import { DotsNine, CaretDown } from '@phosphor-icons/react';
 import './header.css';
 import { Link } from 'react-router-dom';
+import MiniCard from '../minicard/MiniCard';
 
 const Header = () => {
   const headerStyle = {
@@ -11,6 +12,7 @@ const Header = () => {
     justifyContent: 'space-between',
     paddingInline: '1rem',
     boxShadow: '0 0 2px 2px rgba(0, 0, 0,0.1)',
+    marginBlockEnd: '2rem',
   };
   return (
     <header className='header' style={headerStyle}>
@@ -37,11 +39,11 @@ const Header = () => {
         <Link>
           <div className=' flex place-items col-gap-05 align-item-center'>
             <div className='auth-image'>
-              <img src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600' />
+              <MiniCard height={32} width={32} src='' />
             </div>
 
             <p>Xanthe Neal</p>
-            <CaretDown size={20} />
+            <CaretDown size={18} />
           </div>
         </Link>
       </div>

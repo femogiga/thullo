@@ -2,6 +2,7 @@
 import Header from './components/header/Header'
 import MiniCard from './components/minicard/MiniCard';
 import PresentMembers from './components/presentmember/PresentMembers';
+import TaskCard from './components/taskcard/TaskCard';
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
     <div className='container'>
       <Header />
       <PresentMembers/>
-     
+     <TaskCard/>
     </div>
   );
 }
