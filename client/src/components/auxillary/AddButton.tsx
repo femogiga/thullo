@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
-const AddButton = ({width,height}) => {
+const AddButton = ({ width, height }) => {
   return (
     <IconButton
       sx={{

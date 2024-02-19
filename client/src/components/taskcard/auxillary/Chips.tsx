@@ -9,7 +9,7 @@ const Chips = ({ taskType }) => {
         label={taskType || 'Clickable'}
         sx={{
           fontSize: '10px',
-          fontWeight: '500',
+          fontWeight: '600',
           backgroundColor: colorStyle.bgColor || '#D5E6FB',
           color: colorStyle.color || '#2F80ED',
           height: '18px',

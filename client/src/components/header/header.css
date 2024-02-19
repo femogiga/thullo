@@ -28,10 +28,10 @@ a {
 
 .search>button {
     position: absolute;
-    height: 2rem;
+    height: 2.2rem;
     /* width: 4rem; */
-    right: 0.1rem;
-    top: .05rem;
+    right: 0rem;
+    top: .2rem;
     border-radius: 8px;
     padding-inline: 1rem;
     background-color: var(--clr-blue);

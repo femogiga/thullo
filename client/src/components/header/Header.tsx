@@ -3,6 +3,9 @@ import { DotsNine, CaretDown } from '@phosphor-icons/react';
 import './header.css';
 import { Link } from 'react-router-dom';
 import MiniCard from '../minicard/MiniCard';
+import TextField from '@mui/material/TextField';
+
+
 
 const Header = () => {
   const headerStyle = {
@@ -32,8 +35,9 @@ const Header = () => {
       </div>
 
       <div className='group-width flex flex-end align-item-center col-gap-2'>
-        <div className=' search flex col-gap-1'>
-          <input type='text' className='search-input' placeholder='Keyword..' />
+        <div className='search flex col-gap-1'>
+          {/* <input type='text' className='search-input' placeholder='Keyword..' /> */}
+          <TextField className='' size='small'  />
           <button>Search</button>
         </div>
         <Link>
