@@ -52,10 +52,12 @@ const TaskCard = () => {
             </Stack>
             <Stack direction='row' spacing={1} alignItems={'center'}>
               <IconButton>
-                <CommentIcon sx={{ width: '12px' }} />
+                <CommentIcon sx={{ width: '12px', marginRight: '.5rem' }} />
+                <Typography sx={{ fontSize: '10px' }}>{2}</Typography>
               </IconButton>
               <IconButton>
-                <AttachFileIcon sx={{ width: '12px' }} />
+                <AttachFileIcon sx={{ width: '12px', marginRight: '.5rem' }} />
+                <Typography sx={{ fontSize: '10px' }}>{2}</Typography>
               </IconButton>
             </Stack>
           </Stack>
