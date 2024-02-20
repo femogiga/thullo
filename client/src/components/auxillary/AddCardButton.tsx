@@ -20,7 +20,7 @@ const AddCardButton = () => {
               textTransform: 'capitalize', // Convert the first letter to uppercase
             },
           }}>
-          Add another List
+          Add another card
         </Typography>
       </Button>
     </div>

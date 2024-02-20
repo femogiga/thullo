@@ -6,11 +6,12 @@ import PanelName from './components/taskpanel/PanelName';
 import Board from './components/board/Board';
 import AddListAndCardButton from './components/auxillary/AddListButton';
 import AddCardButton from './components/auxillary/AddCardButton';
+import BoardInformation from './components/boardInfo/BoardInformation';
 
 function App() {
   return (
     <div className='container'>
-      <Header />
+      {/* <Header />
       <PresentMembers />
       <Board>
         <TaskPanel>
@@ -38,7 +39,8 @@ function App() {
           <AddCardButton />
         </TaskPanel>
         <AddListAndCardButton />
-      </Board>
+      </Board> */}
+      <BoardInformation/>
     </div>
   );
 }
