@@ -9,6 +9,7 @@ import AddCardButton from './components/auxillary/AddCardButton';
 import BoardInformation from './components/boardInfo/BoardInformation';
 import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
+import CardInformation from './components/cardinformation/CardInformation';
 
 function App() {
   const pageInfoVisibility = useSelector(
@@ -61,7 +62,7 @@ function App() {
         </TaskPanel>
         <AddListAndCardButton />
       </Board> */}
-    
+    <CardInformation/>
     </div>
   );
 }
