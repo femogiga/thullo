@@ -7,13 +7,34 @@ import Board from './components/board/Board';
 import AddListAndCardButton from './components/auxillary/AddListButton';
 import AddCardButton from './components/auxillary/AddCardButton';
 import BoardInformation from './components/boardInfo/BoardInformation';
+import { useSelector } from 'react-redux';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function App() {
+  const pageInfoVisibility = useSelector(
+    (state) => state.pageInformation.visible
+  );
   return (
     <div className='container'>
-      {/* <Header />
+      <Header />
       <PresentMembers />
-      <Board>
+      {/* <Board>
+        <AnimatePresence>
+          <motion.div
+            layout
+            initial={{ opacity: 0, translateX: 500 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, translateX: 500 }}
+            style={{
+              position: 'absolute',
+              right: '2rem',
+              top: '4rem',
+              zIndex: '4',
+            }}>
+            {pageInfoVisibility && <BoardInformation />}
+          </motion.div>
+        </AnimatePresence>
         <TaskPanel>
           <PanelName listName={'Backlog'} icon={'🛷'} />
           <TaskCard />
@@ -40,7 +61,7 @@ function App() {
         </TaskPanel>
         <AddListAndCardButton />
       </Board> */}
-      <BoardInformation/>
+    
     </div>
   );
 }

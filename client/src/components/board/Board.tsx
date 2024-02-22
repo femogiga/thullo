@@ -7,7 +7,7 @@ const Board = ({ children }) => {
       spacing='2rem'
       sx={{
         display: 'flex',
-        padding: '2rem 2rem',
+        padding: '1rem',
         backgroundColor: '#F8F9FD',
         borderRadius: '2rem',
       }}>

@@ -19,6 +19,7 @@ const PresentMembers = () => {
         <AddButton width={32} height={32} />
       </div>
       <ShowMenu />
+
     </article>
   );
 };

@@ -8,7 +8,7 @@ const NameAvatar = ({ src, text }) => {
       ? { color: '#BDBDBD ', border: '0px solid #BDBDBD ' }
       : { color: '#EB5757', border: '1px solid #EB5757' };
   return (
-    <Stack direction='row' alignItems='center' justifyContent='space-between' >
+    <Stack direction='row' alignItems='center' justifyContent='space-between'>
       <Stack direction='row' alignItems='center' columnGap='1rem'>
         <MiniCard height={28} width={28} src='' />
 
@@ -18,16 +18,17 @@ const NameAvatar = ({ src, text }) => {
           </p>
         </div>
       </Stack>
-      <Stack alignItems='center'>
+      <Stack direction='row' alignItems='flex-end' gap='.3rem'>
         <Button
           sx={{
             textTransform: 'capitalize',
             width: '62px',
             height: '24px',
             borderRadius: '8px',
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '.3rem',
+            // display: 'flex',
+            //   justifyContent: 'center',
+            // alignItems: 'center',
+            // gap: '.3rem',
             border: borderStyle,
             borderColor: borderStyle.color,
             color: borderStyle.color || '#828282',

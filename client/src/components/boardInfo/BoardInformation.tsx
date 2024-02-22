@@ -6,25 +6,35 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import FeedIcon from '@mui/icons-material/Feed';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NameAvatar from '../auxillary/NameAvatar';
+import { usePageInformation } from './hook';
+import { useSelector } from 'react-redux';
 const BoardInformation = () => {
+  const { handleShowMenuClose } = usePageInformation();
+
   return (
     <article
+      className = 'boardInformation'
       style={{
-        border: '1px solid black',
+        // border: '1px solid black',
         width: '377px',
         fontSize: '10px',
         color: '#BDBDBD',
         padding: '1rem 2rem',
         boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+        backgroundColor: 'rgba(255,255,255)',
+
+        // opacity:0
       }}>
-      <Stack direction='row' justifyContent='space-between'>
+      <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography
           sx={{ color: 'black', fontWeight: '600', fontSize: '12px' }}>
           Devchallenges Board
         </Typography>
-        <IconButton aria-label='close'>
+        <IconButton
+          aria-label='close'
+          sx={{ fontSize: '24px' }}
+          onClick={handleShowMenuClose}>
           <ClearIcon />
         </IconButton>
       </Stack>

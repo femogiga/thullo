@@ -3,10 +3,13 @@
   --clr-blue: #2F80ED;
   --font-sm: .75rem;
 }
-*,::before,::after{
-    box-sizing: border-box;
-    margin:0;
-    padding:0
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0
 }
 
 body {
@@ -17,8 +20,9 @@ body {
 
 .container {
   padding-inline: 2rem;
-  width: 80%;
+  width: 86%;
   margin-inline: auto;
+  position: relative;
 }
 
 img {
@@ -81,7 +85,16 @@ img {
 .align-item-center {
   align-items: center;
 }
-.bold{
+
+.bold {
   font-weight: bold;
 
+}
+
+.show{
+  opacity:1;
+}
+
+.hide {
+  opacity: 0;
 }
