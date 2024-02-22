@@ -16,6 +16,8 @@ const BoardInformation = () => {
         width: '377px',
         fontSize: '10px',
         color: '#BDBDBD',
+        padding: '1rem 2rem',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
       }}>
       <Stack direction='row' justifyContent='space-between'>
         <Typography
@@ -26,7 +28,7 @@ const BoardInformation = () => {
           <ClearIcon />
         </IconButton>
       </Stack>
-      <Divider />
+      <Divider sx={{ marginBlockEnd: '1rem' }} />
       <Stack direction='row' justifyContent='flex-start' alignItems='center'>
         <PersonPinIcon sx={{ fontSize: '10px' }} /> <span>Made by</span>
       </Stack>
@@ -129,7 +131,7 @@ const BoardInformation = () => {
         </div>
       </Stack> */}
 
-      <NameAvatar src={''} text='Admin'  />
+      <NameAvatar src={''} text='Admin' />
       <NameAvatar src={''} text='Delete' />
       <NameAvatar src={''} text='Delete' />
     </article>
