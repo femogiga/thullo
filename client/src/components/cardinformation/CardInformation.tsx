@@ -15,9 +15,19 @@ import ImageIcon from '@mui/icons-material/Image';
 import EditIcon from '@mui/icons-material/Edit';
 import FeedIcon from '@mui/icons-material/Feed';
 import ClearIcon from '@mui/icons-material/Clear';
+import CrudButton from '../auxillary/CrudButton';
+import IconLabel from '../auxillary/IconLabel';
+import { Add, Edit } from '@mui/icons-material';
 const CardInformation = () => {
   return (
-    <article style={{ maxWidth: '41.313rem', position: 'relative' }}>
+    <article
+      style={{
+        maxWidth: '41.313rem',
+        position: 'relative',
+        padding: '1rem',
+        boxShadow: '0 2px 4px 0 rgba(0,0,0,0.05)',
+        border: '1px solid black',
+      }}>
       <div>
         <img
           style={{
@@ -61,33 +71,21 @@ const CardInformation = () => {
               <span> in Progress</span>
             </Typography>
           </Box>
-          <Stack direction='row' spacing='1rem' marginBlock={'1rem'}>
-            <Stack
-              direction='row'
-              alignItems='center'
-              justifyContent='center'
-              color='#BDBDBD'
-              gap='.3rem'>
-              <FeedIcon sx={{ fontSize: '10px' }} />
-              <Typography sx={{ fontSize: '10px' }}>Description</Typography>
-            </Stack>
-            <Button
-              sx={{
-                textTransform: 'capitalize',
-                width: '62px',
-                height: '24px',
-                borderRadius: '8px',
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '.3rem',
-                border: '1px solid #BDBDBD',
-                color: '#828282',
-              }}>
-              <EditIcon sx={{ fontSize: '10px' }} />
-              <Typography sx={{ fontSize: '10px' }}>Edit</Typography>
-            </Button>
-          </Stack>
 
+          <Stack
+            direction='row'
+            spacing='1rem'
+            marginBlock={'1rem'}
+            alignItems='center'>
+            <IconLabel
+              labelText={'Description'}
+              icon={<FeedIcon sx={{ fontSize: '10px' }} />}
+            />
+            <CrudButton
+              text={'Edit'}
+              icon={<EditIcon sx={{ fontSize: '10px' }} />}
+            />
+          </Stack>
           <Box>
             <Typography>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim amet
@@ -105,19 +103,27 @@ const CardInformation = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </Typography>
           </Box>
-        </Grid>
-        <Grid item xs={3}>
           <Stack
             direction='row'
-            justifyContent='flex-start'
-            alignItems='center'
-            marginBlockEnd='1rem'
-            gap='.3rem'
-            fontSize='12px'
-            color='#BDBDBD'>
-            <PersonPinIcon sx={{ fontSize: '12px' }} /> <span>Actions</span>
+            spacing='1rem'
+            marginBlock={'1rem'}
+            alignItems='center'>
+            <IconLabel
+              labelText={'Attachments'}
+              icon={<FeedIcon sx={{ fontSize: '10px' }} />}
+            />
+            <CrudButton text={'Add'} icon={<Add sx={{ fontSize: '10px' }} />} />
           </Stack>
-                  <ActionButton startIcon={<GroupIcon  />} buttonText={'Members'} />
+        </Grid>
+        <Grid item xs={3}>
+          <div>
+            <IconLabel
+              labelText={'Actions'}
+              icon={<PersonPinIcon sx={{ fontSize: '12px' }} />}
+            />
+          </div>
+
+          <ActionButton startIcon={<GroupIcon />} buttonText={'Members'} />
           <ActionButton startIcon={<LabelIcon />} buttonText={'Labels'} />
           <ActionButton startIcon={<ImageIcon />} buttonText={'Cover'} />
         </Grid>
