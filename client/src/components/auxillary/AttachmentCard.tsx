@@ -17,7 +17,7 @@ const AttachmentCard = ({ src }) => {
             sx={{ fontSize: '10px', fontWeight: '500', marginBlockEnd: '5px' }}>
             Reasoning by Ragnanath Krishma
           </Typography>
-          <Stack direction='row' spacing='9px'>
+          <Stack direction='row' spacing='9px' color='#828282'>
             <CrudButton icon='' text={'Download'} />
             <CrudButton icon='' text={'Delete'} />
           </Stack>

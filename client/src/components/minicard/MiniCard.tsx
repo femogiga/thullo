@@ -2,7 +2,7 @@ import Avatar from '@mui/material/Avatar';
 import { LockKey } from '@phosphor-icons/react';
 const MiniCard = ({ src, width, height }) => {
   return (
-    <div>
+    <div className='avatar'>
       {/* <p style={paraStyle}>
         <LockKey size={20} />
         <span>Private</span>

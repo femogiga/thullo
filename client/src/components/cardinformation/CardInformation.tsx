@@ -19,6 +19,8 @@ import CrudButton from '../auxillary/CrudButton';
 import IconLabel from '../auxillary/IconLabel';
 import { Add, Edit } from '@mui/icons-material';
 import AttachmentCard from '../auxillary/AttachmentCard';
+import CommentInput from '../comment/CommentInput';
+import { CommentCard } from '../auxillary/CommentCard';
 const CardInformation = () => {
   return (
     <article
@@ -88,19 +90,19 @@ const CardInformation = () => {
             />
           </Stack>
           <Box>
-            <Typography>
+            <Typography sx={{ fontSize: '14px' }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim amet
               quibusdam, aspernatur pariatur ipsa quos nulla quam alias id vel
               praesentium minima saepe velit nostrum illo tempore veniam laborum
               iste.
             </Typography>
-            <Typography>
+            <Typography sx={{ fontSize: '14px' }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim amet
               quibusdam, aspernatur pariatur ipsa quos nulla quam alias id vel
               praesentium minima saepe velit nostrum illo tempore veniam laborum
               iste.
             </Typography>
-            <Typography>
+            <Typography sx={{ fontSize: '14px' }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </Typography>
           </Box>
@@ -119,6 +121,13 @@ const CardInformation = () => {
             <AttachmentCard src='' />
             <AttachmentCard src='' />
           </Box>
+          <Box sx={{ marginBlockEnd: '2rem' }}>
+            <CommentInput src={''} />
+          </Box>
+          <div>
+            <CommentCard firstName={''} lastName={''} />
+            <CommentCard firstName={''} lastName={''} />
+          </div>
         </Grid>
 
         <Grid item xs={3}>
@@ -128,7 +137,6 @@ const CardInformation = () => {
               icon={<PersonPinIcon sx={{ fontSize: '12px' }} />}
             />
           </div>
-
           <ActionButton startIcon={<GroupIcon />} buttonText={'Members'} />
           <ActionButton startIcon={<LabelIcon />} buttonText={'Labels'} />
           <ActionButton startIcon={<ImageIcon />} buttonText={'Cover'} />
