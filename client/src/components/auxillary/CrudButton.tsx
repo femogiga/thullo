@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 const CrudButton = ({ text, icon }) => {
   return (
     <div>
-      <Stack direction='row' spacing='1rem' marginBlock={'1rem'}>
+      <Stack direction='row' spacing='1rem'>
         <Button
           sx={{
             textTransform: 'capitalize',

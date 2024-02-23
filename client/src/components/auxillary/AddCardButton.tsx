@@ -17,7 +17,7 @@ const AddCardButton = () => {
             textTransform: 'lowercase',
             fontSize: '12px',
             '&::first-letter': {
-              textTransform: 'capitalize', // Convert the first letter to uppercase
+              textTransform: 'capitalize', 
             },
           }}>
           Add another card

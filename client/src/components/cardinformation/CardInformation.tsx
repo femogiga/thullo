@@ -18,6 +18,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CrudButton from '../auxillary/CrudButton';
 import IconLabel from '../auxillary/IconLabel';
 import { Add, Edit } from '@mui/icons-material';
+import AttachmentCard from '../auxillary/AttachmentCard';
 const CardInformation = () => {
   return (
     <article
@@ -114,7 +115,12 @@ const CardInformation = () => {
             />
             <CrudButton text={'Add'} icon={<Add sx={{ fontSize: '10px' }} />} />
           </Stack>
+          <Box sx={{ marginBlockEnd: '2rem' }}>
+            <AttachmentCard src='' />
+            <AttachmentCard src='' />
+          </Box>
         </Grid>
+
         <Grid item xs={3}>
           <div>
             <IconLabel
