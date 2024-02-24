@@ -7,7 +7,7 @@ const MiniCard = ({ src, width, height }) => {
         <LockKey size={20} />
         <span>Private</span>
       </p> */}
-      <Link to={''}>
+
         <Avatar
           alt='Remy Sharp'
           src={
@@ -23,7 +23,7 @@ const MiniCard = ({ src, width, height }) => {
             objectFit: 'cover',
           }}
         />
-      </Link>
+      
     </div>
   );
 };

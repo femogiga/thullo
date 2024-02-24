@@ -186,10 +186,11 @@ const CardInformation = () => {
               <AddCardButton buttonText={'Assign a member'} />
             </Box>
           </Stack>
-
-          <MemberCard />
-          <CoverCard />
-          <LabelCard/>
+          <Box position={'relative'} top='1rem'>
+            <MemberCard />
+            <CoverCard />
+            <LabelCard />
+          </Box>
         </Grid>
       </Grid>
     </article>

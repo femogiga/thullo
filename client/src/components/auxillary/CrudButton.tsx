@@ -22,6 +22,10 @@ const CrudButton = ({ text, icon, colours }) => {
             border: '1px solid #BDBDBD',
             color: colours?.color || '#828282',
             backgroundColor: colours?.bg || '',
+            '&:hover': {
+              backgroundColor: colours?.bg,
+              filter: 'contrast(300%)',
+            },
           }}>
           {/* <EditIcon sx={{ fontSize: '10px' }} /> */}
           {<div> {icon}</div> || null}
