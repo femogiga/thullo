@@ -11,11 +11,12 @@ import {
   Button,
 } from '@mui/material';
 import React from 'react';
-import { IconButton } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
 import { NameLabel } from './../auxillary/NameLabel';
 import MemberSelect from './MemberSelect';
 import CrudButton from '../auxillary/CrudButton';
+import SearchIcon from '@mui/icons-material/Search';
 
 const MemberCard = () => {
   return (
@@ -27,6 +28,7 @@ const MemberCard = () => {
         maxHeight: '315px',
         height: '315px',
         display: 'flex',
+        borderRadius: '8px',
       }}>
       <CardContent>
         <FormControl>
@@ -34,12 +36,27 @@ const MemberCard = () => {
             Members
           </Typography>
           <Typography
-            sx={{ fontSize: '12px', marginBlockEnd: '.5rem', color: '#828282' }}>
+            sx={{
+              fontSize: '12px',
+              marginBlockEnd: '.5rem',
+              color: '#828282',
+            }}>
             Assign members to this card
           </Typography>
 
-          <Box sx={{ marginBlockEnd: '1.1rem' }}>
+          <Box sx={{ marginBlockEnd: '1.1rem', position: 'relative' }}>
             <TextField className='user-input' rows={1} placeholder='User...' />
+            <IconButton
+              sx={{
+                borderRadius: '8px',
+                backgroundColor: '#2F80ED',
+                color: 'white',
+                position: 'absolute',
+                right: '.2rem',
+                top: '.2rem',
+              }}>
+              <SearchIcon sx={{ fontSize: '.9rem' }} />
+            </IconButton>
           </Box>
           <Paper
             variant='elevation'
@@ -52,7 +69,11 @@ const MemberCard = () => {
             </Stack>
           </Paper>
           <Stack direction={'row'} justifyContent={'center'}>
-            <CrudButton text='invite' icon={null} colours={{ color: 'white', bg: '#2F80ED' }} />
+            <CrudButton
+              text='invite'
+              icon={null}
+              colours={{ color: 'white', bg: '#2F80ED' }}
+            />
           </Stack>
         </FormControl>
       </CardContent>
