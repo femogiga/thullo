@@ -14,7 +14,7 @@ import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
 import { NameLabel } from './../auxillary/NameLabel';
-import MemberSelect from './MemberSelect';
+import MemberSelect from './auxillary/MemberSelect';
 import CrudButton from '../auxillary/CrudButton';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -24,11 +24,13 @@ const MemberCard = () => {
       className='member-card'
       sx={{
         maxWidth: '245.28px',
-        width: '245.28px',
+        width: '15.33rem',
         maxHeight: '315px',
         height: '315px',
         display: 'flex',
         borderRadius: '8px',
+        position: 'absolute',
+        zIndex: '4',
       }}>
       <CardContent>
         <FormControl>

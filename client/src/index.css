@@ -103,6 +103,10 @@ img {
   padding-inline-start: 3rem;
 }
 
+.cover-card ::placeholder {
+  padding-inline-start: .2rem;
+  font-size: 12px;
+}
 
 .comment-input .MuiInputBase-root {
   border: none;
@@ -111,8 +115,9 @@ img {
 }
 
 
-.member-card input{
+.member-card input,
+.cover-card input {
   /* padding-inline: 0rem ; */
   /* height:.5rem; */
-  height:.18rem
+  height: .18rem
 }

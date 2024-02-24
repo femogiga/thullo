@@ -28,6 +28,8 @@ import { Link } from 'react-router-dom';
 import AddCardButton from '../auxillary/AddCardButton';
 import AddListButton from '../auxillary/AddListButton';
 import MemberCard from '../actionscard/MemberCard';
+import { CoverCard } from '../actionscard/CoverCard';
+import LabelCard from '../actionscard/LabelCard';
 const CardInformation = () => {
   return (
     <article
@@ -185,8 +187,9 @@ const CardInformation = () => {
             </Box>
           </Stack>
 
-
-          <MemberCard/>
+          <MemberCard />
+          <CoverCard />
+          <LabelCard/>
         </Grid>
       </Grid>
     </article>
