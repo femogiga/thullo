@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from '@mui/material';
 import MiniCard from '../minicard/MiniCard';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-const NameAvatar = ({ src, text }) => {
+const NameAvatar = ({ src, text, variant,fullName }) => {
   const borderStyle =
     text === 'Admin'
       ? { color: '#BDBDBD ', border: '0px solid #BDBDBD ' }
@@ -14,33 +14,35 @@ const NameAvatar = ({ src, text }) => {
 
         <div>
           <p style={{ fontSize: '12px', color: 'black', fontWeight: '600' }}>
-            Daniel Jensen
+            {fullName || 'Daniel Jensen'}
           </p>
         </div>
       </Stack>
       <Stack direction='row' alignItems='flex-end' gap='.3rem'>
-        <Button
-          sx={{
-            textTransform: 'capitalize',
-            width: '62px',
-            height: '24px',
-            borderRadius: '8px',
-            // display: 'flex',
-            //   justifyContent: 'center',
-            // alignItems: 'center',
-            // gap: '.3rem',
-            border: borderStyle,
-            borderColor: borderStyle.color,
-            color: borderStyle.color || '#828282',
-            marginBlockEnd: '1rem',
-          }}>
-          {text === 'Admin' ? (
-            <MoreHorizIcon sx={{ fontSize: '10px', color: '#BDBDBD' }} />
-          ) : null}
-          <Typography sx={{ fontSize: '10px', color: borderStyle.color }}>
-            {text}
-          </Typography>
-        </Button>
+        {variant == 'withLabel' ? (
+          <Button
+            sx={{
+              textTransform: 'capitalize',
+              width: '62px',
+              height: '24px',
+              borderRadius: '8px',
+              // display: 'flex',
+              //   justifyContent: 'center',
+              // alignItems: 'center',
+              // gap: '.3rem',
+              border: borderStyle,
+              borderColor: borderStyle.color,
+              color: borderStyle.color || '#828282',
+              marginBlockEnd: '1rem',
+            }}>
+            {text === 'Admin' ? (
+              <MoreHorizIcon sx={{ fontSize: '10px', color: '#BDBDBD' }} />
+            ) : null}
+            <Typography sx={{ fontSize: '10px', color: borderStyle.color }}>
+              {text}
+            </Typography>
+          </Button>
+        ) : null}
       </Stack>
     </Stack>
   );

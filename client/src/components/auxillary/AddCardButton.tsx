@@ -1,12 +1,13 @@
 import { Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-const AddCardButton = () => {
+const AddCardButton = ({ buttonText }) => {
   return (
     <div>
       <Button
         sx={{
-          width: '244px',
+          width: '100%',
+          maxWidth: '244px',
           display: 'flex',
           justifyContent: 'space-between',
           backgroundColor: '#DAE4FD',
@@ -17,10 +18,10 @@ const AddCardButton = () => {
             textTransform: 'lowercase',
             fontSize: '12px',
             '&::first-letter': {
-              textTransform: 'capitalize', 
+              textTransform: 'capitalize',
             },
           }}>
-          Add another card
+          {buttonText || 'Add another card'}
         </Typography>
       </Button>
     </div>

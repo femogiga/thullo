@@ -21,15 +21,24 @@ import { Add, Edit } from '@mui/icons-material';
 import AttachmentCard from '../auxillary/AttachmentCard';
 import CommentInput from '../comment/CommentInput';
 import { CommentCard } from '../auxillary/CommentCard';
+import MiniCard from '../minicard/MiniCard';
+import { NameLabel } from './../auxillary/NameLabel';
+import NameAvatar from '../auxillary/NameAvatar';
+import { Link } from 'react-router-dom';
+import AddCardButton from '../auxillary/AddCardButton';
+import AddListButton from '../auxillary/AddListButton';
+import MemberCard from '../actionscard/MemberCard';
 const CardInformation = () => {
   return (
     <article
       style={{
         maxWidth: '41.313rem',
-        position: 'relative',
+        position: 'absolute',
         padding: '1rem',
         boxShadow: '0 2px 4px 0 rgba(0,0,0,0.05)',
-        border: '1px solid black',
+        // border: '1px solid black',
+        // translate: '50%',
+        // zIndex: '4',
       }}>
       <div>
         <img
@@ -140,6 +149,44 @@ const CardInformation = () => {
           <ActionButton startIcon={<GroupIcon />} buttonText={'Members'} />
           <ActionButton startIcon={<LabelIcon />} buttonText={'Labels'} />
           <ActionButton startIcon={<ImageIcon />} buttonText={'Cover'} />
+          <Stack>
+            <div style={{ marginBlockEnd: '1rem' }}>
+              <IconLabel
+                labelText={'Members'}
+                icon={<GroupIcon sx={{ fontSize: '12px' }} />}
+              />
+            </div>
+            <Stack
+              direction='column'
+              display='flex'
+              spacing={1.5}
+              sx={{ marginBlockEnd: '1.5rem' }}>
+              <NameAvatar
+                fullName={'Jimmy Flaunt'}
+                src={''}
+                text=''
+                variant='withoutLabel'
+              />
+              <NameAvatar
+                fullName={'Tony Mark'}
+                src={''}
+                text=''
+                variant='withoutLabel'
+              />
+              <NameAvatar
+                fullName={'Natalie Griffin'}
+                src={''}
+                text=''
+                variant='withoutLabel'
+              />
+            </Stack>
+            <Box>
+              <AddCardButton buttonText={'Assign a member'} />
+            </Box>
+          </Stack>
+
+
+          <MemberCard/>
         </Grid>
       </Grid>
     </article>

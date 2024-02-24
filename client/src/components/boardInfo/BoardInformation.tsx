@@ -14,7 +14,7 @@ const BoardInformation = () => {
 
   return (
     <article
-      className = 'boardInformation'
+      className='boardInformation'
       style={{
         // border: '1px solid black',
         width: '377px',
@@ -141,9 +141,9 @@ const BoardInformation = () => {
         </div>
       </Stack> */}
 
-      <NameAvatar src={''} text='Admin' />
-      <NameAvatar src={''} text='Delete' />
-      <NameAvatar src={''} text='Delete' />
+      <NameAvatar src={''} text='Admin' variant='withLabel' />
+      <NameAvatar src={''} text='Delete' variant='withLabel' />
+      <NameAvatar src={''} text='Delete' variant='withLabel' />
     </article>
   );
 };

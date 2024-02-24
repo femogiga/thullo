@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import CardInformation from './components/cardinformation/CardInformation';
 
-function App() {
+const  App:React.FC = () => {
   const pageInfoVisibility = useSelector(
     (state) => state.pageInformation.visible
   );

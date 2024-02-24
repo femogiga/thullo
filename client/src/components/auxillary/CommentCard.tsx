@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import MiniCard from '../minicard/MiniCard';
 import { NameLabel } from './NameLabel';
 import Divider from '@mui/material/Divider';
+import { Link } from 'react-router-dom';
 
 export const CommentCard = ({ firstName, lastName }) => {
   (firstName = 'Christiano'), (lastName = 'Ronaldo');
@@ -21,12 +22,12 @@ export const CommentCard = ({ firstName, lastName }) => {
           </Box>
         </Stack>
         <Stack direction='row' alignItems={'center'} spacing={1}>
-          <p>Edit</p>
+          <Link to='/'>Edit</Link>
           <p> - </p>
-          <p>Delete</p>
+          <Link to='/'>Delete</Link>
         </Stack>
       </Stack>
-      <Typography sx={{ marginBlockEnd: '1rem',fontSize:'14px' }}>
+      <Typography sx={{ marginBlockEnd: '1rem', fontSize: '14px' }}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi assumenda
         odio minus sed nesciunt recusandae accusamus repellendus suscipit
         delectus iste asperiores provident, est molestias ducimus autem cum
