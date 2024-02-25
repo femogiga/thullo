@@ -10,6 +10,7 @@ import BoardInformation from './components/boardInfo/BoardInformation';
 import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import CardInformation from './components/cardinformation/CardInformation';
+import AllBoard from './components/allboard/AllBoard';
 
 const  App:React.FC = () => {
   const pageInfoVisibility = useSelector(
@@ -18,8 +19,8 @@ const  App:React.FC = () => {
   return (
     <div className='container'>
       <Header />
-      <PresentMembers />
-      {/* <Board>
+      {/* <PresentMembers /> */}
+      {/* <Board >
         <AnimatePresence>
           <motion.div
             layout
@@ -61,8 +62,9 @@ const  App:React.FC = () => {
           <AddCardButton />
         </TaskPanel>
         <AddListAndCardButton />
-      </Board> */}
-    <CardInformation/>
+      </Board>
+    <CardInformation/> */}
+      <AllBoard/>
     </div>
   );
 }

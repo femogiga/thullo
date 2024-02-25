@@ -2,6 +2,11 @@ import { Button, Stack } from '@mui/material';
 import React from 'react';
 
 const ActionButton = ({ startIcon, buttonText }) => {
+  /**
+   ** Button with a start icon
+   *
+   *
+   */
   return (
     <Stack direction='row' spacing={2} style={{ marginBlockEnd: '1rem' }}>
       <Button

@@ -20,6 +20,11 @@ import IconLabel from '../auxillary/IconLabel';
 import Chips from '../taskcard/auxillary/Chips';
 import CrudButton from '../auxillary/CrudButton';
 const LabelCard = () => {
+    /**
+     ** LabelCard is used to apply color , labels and classification   in task
+     *
+     *
+     */
   return (
     <Card
       className='cover-card'

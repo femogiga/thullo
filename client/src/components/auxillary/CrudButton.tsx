@@ -2,7 +2,13 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import FeedIcon from '@mui/icons-material/Feed';
 import EditIcon from '@mui/icons-material/Edit';
 
-const CrudButton = ({ text, icon, colours }) => {
+interface CrudButtonProps {
+  text: string;
+  icon: React.ReactElement<SVGAElement>;
+  colours: { bg: string; color: string };
+}
+
+const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours }) => {
   // colours = {
   //   bg: 'blue',
   //   color:'white'
@@ -18,6 +24,7 @@ const CrudButton = ({ text, icon, colours }) => {
             borderRadius: '8px',
             display: 'flex',
             justifyContent: 'center',
+            alignItems: 'center',
             gap: '.3rem',
             border: '1px solid #BDBDBD',
             color: colours?.color || '#828282',

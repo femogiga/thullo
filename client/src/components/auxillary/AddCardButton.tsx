@@ -2,6 +2,12 @@ import { Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 const AddCardButton = ({ buttonText }) => {
+  /**
+   ** Button with deault text whose text can be changed
+  * @param {buttonText}
+   *
+   *
+   */
   return (
     <div>
       <Button

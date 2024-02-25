@@ -2,7 +2,10 @@ import { Box, Stack, Typography } from '@mui/material';
 import IconLabel from './IconLabel';
 import CrudButton from './CrudButton';
 
-const AttachmentCard = ({ src }) => {
+interface AttachmentProps {
+  src: string;
+}
+const AttachmentCard: React.FC<AttachmentProps> = ({ src }) => {
   src =
     'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600';
   return (
@@ -18,8 +21,8 @@ const AttachmentCard = ({ src }) => {
             Reasoning by Ragnanath Krishma
           </Typography>
           <Stack direction='row' spacing='9px' color='#828282'>
-            <CrudButton icon='' text={'Download'} />
-            <CrudButton icon='' text={'Delete'} />
+            <CrudButton colours='' icon='' text={'Download'} />
+            <CrudButton colours='' icon='' text={'Delete'} />
           </Stack>
         </div>
       </Stack>

@@ -121,3 +121,9 @@ img {
   /* height:.5rem; */
   height: .18rem
 }
+
+
+.board-card .MuiAvatarGroup .MuiAvatar-root{
+  width:28px;
+  height: 28px;
+}
