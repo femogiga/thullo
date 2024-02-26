@@ -18,6 +18,7 @@ const BoardCard = () => {
           maxWidth: 243,
           height: 243,
           boxShadow: '0 4 12 0 rgba(0 0 0.05)',
+          borderRadius: '12px',
         }}
         draggable>
         <CardContent>
@@ -26,7 +27,12 @@ const BoardCard = () => {
             image='https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=600'
             title='green iguana'
           />
-          <Typography sx={{ fontWeight: '500', fontSize: '16px' ,marginBlockEnd:'.6rem'}}>
+          <Typography
+            sx={{
+              fontWeight: '500',
+              fontSize: '16px',
+              marginBlockEnd: '.6rem',
+            }}>
             Devchallenges
           </Typography>
           <Box sx={{ display: 'flex' }}>

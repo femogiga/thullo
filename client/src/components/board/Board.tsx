@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
 
-const Board = ({ children }) => {
+const Board = ({ children ,direction}) => {
   return (
     <Stack
-      direction='row'
+      direction={direction}
       spacing='2rem'
 
       sx={{

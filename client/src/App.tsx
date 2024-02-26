@@ -20,7 +20,7 @@ const  App:React.FC = () => {
     <div className='container'>
       <Header />
       {/* <PresentMembers /> */}
-      {/* <Board >
+      {/* <Board direction={'row'}>
         <AnimatePresence>
           <motion.div
             layout

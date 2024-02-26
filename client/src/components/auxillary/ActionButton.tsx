@@ -15,7 +15,7 @@ const ActionButton = ({ startIcon, buttonText }) => {
         sx={{
           display: 'flex',
           justifyContent: 'flex-start',
-          width: '148.98px',
+          width:'9.311rem',
           textTransform: 'capitalize',
           fontSize: '12px',
           color: '#828282',
