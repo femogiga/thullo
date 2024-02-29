@@ -35,8 +35,7 @@ const AllBoard = () => {
           <BoardCard />
           <BoardCard />
         </Stack>
-        <Box sx={{position:'absolute',zIndex:'5',right:'35%'}}>
-
+        <Box sx={{ position: 'absolute', zIndex: '5', right: '38%' }}>
           <AddBoardModal />
         </Box>
       </Board>
