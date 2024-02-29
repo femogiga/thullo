@@ -12,6 +12,7 @@ import TaskCard from '../../taskcard/TaskCard';
 import CardInformation from '../../cardinformation/CardInformation';
 import Visibility from '../../auxillary/Visibility';
 import { Box } from '@mui/material';
+import InviteCard from '../../actionscard/InviteCard';
 
 const BoardPage = () => {
   const pageInfoVisibility = useSelector(
@@ -83,6 +84,7 @@ const BoardPage = () => {
           )}
         </motion.div>
       </AnimatePresence>
+
     </div>
   );
 };

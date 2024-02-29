@@ -20,7 +20,8 @@ const App: React.FC = () => {
       {/* <CardInformation/>  */}
       {/* <AllBoard/> */}
       {/* <AllBoardPage/> */}
-      <BoardPage />
+      <BoardPage/>
+
     </div>
   );
 };

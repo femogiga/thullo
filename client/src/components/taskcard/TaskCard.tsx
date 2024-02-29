@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardContent,
   CardMedia,
@@ -12,8 +13,20 @@ import AddButton from '../auxillary/AddButton';
 import CommentIcon from '@mui/icons-material/Comment';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import BackHandIcon from '@mui/icons-material/BackHand';
+import InviteCard from '../actionscard/InviteCard';
+import useUserHook from './hook/useUserHook';
+import { useEffect, useState } from 'react';
 
 const TaskCard = () => {
+  // const { handleAddUserButton, show, setShow } = useUserHook;
+  const [show, setShow] = useState(false);
+  useEffect(() => {}, [show]);
+
+  const handleAddUserButton = (e) => {
+    e.preventDefault();
+    //dispatch()
+    setShow(!show);
+  };
   return (
     <div>
       <Card
@@ -54,7 +67,7 @@ const TaskCard = () => {
             <Stack direction='row' spacing={1} alignItems={'center'}>
               <MiniCard height={28} width={28} src='' />
               <MiniCard height={28} width={28} src='' />
-              <AddButton width={28} height={28} />
+              <AddButton width={28} height={28} onClick={handleAddUserButton} />
             </Stack>
             <Stack direction='row' spacing={1} alignItems={'center'}>
               <IconButton>
@@ -69,6 +82,11 @@ const TaskCard = () => {
           </Stack>
         </CardContent>
       </Card>
+      {show && (
+        <Box sx={{ position: 'absolute', top: '9rem', zIndex: '6' }}>
+          <InviteCard />
+        </Box>
+      )}
     </div>
   );
 };

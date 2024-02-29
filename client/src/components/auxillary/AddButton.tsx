@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
-const AddButton = ({ width, height }) => {
+const AddButton = ({ width, height,onClick }) => {
   /**
    ** Button with Add icon
    *
@@ -8,6 +8,7 @@ const AddButton = ({ width, height }) => {
    */
   return (
     <IconButton
+      onClick={onClick}
       sx={{
         borderRadius: '8px',
         backgroundColor: '#2F80ED',
