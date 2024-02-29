@@ -19,8 +19,14 @@ import CrudButton from '../../auxillary/CrudButton';
 
 const AddBoardModal = () => {
   return (
-    <Box sx={{ maxWidth: '307px', border: '1px solid black', padding: '1rem' }}>
-      <div>
+    <Box
+      sx={{
+        maxWidth: '307px',
+        padding: '1rem',
+        borderRadius: '12px',
+        boxShadow: '0 2px 4px 1px rgba(0,0,0,.1)',
+      }}>
+      <div style={{ marginBlockEnd: '1rem' }}>
         <img
           style={{
             // maxWidth: '259px',
@@ -32,10 +38,16 @@ const AddBoardModal = () => {
           src='https://images.pexels.com/photos/18262756/pexels-photo-18262756/free-photo-of-smiling-woman-carrying-basket-on-back-with-flowers.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
         />
       </div>
-      <Box>
+      <Box sx={{ marginBlockEnd: '1rem' }}>
         <input
           type='text'
-          style={{ width: '100%', height: '34px', borderRadius: '8px' }}
+          style={{
+            width: '100%',
+            height: '34px',
+            borderRadius: '8px',
+            border: 'none',
+            boxShadow: '0 2px 4px 1px rgba(0,0,0,.1)',
+          }}
           placeholder='Add board title'
         />
       </Box>
@@ -43,7 +55,8 @@ const AddBoardModal = () => {
         direction={'row'}
         spacing={2}
         sx={{ textTransform: 'capitalize' }}
-        justifyContent={'space-between'}>
+        justifyContent={'space-between'}
+        sx={{ marginBlockEnd: '1rem' }}>
         <Button
           sx={{
             textTransform: 'capitalize',
