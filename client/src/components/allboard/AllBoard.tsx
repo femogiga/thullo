@@ -26,16 +26,19 @@ const AllBoard = () => {
           gap='1rem'
           justifyContent={'space-between'}
           sx={{ flexWrap: 'wrap' }}>
-          {/* <BoardCard />
           <BoardCard />
           <BoardCard />
           <BoardCard />
           <BoardCard />
           <BoardCard />
           <BoardCard />
-          <BoardCard /> */}
+          <BoardCard />
+          <BoardCard />
         </Stack>
-        <AddBoardModal />
+        <Box sx={{position:'absolute',zIndex:'5',right:'35%'}}>
+
+          <AddBoardModal />
+        </Box>
       </Board>
     </Box>
   );

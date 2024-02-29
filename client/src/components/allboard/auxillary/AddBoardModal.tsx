@@ -11,7 +11,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
 import ImageIcon from '@mui/icons-material/Image';
 import LockIcon from '@mui/icons-material/Lock';
 import AddIcon from '@mui/icons-material/Add';
@@ -25,6 +24,7 @@ const AddBoardModal = () => {
         padding: '1rem',
         borderRadius: '12px',
         boxShadow: '0 2px 4px 1px rgba(0,0,0,.1)',
+        backgroundColor: 'rgba(255,255,255)'
       }}>
       <div style={{ marginBlockEnd: '1rem' }}>
         <img
