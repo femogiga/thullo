@@ -11,8 +11,8 @@ import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import CardInformation from './components/cardinformation/CardInformation';
 import AllBoard from './components/allboard/AllBoard';
-import AllBoardPage from './components/pages/AllBoardPage';
-import BoardPage from './components/pages/BoardPage';
+import AllBoardPage from './components/pages/allboard/AllBoardPage';
+import BoardPage from './components/pages/mainboard/BoardPage';
 
 const App: React.FC = () => {
   return (

@@ -15,7 +15,8 @@ const Visibility: React.FC = () => {
         padding: '0.5rem',
         width: '234px',
         maxHeight: '199px',
-        borderRadius: '12px',
+          borderRadius: '12px',
+        backgroundColor: 'rgba(255,255,255)'
       }}>
       <div style={{ marginBlockEnd: '1rem' }}>
         <Typography variant='h6' sx={{ fontSize: '13px', fontWeight: '600' }}>
