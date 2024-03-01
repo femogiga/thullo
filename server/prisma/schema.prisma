@@ -29,9 +29,18 @@ model User {
 model Board {
   id Int @id @default(autoincrement())
   name    String
-  cards   Task[]
+  
   admin   User   @relation(fields: [adminId], references: [id])
   adminId Int
+  panels Panel[]
+}
+
+model Panel{
+    id Int @id @default(autoincrement())
+    title String
+    board Board   @relation(fields: [boardId], references: [id])
+    boardId  Int
+    tasks Task[]
 }
 
 model Task {
@@ -39,12 +48,13 @@ model Task {
   title       String
   description String
   status      String
+   imageUrl    String
   chats       Chat[]
   assets      Asset[]
-  board       Board   @relation(fields: [boardId], references: [id])
-  boardId     Int
   labels TasksOnLabels[]
   users UsersOnTasks[]
+  panel Panel @relation(fields: [panelId], references: [id])
+  panelId Int
 }
 
 model UsersOnTasks{
@@ -59,7 +69,7 @@ model UsersOnTasks{
 model Label{
   id Int @id @default(autoincrement())
   label       String
-  imageUrl    String
+
   labelColor  String
  tasks TasksOnLabels[]
 
