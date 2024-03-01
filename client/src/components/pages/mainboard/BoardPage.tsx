@@ -22,12 +22,12 @@ const BoardPage = () => {
     inReview: false,
     completed: false,
   });
- const handleDeleteRenameVisibility = (panel) => {
-   setVisibleState((prevState) => ({
-     ...prevState,
-     [panel]: !prevState[panel],
-   }));
- };
+  const handleDeleteRenameVisibility = (panel) => {
+    setVisibleState((prevState) => ({
+      ...prevState,
+      [panel]: !prevState[panel],
+    }));
+  };
 
   useEffect(() => {}, []);
   const pageInfoVisibility = useSelector(
@@ -59,7 +59,7 @@ const BoardPage = () => {
           <PanelName
             listName={'Backlog'}
             icon={'🛷'}
-            onClick={()=>handleDeleteRenameVisibility('backlog')}
+            onClick={() => handleDeleteRenameVisibility('backlog')}
           />
           <TaskCard />
           <AddCardButton />
@@ -77,7 +77,7 @@ const BoardPage = () => {
           <PanelName
             listName={'In Progress'}
             icon={'📚'}
-            onClick={()=>handleDeleteRenameVisibility('inProgress')}
+            onClick={() => handleDeleteRenameVisibility('inProgress')}
           />
           <TaskCard />
           <TaskCard />
@@ -116,7 +116,7 @@ const BoardPage = () => {
           <PanelName
             listName={'Completed'}
             icon={'👌'}
-            onClick={()=>handleDeleteRenameVisibility('completed')}
+            onClick={() => handleDeleteRenameVisibility('completed')}
           />
           <TaskCard />
           <TaskCard />

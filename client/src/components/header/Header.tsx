@@ -26,21 +26,23 @@ const Header = () => {
         </div>
         <p className='bold'>Devchallenges Board</p>
         <div className='divider'></div>
-        <button className='allboard-button flex place-items col-gap-05'>
+        <Link to='/allboard' className='allboard-button flex place-items col-gap-05'>
           <span className='flex'>
             <DotsNine />
           </span>
-          <span>All board</span>
-        </button>
+
+            <span>All board</span>
+
+        </Link>
       </div>
 
       <div className='group-width flex flex-end align-item-center col-gap-2'>
         <div className='search flex col-gap-1'>
           {/* <input type='text' className='search-input' placeholder='Keyword..' /> */}
-          <TextField className='' size='small'  />
+          <TextField className='' size='small' />
           <button>Search</button>
         </div>
-        <Link>
+        <Link to="">
           <div className=' flex place-items col-gap-05 align-item-center'>
             <div className='auth-image'>
               <MiniCard height={32} width={32} src='' />

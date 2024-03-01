@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  firstname String
+  lastname  String
+  email     String @unique
+  password  String
+  imgUrl    String
+
+  Board Board[]
+  Chat Chat[]
+  tasks UsersOnTasks[]
+}
+
+model Board {
+  id Int @id @default(autoincrement())
+  name    String
+  cards   Task[]
+  admin   User   @relation(fields: [adminId], references: [id])
+  adminId Int
+}
+
+model Task {
+  id Int @id @default(autoincrement())
+  title       String
+  description String
+  status      String
+  chats       Chat[]
+  assets      Asset[]
+  board       Board   @relation(fields: [boardId], references: [id])
+  boardId     Int
+  labels TasksOnLabels[]
+  users UsersOnTasks[]
+}
+
+model UsersOnTasks{
+   user User @relation(fields: [authorId] , references:[id])
+  authorId Int
+  task Task @relation(fields: [taskId] , references:[id])
+  taskId Int
+      @@id([taskId, authorId])
+
+}
+
+model Label{
+  id Int @id @default(autoincrement())
+  label       String
+  imageUrl    String
+  labelColor  String
+ tasks TasksOnLabels[]
+
+}
+
+model TasksOnLabels{
+  task Task @relation(fields: [taskId] , references:[id])
+  taskId Int
+  label Label @relation(fields: [labelId] , references:[id])
+  labelId Int
+    @@id([taskId, labelId])
+}
+
+model Chat {
+  id Int @id @default(autoincrement())
+  content   String?
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  card      Task     @relation(fields: [taskId], references: [id])
+  taskId    Int
+  createdAt DateTime @default(now())
+}
+
+model Asset {
+  id Int @id @default(autoincrement())
+  url        String?
+  createdAt  DateTime @default(now())
+  attachment Task     @relation(fields: [assetId], references: [id])
+  assetId    Int
+}
