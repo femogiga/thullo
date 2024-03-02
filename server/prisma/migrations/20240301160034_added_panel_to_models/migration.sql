@@ -26,3 +26,6 @@ ALTER TABLE "Panel" ADD CONSTRAINT "Panel_boardId_fkey" FOREIGN KEY ("boardId") 
 
 -- AddForeignKey
 ALTER TABLE "Task" ADD CONSTRAINT "Task_panelId_fkey" FOREIGN KEY ("panelId") REFERENCES "Panel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
+ALTER SEQUENCE "Task_id_seq" MINVALUE 0 START 0 RESTART 0;
