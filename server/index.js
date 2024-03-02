@@ -6,6 +6,13 @@ require('dotenv').config();
 const authRoute = require('./authentication/authRoute');
 const boardRoute = require('./routes/boardRoute');
 const chatRoute = require('./routes/chatRoute');
+const labelRoute = require('./routes/labelRoute');
+const panelRoute = require('./routes/panelRoute');
+const taskRoute = require('./routes/taskRoute');
+const userRoute = require('./routes/userRoute');
+const taskOnLabelRoute = require('./routes/taskOnLabelRoute');
+const usersOnTasksRoute = require('./routes/usersOnTasksRoute');
+
 
 const app = express();
 app.use(express.json());
@@ -15,6 +22,12 @@ app.use(cors());
 // app.use('/auth', authMiddleware, authRoute);
 app.use('/boards', boardRoute);
 app.use('/chats', chatRoute);
+app.use('/labels', labelRoute);
+app.use('/panels', panelRoute);
+app.use('/tasks', taskRoute);
+app.use('/users', userRoute);
+app.use('/usersontasks',usersOnTasksRoute)
+app.use('/tasksonlabels', taskOnLabelRoute);
 
 const port = process.env.PORT || 9000;
 
