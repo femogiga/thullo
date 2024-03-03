@@ -7,10 +7,8 @@ import {
   AvatarGroup,
   Box,
 } from '@mui/material';
-import React from 'react';
-import MiniCard from './../../minicard/MiniCard';
 
-const BoardCard = () => {
+const BoardCard = ({name,thumbnail}) => {
   return (
     <div className='board-card'>
       <Card
@@ -23,9 +21,9 @@ const BoardCard = () => {
         draggable>
         <CardContent>
           <CardMedia
-            sx={{ width: 219, height: 130, marginBlockEnd: '1rem' }}
-            image='https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=600'
-            title='green iguana'
+            sx={{ width: 219, height: 130, marginBlockEnd: '1rem',borderRadius:'12px' }}
+            image={thumbnail || 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=600'}
+            title='board thumbnail'
           />
           <Typography
             sx={{
@@ -33,7 +31,7 @@ const BoardCard = () => {
               fontSize: '16px',
               marginBlockEnd: '.6rem',
             }}>
-            Devchallenges
+            {name ||'Devchallenges'}
           </Typography>
           <Box sx={{ display: 'flex' }}>
             <AvatarGroup
