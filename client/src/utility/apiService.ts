@@ -46,8 +46,8 @@ const authRegister = (url: string, data) => {
     });
 };
 
-const getById = (url: string, id) => {
-    return axios.get(`${baseUrl}${url}${id}`, {
+const getById = (url: string, id:number) => {
+    return axios.get(`${baseUrl}${url}/${id}`, {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,

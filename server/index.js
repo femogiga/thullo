@@ -12,7 +12,7 @@ const taskRoute = require('./routes/taskRoute');
 const userRoute = require('./routes/userRoute');
 const taskOnLabelRoute = require('./routes/taskOnLabelRoute');
 const usersOnTasksRoute = require('./routes/usersOnTasksRoute');
-
+const allBoardRoute = require('./routes/allBoardPageRoute');
 
 const app = express();
 app.use(express.json());
@@ -26,8 +26,9 @@ app.use('/labels', labelRoute);
 app.use('/panels', panelRoute);
 app.use('/tasks', taskRoute);
 app.use('/users', userRoute);
-app.use('/usersontasks',usersOnTasksRoute)
+app.use('/usersontasks', usersOnTasksRoute);
 app.use('/tasksonlabels', taskOnLabelRoute);
+app.use('/allboard', allBoardRoute);
 
 const port = process.env.PORT || 9000;
 

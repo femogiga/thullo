@@ -43,6 +43,7 @@ model Panel{
     tasks Task[]
 }
 
+
 model Task {
   id Int @id @default(autoincrement())
   title       String

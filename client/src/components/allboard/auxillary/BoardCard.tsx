@@ -7,8 +7,11 @@ import {
   AvatarGroup,
   Box,
 } from '@mui/material';
+import { useAllBoardPageDataById } from '../../../api/allBoardPageData';
 
-const BoardCard = ({name,thumbnail}) => {
+const BoardCard = ({ name, thumbnail, boardId }) => {
+  const { isPending, data:userPhotos } = useAllBoardPageDataById(boardId)
+  console.log(userPhotos)
   return (
     <div className='board-card'>
       <Card
@@ -45,6 +48,27 @@ const BoardCard = ({name,thumbnail}) => {
                   fontSize: 15,
                 },
               }}>
+              {
+               userPhotos && userPhotos.map(photo =>(<Avatar
+                  sx={{
+                    marginInlineEnd: '.5rem',
+                    borderRadius: '8px',
+                    width: 28,
+                    height: 28,
+                  }}
+                  alt='Remy Sharp'
+                  src={photo.imgUrl}
+                />))
+              }
+              {/* <Avatar
+                sx={{
+                  marginInlineEnd: '.5rem',
+                  width: 28,
+                  height: 28,
+                }}
+                alt='Remy Sharp'
+                src='/static/images/avatar/1.jpg'
+              />
               <Avatar
                 sx={{
                   marginInlineEnd: '.5rem',
@@ -54,26 +78,7 @@ const BoardCard = ({name,thumbnail}) => {
                 }}
                 alt='Remy Sharp'
                 src='/static/images/avatar/1.jpg'
-              />
-              <Avatar
-                sx={{
-                  marginInlineEnd: '.5rem',
-                  width: 28,
-                  height: 28,
-                }}
-                alt='Remy Sharp'
-                src='/static/images/avatar/1.jpg'
-              />
-              <Avatar
-                sx={{
-                  marginInlineEnd: '.5rem',
-                  borderRadius: '8px',
-                  width: 28,
-                  height: 28,
-                }}
-                alt='Remy Sharp'
-                src='/static/images/avatar/1.jpg'
-              />
+              /> */}
             </AvatarGroup>
           </Box>
         </CardContent>

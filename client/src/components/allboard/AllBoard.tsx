@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const AllBoard = () => {
   const { isPending, error, data } = useAllBoardData();
-  console.log(data);
+
   return (
     <Box className='container' sx={{ position: 'relative' }}>
       <Board direction={'column'}>
@@ -43,6 +43,7 @@ const AllBoard = () => {
                   <BoardCard
                     key={board.id}
                     name={board.name}
+                    boardId= {board.id}
                     thumbnail={board.thumbnail}
                   />
                 </Link>
