@@ -9,8 +9,8 @@ import {
 } from '@mui/material';
 import { useAllBoardPageDataById } from '../../../api/allBoardPageData';
 
-const BoardCard = ({ name, thumbnail, boardId }) => {
-  const { isPending, data:userPhotos } = useAllBoardPageDataById(boardId)
+const BoardCard = ({ name, thumbnail, boardId ,userPhotos}) => {
+ // const { isPending, data:userPhotos } = useAllBoardPageDataById(boardId)
   console.log(userPhotos)
   return (
     <div className='board-card'>
@@ -49,7 +49,7 @@ const BoardCard = ({ name, thumbnail, boardId }) => {
                 },
               }}>
               {
-               userPhotos && userPhotos.map(photo =>(<Avatar
+               userPhotos && userPhotos.map((photo,index) =>(<Avatar key={`userphoto_${index}`}
                   sx={{
                     marginInlineEnd: '.5rem',
                     borderRadius: '8px',
@@ -57,7 +57,7 @@ const BoardCard = ({ name, thumbnail, boardId }) => {
                     height: 28,
                   }}
                   alt='Remy Sharp'
-                  src={photo.imgUrl}
+                  src={photo}
                 />))
               }
               {/* <Avatar

@@ -13,3 +13,11 @@ export const useAllBoardPageDataById = (id:number) => {
     });
     return { isPending, error, data };
 };
+
+export const useAllBoardPageData = () => {
+    const { isPending, error, data } = useQuery({
+        queryKey: ['allBoardPage'],
+        queryFn: () => apiService.get('/allboard').then((res) => res.data),
+    });
+    return { isPending, error, data };
+};

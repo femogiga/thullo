@@ -38,7 +38,7 @@ const AllBoardPage = async (req, res) => {
         knex.raw('ARRAY_AGG("User"."imgUrl") as userPhotos')
       )
       .from('Board')
-      .innerJoin('Panel', 'Board.id', '=', 'Panel.boardId')
+      .leftJoin('Panel', 'Board.id', '=', 'Panel.boardId')
       .leftJoin('Task', 'Panel.id', '=', 'Task.panelId')
       .leftJoin('UsersOnTasks', 'Task.id', '=', 'UsersOnTasks.taskId')
       .leftJoin('User', 'User.id', '=', 'UsersOnTasks.authorId')

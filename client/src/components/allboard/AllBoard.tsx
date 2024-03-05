@@ -6,9 +6,13 @@ import AddIcon from '@mui/icons-material/Add';
 import AddBoardModal from './auxillary/AddBoardModal';
 import { useAllBoardData } from '../../api/boardData';
 import { Link } from 'react-router-dom';
+import { useAllBoardPageData } from '../../api/allBoardPageData';
 
 const AllBoard = () => {
   const { isPending, error, data } = useAllBoardData();
+  const { isPending: p, error: e, data: allBoardPageData } = useAllBoardPageData()
+
+  console.log(allBoardPageData)
 
   return (
     <Box className='container' sx={{ position: 'relative' }}>
@@ -37,14 +41,15 @@ const AllBoard = () => {
               flexWrap: 'wrap',
               maxWidth: '70%',
             }}>
-            {data &&
-              data.map((board) => (
+            {allBoardPageData &&
+              allBoardPageData.map((board) => (
                 <Link to={`/boards/${board.id}`}>
                   <BoardCard
                     key={board.id}
                     name={board.name}
-                    boardId= {board.id}
+                    boardId={board.id}
                     thumbnail={board.thumbnail}
+                    userPhotos={board.userphotos}
                   />
                 </Link>
               ))}
