@@ -7,12 +7,17 @@ import AddBoardModal from './auxillary/AddBoardModal';
 import { useAllBoardData } from '../../api/boardData';
 import { Link } from 'react-router-dom';
 import { useAllBoardPageData } from '../../api/allBoardPageData';
+import IsLoading from './../auxillary/IsLoading';
 
 const AllBoard = () => {
   const { isPending, error, data } = useAllBoardData();
-  const { isPending: p, error: e, data: allBoardPageData } = useAllBoardPageData()
+  const {
+    isPending: allBoardPagepending,
+    error: allBoardError,
+    data: allBoardPageData,
+  } = useAllBoardPageData();
 
-  console.log(allBoardPageData)
+  console.log(allBoardPageData);
 
   return (
     <Box className='container' sx={{ position: 'relative' }}>
@@ -41,7 +46,10 @@ const AllBoard = () => {
               flexWrap: 'wrap',
               maxWidth: '70%',
             }}>
-            {allBoardPageData &&
+            {allBoardPagepending ? (
+              <IsLoading />
+            ) : (
+              allBoardPageData &&
               allBoardPageData.map((board) => (
                 <Link to={`/boards/${board.id}`}>
                   <BoardCard
@@ -52,7 +60,8 @@ const AllBoard = () => {
                     userPhotos={board.userphotos}
                   />
                 </Link>
-              ))}
+              ))
+            )}
             {/* <BoardCard />
           <BoardCard />
           <BoardCard />

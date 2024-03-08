@@ -27,7 +27,6 @@ const getUserPhoto = async (req, res) => {
   //console.log(Array.from (new Set(result)));
 };
 
-
 const AllBoardPage = async (req, res) => {
   try {
     const result = await knex
@@ -54,7 +53,4 @@ const AllBoardPage = async (req, res) => {
   //console.log(Array.from (new Set(result)));
 };
 
-
-
-
-module.exports = { getUserPhoto ,AllBoardPage };
+module.exports = { getUserPhoto, AllBoardPage };

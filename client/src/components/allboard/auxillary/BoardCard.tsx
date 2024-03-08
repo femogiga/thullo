@@ -9,9 +9,9 @@ import {
 } from '@mui/material';
 import { useAllBoardPageDataById } from '../../../api/allBoardPageData';
 
-const BoardCard = ({ name, thumbnail, boardId ,userPhotos}) => {
- // const { isPending, data:userPhotos } = useAllBoardPageDataById(boardId)
-  console.log(userPhotos)
+const BoardCard = ({ name, thumbnail, boardId, userPhotos }) => {
+  // const { isPending, data:userPhotos } = useAllBoardPageDataById(boardId)
+  //console.log(userPhotos)
   return (
     <div className='board-card'>
       <Card
@@ -24,8 +24,16 @@ const BoardCard = ({ name, thumbnail, boardId ,userPhotos}) => {
         draggable>
         <CardContent>
           <CardMedia
-            sx={{ width: 219, height: 130, marginBlockEnd: '1rem',borderRadius:'12px' }}
-            image={thumbnail || 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=600'}
+            sx={{
+              width: 219,
+              height: 130,
+              marginBlockEnd: '1rem',
+              borderRadius: '12px',
+            }}
+            image={
+              thumbnail ||
+              'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=600'
+            }
             title='board thumbnail'
           />
           <Typography
@@ -34,12 +42,12 @@ const BoardCard = ({ name, thumbnail, boardId ,userPhotos}) => {
               fontSize: '16px',
               marginBlockEnd: '.6rem',
             }}>
-            {name ||'Devchallenges'}
+            {name || 'Devchallenges'}
           </Typography>
           <Box sx={{ display: 'flex' }}>
             <AvatarGroup
               variant='rounded'
-              total={7}
+              total={userPhotos.length}
               max={4}
               sx={{
                 '& .MuiAvatar-root': {
@@ -48,37 +56,20 @@ const BoardCard = ({ name, thumbnail, boardId ,userPhotos}) => {
                   fontSize: 15,
                 },
               }}>
-              {
-               userPhotos && userPhotos.map((photo,index) =>(<Avatar key={`userphoto_${index}`}
-                  sx={{
-                    marginInlineEnd: '.5rem',
-                    borderRadius: '8px',
-                    width: 28,
-                    height: 28,
-                  }}
-                  alt='Remy Sharp'
-                  src={photo}
-                />))
-              }
-              {/* <Avatar
-                sx={{
-                  marginInlineEnd: '.5rem',
-                  width: 28,
-                  height: 28,
-                }}
-                alt='Remy Sharp'
-                src='/static/images/avatar/1.jpg'
-              />
-              <Avatar
-                sx={{
-                  marginInlineEnd: '.5rem',
-                  borderRadius: '8px',
-                  width: 28,
-                  height: 28,
-                }}
-                alt='Remy Sharp'
-                src='/static/images/avatar/1.jpg'
-              /> */}
+              {userPhotos &&
+                userPhotos.map((photo, index) => (
+                  <Avatar
+                    key={`userphoto_${index}`}
+                    sx={{
+                      marginInlineEnd: '.5rem',
+                      borderRadius: '8px',
+                      width: 28,
+                      height: 28,
+                    }}
+                    alt='Remy Sharp'
+                    src={photo}
+                  />
+                ))}
             </AvatarGroup>
           </Box>
         </CardContent>

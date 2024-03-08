@@ -9,11 +9,11 @@ import TaskPanel from '../../taskpanel/TaskPanel';
 import PanelName from '../../taskpanel/PanelName';
 import AddCardButton from '../../auxillary/AddCardButton';
 import TaskCard from '../../taskcard/TaskCard';
-import CardInformation from '../../cardinformation/CardInformation';
 import Visibility from '../../auxillary/Visibility';
 import { Box } from '@mui/material';
-import InviteCard from '../../actionscard/InviteCard';
-import DeleteRename from '../../auxillary/DeleteRename';
+import { useMainPageData } from './hooks/useMainPageData';
+import { useAllTaskData, useTaskCardData } from '../../../api/taskData';
+import { useCardData } from '../../../api/mainBoardPageData';
 
 const BoardPage = () => {
   const [visibleState, setVisibleState] = useState({
@@ -34,9 +34,18 @@ const BoardPage = () => {
     (state) => state.pageInformation.visible
   );
   const visibleModalState = useSelector((state) => state.visibility.visible);
+  // const { id } = useParams();
+  // const { boardByIdData } = useBoardDataId(parseInt(id));
+  const { boardByIdData, panelByBoardIdData } = useMainPageData();
+
+  //console.log('boardByIdData', boardByIdData);
+  // const { taskByPanelIdData } = useTaskDataByPanelId(1);
+  // console.log('=====> ' + taskByPanelIdData);
+  const { taskData } = useAllTaskData();
+  const { taskCard } = useTaskCardData();
   return (
     <div>
-      <Header />
+      <Header boardName={boardByIdData && boardByIdData[0]?.name} />
       <PresentMembers />
       <Board direction={'row'}>
         <AnimatePresence>
@@ -55,25 +64,47 @@ const BoardPage = () => {
             {pageInfoVisibility && <BoardInformation />}
           </motion.div>
         </AnimatePresence>
-        <TaskPanel>
-          <PanelName
-            listName={'Backlog'}
-            icon={'🛷'}
-            onClick={() => handleDeleteRenameVisibility('backlog')}
-          />
-          <TaskCard />
-          <AddCardButton />
-          <Box
-            sx={{
-              position: 'absolute',
-              zIndex: '5',
-              top: '2rem',
-              right: '-7rem',
-            }}>
-            {visibleState.backlog && <DeleteRename />}
-          </Box>
-        </TaskPanel>
-        <TaskPanel>
+
+        {panelByBoardIdData &&
+          panelByBoardIdData.map((panel) => {
+            //const { cardData } = useCardData(panel?.id);
+            return (
+              <>
+                <TaskPanel
+                  key={`panel-${panel.id}`}
+                  panelId={panel?.id}
+                  title={panel?.title}
+                  task={taskCard?.filter((item) => item?.panelId === panel?.id)}
+                  onClick={() => handleDeleteRenameVisibility('backlog')}
+                />
+              </>
+            );
+          })}
+        {/* {panelByBoardIdData &&
+          panelByBoardIdData.map((panel) => {
+            return (
+              <TaskPanel key={`panel-${panel.id}`} panelId={panel?.id}>
+                <PanelName
+                  id={panel.id}
+                  listName={panel.title}
+                  icon={'🛷'}
+                  onClick={() => handleDeleteRenameVisibility('backlog')}
+                />
+                <TaskCard />
+                <AddCardButton />
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    zIndex: '5',
+                    top: '2rem',
+                    right: '-7rem',
+                  }}>
+                  {visibleState.backlog && <DeleteRename />}
+                </Box>
+              </TaskPanel>
+            );
+          })} */}
+        {/* <TaskPanel>
           <PanelName
             listName={'In Progress'}
             icon={'📚'}
@@ -130,7 +161,7 @@ const BoardPage = () => {
             }}>
             {visibleState.completed && <DeleteRename />}
           </Box>
-        </TaskPanel>
+        </TaskPanel> */}
       </Board>
       {/* <CardInformation /> */}
       {/* <AllBoard/> */}

@@ -20,6 +20,43 @@ const getTaskById = async (req, res) => {
     res.status(500).json(error);
   }
 };
+const getTaskByPanelId = async (req, res) => {
+  try {
+    const result = await knex
+      .from('Task')
+      .where('panelId', '=', parseInt(req.params.panelId))
+      .select('*');
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const getAllTasksWithUsersAndLabels = async (req, res) => {
+  try {
+    const result = await knex
+      .select(
+        'Task.*',
+        knex.raw('JSON_AGG(DISTINCT "Label".*) as labels'),
+        knex.raw('JSON_AGG(DISTINCT "User".*) as users')
+      )
+      .from('Task')
+      .leftJoin('TasksOnLabels', 'Task.id', '=', 'TasksOnLabels.taskId')
+      .leftJoin('Label', 'Label.id', '=', 'TasksOnLabels.labelId')
+      .leftJoin('UsersOnTasks', 'Task.id', '=', 'UsersOnTasks.taskId')
+      .leftJoin('User', 'User.id', '=', 'UsersOnTasks.authorId')
+      .groupBy('Task.id');
+
+    console.log(result);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
+
+
 
 const updateTask = async (req, res) => {
   const { title, description, status, imageUrl, panelId } = req.body;
@@ -74,6 +111,8 @@ const deleteTask = async (req, res) => {
 module.exports = {
   getAllTask,
   getTaskById,
+  getTaskByPanelId,
+  getAllTasksWithUsersAndLabels,
   updateTask,
   createTask,
   deleteTask,

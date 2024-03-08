@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 
 
 
-const Header = () => {
+const Header = ({ boardName }) => {
   const headerStyle = {
     width: '100%',
     display: 'flex',
@@ -24,15 +24,16 @@ const Header = () => {
           <img src={logo} />
           <p className='bold'>Thullo</p>
         </div>
-        <p className='bold'>Devchallenges Board</p>
+        <p className='bold'>{boardName || 'Devchallenges Board'}</p>
         <div className='divider'></div>
-        <Link to='/allboard' className='allboard-button flex place-items col-gap-05'>
+        <Link
+          to='/allboard'
+          className='allboard-button flex place-items col-gap-05'>
           <span className='flex'>
             <DotsNine />
           </span>
 
-            <span>All board</span>
-
+          <span>All board</span>
         </Link>
       </div>
 
@@ -42,7 +43,7 @@ const Header = () => {
           <TextField className='' size='small' />
           <button>Search</button>
         </div>
-        <Link to="">
+        <Link to=''>
           <div className=' flex place-items col-gap-05 align-item-center'>
             <div className='auth-image'>
               <MiniCard height={32} width={32} src='' />

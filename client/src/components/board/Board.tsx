@@ -11,7 +11,8 @@ const Board = ({ children ,direction}) => {
         padding: '1rem',
         backgroundColor: '#F8F9FD',
         borderRadius: '2rem',
-
+        justifyContent: 'center',
+       
       }}>
       {children}
     </Stack>

@@ -3,6 +3,7 @@ const { knex } = require('../Knex');
 const getAllPanel = async (req, res) => {
   try {
     const result = await knex.from('Panel').select('*');
+    console.log(result);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -15,6 +16,18 @@ const getPanelById = async (req, res) => {
       .from('Panel')
       .select('*')
       .where('id', '=', parseInt(req.params.id));
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const getPanelByBoardId = async (req, res) => {
+  try {
+    const result = await knex
+      .from('Panel')
+      .select('*')
+      .where('boardId', '=', parseInt(req.params.boardId));
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -67,6 +80,7 @@ const deletePanel = async (req, res) => {
 module.exports = {
   getAllPanel,
   getPanelById,
+  getPanelByBoardId,
   updatePanel,
   createPanel,
   deletePanel,

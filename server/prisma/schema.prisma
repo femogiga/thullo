@@ -70,7 +70,6 @@ model UsersOnTasks{
 model Label{
   id Int @id @default(autoincrement())
   label       String
-
   labelColor  String
  tasks TasksOnLabels[]
 

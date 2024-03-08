@@ -1,17 +1,16 @@
 import { Chip } from '@mui/material';
 import { chipColor } from './../../../utility/chipColor';
 
-const Chips = ({ taskType }) => {
-  const colorStyle = chipColor(taskType);
+const Chips = ({ label,labelColor }) => {
   return (
     <div>
       <Chip
-        label={taskType || 'Clickable'}
+        label={label || 'Clickable'}
         sx={{
           fontSize: '10px',
           fontWeight: '600',
-          backgroundColor: colorStyle.bgColor || '#D5E6FB',
-          color: colorStyle.color || '#2F80ED',
+          backgroundColor: labelColor || '#D5E6FB',
+          color: "" || '#2F80ED',
           height: '18px',
         }}
       />
