@@ -22,6 +22,7 @@
     "framer-motion": "^11.0.5",
     "phosphor-icons": "^1.4.2",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^6.1.6",
     "react-loading": "^2.0.3",

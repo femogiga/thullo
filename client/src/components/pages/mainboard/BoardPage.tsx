@@ -14,6 +14,7 @@ import { Box } from '@mui/material';
 import { useMainPageData } from './hooks/useMainPageData';
 import { useAllTaskData, useTaskCardData } from '../../../api/taskData';
 import { useCardData } from '../../../api/mainBoardPageData';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const BoardPage = () => {
   const [visibleState, setVisibleState] = useState({
@@ -37,14 +38,18 @@ const BoardPage = () => {
   // const { id } = useParams();
   // const { boardByIdData } = useBoardDataId(parseInt(id));
   const { boardByIdData, panelByBoardIdData } = useMainPageData();
+  console.log(panelByBoardIdData && panelByBoardIdData);
 
   //console.log('boardByIdData', boardByIdData);
   // const { taskByPanelIdData } = useTaskDataByPanelId(1);
   // console.log('=====> ' + taskByPanelIdData);
+  const onDragEnd = (result) => {
+    // Logic to handle drag and drop events
+  };
   const { taskData } = useAllTaskData();
   const { taskCard } = useTaskCardData();
   return (
-    <div>
+    <div style={{ minHeight: '100vh' }}>
       <Header boardName={boardByIdData && boardByIdData[0]?.name} />
       <PresentMembers />
       <Board direction={'row'}>
@@ -64,22 +69,38 @@ const BoardPage = () => {
             {pageInfoVisibility && <BoardInformation />}
           </motion.div>
         </AnimatePresence>
+        <DragDropContext onDragEnd>
+          {panelByBoardIdData &&
+            panelByBoardIdData.map((panel, index) => {
+              //const { cardData } = useCardData(panel?.id);
 
-        {panelByBoardIdData &&
-          panelByBoardIdData.map((panel) => {
-            //const { cardData } = useCardData(panel?.id);
-            return (
-              <>
-                <TaskPanel
-                  key={`panel-${panel.id}`}
-                  panelId={panel?.id}
-                  title={panel?.title}
-                  task={taskCard?.filter((item) => item?.panelId === panel?.id)}
-                  onClick={() => handleDeleteRenameVisibility('backlog')}
-                />
-              </>
-            );
-          })}
+              return (
+                <>
+                  <Droppable droppableId={panel.title}>
+                    {(provided) => (
+                      <div {...provided.droppableProps} ref={provided.innerRef}>
+                        <TaskPanel
+                          key={`panel-${panel.id}`}
+                          panelId={panel?.id}
+                          title={panel?.title}
+                          index={index}
+                          panel={panel}
+                          task={taskCard?.filter(
+                            (item) => item?.panelId === panel?.id
+                          )}
+                          onClick={() =>
+                            handleDeleteRenameVisibility('backlog')
+                          }
+                        />
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </>
+              );
+            })}
+        </DragDropContext>
+
         {/* {panelByBoardIdData &&
           panelByBoardIdData.map((panel) => {
             return (

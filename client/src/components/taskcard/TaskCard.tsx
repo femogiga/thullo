@@ -16,6 +16,7 @@ import BackHandIcon from '@mui/icons-material/BackHand';
 import InviteCard from '../actionscard/InviteCard';
 import { useEffect, useState } from 'react';
 import LabelCard from './../actionscard/LabelCard';
+import { chipColor } from './../../utility/chipColor';
 
 const TaskCard = ({ title, description, imageUrl, labels, users }) => {
   // const { handleAddUserButton, show, setShow } = useUserHook;
@@ -28,7 +29,7 @@ const TaskCard = ({ title, description, imageUrl, labels, users }) => {
     setShow(!show);
   };
   return (
-    <div>
+    <div >
       <Card
         sx={{
           maxWidth: 243,
@@ -36,7 +37,7 @@ const TaskCard = ({ title, description, imageUrl, labels, users }) => {
           boxShadow: '0 4 12 0 rgba(0 0 0.05)',
           borderRadius: '12px',
         }}
-        draggable>
+        >
         <CardContent>
           <CardMedia
             sx={{
@@ -60,13 +61,15 @@ const TaskCard = ({ title, description, imageUrl, labels, users }) => {
           </Typography>
           <Stack direction='row' spacing={1} sx={{ marginBlockEnd: '1.2rem' }}>
             {/* <Chips taskType={'Design'} /> */}
-            {labels && labels.map((label) => (
-              <Chips
-                key={`label${label?.id}`}
-                label={label?.label}
-                labelColor={label?.labelColor}
-              />
-            ))}
+            {labels &&
+              labels.map((label) => (
+                <Chips
+                  key={`label${label?.id}`}
+                  label={label?.label}
+                  labelColor={label?.labelColor}
+                  chip={chipColor(label?.labelColor)}
+                />
+              ))}
           </Stack>
           <Stack
             direction='row'
@@ -75,7 +78,9 @@ const TaskCard = ({ title, description, imageUrl, labels, users }) => {
             alignItems='centre'>
             <Stack direction='row' spacing={1} alignItems={'center'}>
               {/* <MiniCard height={28} width={28} src='' /> */}
-              {users.map(user => (<MiniCard height={28} width={28} src={user?.imgUrl} />))}
+              {users.map((user) => (
+                <MiniCard height={28} width={28} src={user?.imgUrl} />
+              ))}
               <AddButton width={28} height={28} onClick={handleAddUserButton} />
             </Stack>
             <Stack direction='row' spacing={1} alignItems={'center'}>
