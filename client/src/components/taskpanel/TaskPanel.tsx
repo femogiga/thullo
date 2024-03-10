@@ -7,12 +7,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
   const [visibleState, setVisibleState] = useState(false);
-  // const handleDeleteRenameVisibility = () => {
-  //   setVisibleState(!visibleState);
-  // };
-  // const { taskByPanelIdData } = useTaskDataByPanelId(panelId);
 
-  //console.log(cardData)
   const style = {
     // border: '1px solid black',
     width: 'min-content',
@@ -30,22 +25,27 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
 
       {task &&
         task
-          .filter((item) => item?.panelId === panelId)
-          .map((task) => (
-            <Draggable draggableId={`draggable${task.id}`} index={index} type='TASK'>
-              {(provided) => (
+          // .filter((item) => item?.panelId === panelId)
+          .map((task, taskIndex) => (
+            <Draggable
+              key={`draggable-${task.id}`}
+              draggableId={`draggable-${task.id}`}
+              index={taskIndex}
+              type='TASK'>
+              {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}>
                   <TaskCard
-                    key={task.id}
+                    key={`tasckcard-${task.id}`}
                     title={task.title}
                     description={task?.description}
                     imageUrl={task.imageUrl}
                     labels={task.labels}
                     users={task.users}
-                  />
+                  />                 
+
                 </div>
               )}
             </Draggable>

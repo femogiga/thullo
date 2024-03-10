@@ -14,9 +14,10 @@ import { Box } from '@mui/material';
 import { useMainPageData } from './hooks/useMainPageData';
 import { useAllTaskData, useTaskCardData } from '../../../api/taskData';
 import { useCardData } from '../../../api/mainBoardPageData';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 
 const BoardPage = () => {
+  const { taskCard } = useTaskCardData();
   const [visibleState, setVisibleState] = useState({
     backlog: false,
     inProgress: false,
@@ -30,7 +31,6 @@ const BoardPage = () => {
     }));
   };
 
-  useEffect(() => {}, []);
   const pageInfoVisibility = useSelector(
     (state) => state.pageInformation.visible
   );
@@ -40,14 +40,52 @@ const BoardPage = () => {
   const { boardByIdData, panelByBoardIdData } = useMainPageData();
   console.log(panelByBoardIdData && panelByBoardIdData);
 
-  //console.log('boardByIdData', boardByIdData);
-  // const { taskByPanelIdData } = useTaskDataByPanelId(1);
-  // console.log('=====> ' + taskByPanelIdData);
-  const onDragEnd = (result) => {
-    // Logic to handle drag and drop events
-  };
-  const { taskData } = useAllTaskData();
-  const { taskCard } = useTaskCardData();
+  // const onDragEnd = (result) => {
+  //   const { destination, source, draggableId } = result
+  //   if (!destination) {
+  //     return
+  //   }
+  //   if (destination.dropabbleId=== source.dropabbleId && destination.index === source.index) {
+  //     return;
+  //   }
+
+  //   const column = panelByBoardIdData[source.droppableId]
+  //   const newTaskIds = Array.from(column.id)
+  //   console.log('draggableId', draggableId);
+  // };
+  // const [data, setPanelByBoardIdData] = useState([panelByBoardIdData]);
+  //useEffect(() => {}, [data]);
+
+  // const onDragEnd = (result) => {
+  //   const { destination, source, draggableId } = result;
+
+  //   if (
+  //     !destination ||
+  //     (destination.droppableId === source.droppableId &&
+  //       destination.index === source.index)
+  //   ) {
+  //     return;
+  //   }
+
+  //   const column = panelByBoardIdData.find(col => draggableId.contains(col.title))
+  // };
+
+  const [data, setData] = useState(panelByBoardIdData);
+ const onDragEnd = (result:DropResult) => {
+   const { destination, source, draggableId } = result;
+console.log(result)
+   // Check if there is no destination or if the card was dropped in the same position
+   if (
+     !destination ||
+     (destination.droppableId === source.droppableId &&
+       destination.index === source.index)
+   ) {
+     return;
+   }
+
+   // Find the source panel index
+
+ };
   return (
     <div style={{ minHeight: '100vh' }}>
       <Header boardName={boardByIdData && boardByIdData[0]?.name} />
@@ -69,18 +107,18 @@ const BoardPage = () => {
             {pageInfoVisibility && <BoardInformation />}
           </motion.div>
         </AnimatePresence>
-        <DragDropContext onDragEnd>
+        <DragDropContext onDragEnd ={onDragEnd}>
           {panelByBoardIdData &&
             panelByBoardIdData.map((panel, index) => {
               //const { cardData } = useCardData(panel?.id);
-
+//
               return (
                 <>
-                  <Droppable droppableId={panel.title}>
-                    {(provided) => (
+                  <Droppable droppableId={panel?.title}>
+                    {(provided, snapshot) => (
                       <div {...provided.droppableProps} ref={provided.innerRef}>
                         <TaskPanel
-                          key={`panel-${panel.id}`}
+                          key={`panel-${panel?.id}`}
                           panelId={panel?.id}
                           title={panel?.title}
                           index={index}
