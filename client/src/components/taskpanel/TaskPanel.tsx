@@ -15,7 +15,6 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
-
     rowGap: '1rem',
   };
   return (
@@ -29,7 +28,7 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
           .map((task, taskIndex) => (
             <Draggable
               key={`draggable-${task.id}`}
-              draggableId={`draggable-${task.id}`}
+              draggableId={`${"" + task.id}`}
               index={taskIndex}
               type='TASK'>
               {(provided, snapshot) => (
@@ -44,8 +43,7 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
                     imageUrl={task.imageUrl}
                     labels={task.labels}
                     users={task.users}
-                  />                 
-
+                  />
                 </div>
               )}
             </Draggable>

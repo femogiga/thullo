@@ -15,5 +15,5 @@ export const useMainPageData = () => {
 
     console.log('panelByBoardIdData', panelByBoardIdData);
 //console.log('taskByPanelIdData', taskByPanelIdData);
-    return { boardByIdData, panelByBoardIdData }
+    return { boardByIdData, panelByBoardIdData,boardId:id }
 }

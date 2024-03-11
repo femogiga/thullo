@@ -56,8 +56,6 @@ const getAllTasksWithUsersAndLabels = async (req, res) => {
   }
 };
 
-
-
 const updateTask = async (req, res) => {
   const { title, description, status, imageUrl, panelId } = req.body;
   try {
@@ -108,6 +106,35 @@ const deleteTask = async (req, res) => {
   }
 };
 
+const updateTaskPosition = async (req, res) => {
+  const { title, boardId, taskId} = req.body;
+  console.log('taskId======>', taskId);
+  console.log('title======>', title);
+  console.log('boardId======>', boardId)
+
+  try {
+    const panel = await knex
+      .from('Panel')
+      .where('title', '=', title)
+      .andWhere('boardId', '=', parseInt(boardId))
+      // .where('title', '=', 'Completed')
+      // .andWhere('boardId', '=', 1)
+      .select('*');
+    const newPanelId = parseInt(panel[0]?.id);
+    const task = await knex('Task')
+      //.where('id', '=', 2)
+      .where('id', '=', parseInt(taskId))
+      .update({ panelId: newPanelId });
+    // .update({ panelId: 2 });
+
+    console.log('panel=====>', task);
+    res.status(200).json({ task, message: 'successfully updated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   getAllTask,
   getTaskById,
@@ -116,4 +143,5 @@ module.exports = {
   updateTask,
   createTask,
   deleteTask,
+  updateTaskPosition,
 };

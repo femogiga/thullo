@@ -12,12 +12,18 @@ import TaskCard from '../../taskcard/TaskCard';
 import Visibility from '../../auxillary/Visibility';
 import { Box } from '@mui/material';
 import { useMainPageData } from './hooks/useMainPageData';
-import { useAllTaskData, useTaskCardData } from '../../../api/taskData';
+import {
+  useAllTaskData,
+  useTaskCardData,
+  useTaskCardMutation,
+} from '../../../api/taskData';
 import { useCardData } from '../../../api/mainBoardPageData';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
+import { useParams } from 'react-router-dom';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
+  const { id } = useParams();
   const [visibleState, setVisibleState] = useState({
     backlog: false,
     inProgress: false,
@@ -31,6 +37,8 @@ const BoardPage = () => {
     }));
   };
 
+  useEffect(() => {}, []);
+
   const pageInfoVisibility = useSelector(
     (state) => state.pageInformation.visible
   );
@@ -39,6 +47,7 @@ const BoardPage = () => {
   // const { boardByIdData } = useBoardDataId(parseInt(id));
   const { boardByIdData, panelByBoardIdData } = useMainPageData();
   console.log(panelByBoardIdData && panelByBoardIdData);
+  const { isSuccess, error, mutate } = useTaskCardMutation();
 
   // const onDragEnd = (result) => {
   //   const { destination, source, draggableId } = result
@@ -70,22 +79,35 @@ const BoardPage = () => {
   //   const column = panelByBoardIdData.find(col => draggableId.contains(col.title))
   // };
 
-  const [data, setData] = useState(panelByBoardIdData);
- const onDragEnd = (result:DropResult) => {
-   const { destination, source, draggableId } = result;
-console.log(result)
-   // Check if there is no destination or if the card was dropped in the same position
-   if (
-     !destination ||
-     (destination.droppableId === source.droppableId &&
-       destination.index === source.index)
-   ) {
-     return;
-   }
-
-   // Find the source panel index
-
- };
+  //const [data, setData] = useState(panelByBoardIdData);
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+    console.log(result);
+    // Check if there is no destination or if the card was dropped in the same position
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+    const destTextArray = destination.droppableId.split('-');
+    const title = destTextArray[0];
+    console.log(title);
+    //console.log('destArray===>', destArray);
+    console.log('boardId===>', id);
+    //const destinationId =
+    // const idArray = draggableId.split('-');
+    //console.log('idArray', idArray);
+    // const id = idArray[1];
+    console.log(draggableId);
+    const boardId = id;
+    const taskId = draggableId;
+    if (title && taskId && boardId) {
+      const dataToSend = { title, boardId: id, taskId };
+      mutate(dataToSend);
+    }
+  };
   return (
     <div style={{ minHeight: '100vh' }}>
       <Header boardName={boardByIdData && boardByIdData[0]?.name} />
@@ -107,11 +129,11 @@ console.log(result)
             {pageInfoVisibility && <BoardInformation />}
           </motion.div>
         </AnimatePresence>
-        <DragDropContext onDragEnd ={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd}>
           {panelByBoardIdData &&
             panelByBoardIdData.map((panel, index) => {
               //const { cardData } = useCardData(panel?.id);
-//
+              //
               return (
                 <>
                   <Droppable droppableId={panel?.title}>

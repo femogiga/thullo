@@ -7,7 +7,7 @@ import {
 import apiService from '../utility/apiService';
 
 export const useAllTaskData = () => {
-    const { isPending, error, data:taskData } = useQuery({
+    const { isPending, error, data: taskData } = useQuery({
         queryKey: ['allTask'],
         queryFn: () => apiService.get('/tasks').then((res) => res.data),
     });
@@ -27,10 +27,10 @@ export const useTaskDataId = (id) => {
 };
 
 
-export const useTaskDataByPanelId = (panelId:number) => {
+export const useTaskDataByPanelId = (panelId: number) => {
     const { isPending, error, data: taskByPanelIdData } = useQuery({
         queryKey: ['tasksPanelIddata'],
-        queryFn:async () =>
+        queryFn: async () =>
             await apiService
                 .get(`/tasks/${panelId}`)
                 .then((res) => res.data),
@@ -46,4 +46,23 @@ export const useTaskCardData = () => {
                 .then((res) => res.data),
     });
     return { isPending, error, taskCard };
+};
+
+
+export const useTaskCardMutation = () => {
+    const { isSuccess, error, mutate } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.put('/tasks/cardposition', data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            const queryClient = new QueryClient()
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+
+        }
+
+
+    });
+    return { isSuccess, error, mutate };
 };
