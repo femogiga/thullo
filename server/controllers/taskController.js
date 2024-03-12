@@ -107,10 +107,10 @@ const deleteTask = async (req, res) => {
 };
 
 const updateTaskPosition = async (req, res) => {
-  const { title, boardId, taskId} = req.body;
+  const { title, boardId, taskId } = req.body;
   console.log('taskId======>', taskId);
   console.log('title======>', title);
-  console.log('boardId======>', boardId)
+  console.log('boardId======>', boardId);
 
   try {
     const panel = await knex

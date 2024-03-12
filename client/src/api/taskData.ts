@@ -50,7 +50,7 @@ export const useTaskCardData = () => {
 
 
 export const useTaskCardMutation = () => {
-    const { isSuccess, error, mutate } = useMutation({
+    const { isSuccess, error, mutateAsync } = useMutation({
         mutationFn: async (data) => {
             const response = await apiService.put('/tasks/cardposition', data);
             return response.data;
@@ -64,5 +64,5 @@ export const useTaskCardMutation = () => {
 
 
     });
-    return { isSuccess, error, mutate };
+    return { isSuccess, error, mutateAsync };
 };

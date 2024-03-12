@@ -23,7 +23,10 @@ import { useParams } from 'react-router-dom';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
-  const { id } = useParams();
+  const [title, setTitle] = useState('');
+  //const { id } = useParams();
+  const params = useParams();
+  const id = params.id;
   const [visibleState, setVisibleState] = useState({
     backlog: false,
     inProgress: false,
@@ -37,7 +40,7 @@ const BoardPage = () => {
     }));
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [params]);
 
   const pageInfoVisibility = useSelector(
     (state) => state.pageInformation.visible
@@ -47,7 +50,7 @@ const BoardPage = () => {
   // const { boardByIdData } = useBoardDataId(parseInt(id));
   const { boardByIdData, panelByBoardIdData } = useMainPageData();
   console.log(panelByBoardIdData && panelByBoardIdData);
-  const { isSuccess, error, mutate } = useTaskCardMutation();
+  const { isSuccess, error, mutateAsync } = useTaskCardMutation();
 
   // const onDragEnd = (result) => {
   //   const { destination, source, draggableId } = result
@@ -92,7 +95,8 @@ const BoardPage = () => {
       return;
     }
     const destTextArray = destination.droppableId.split('-');
-    const title = destTextArray[0];
+    //const title = destTextArray[0];
+    setTitle(destTextArray[0]);
     console.log(title);
     //console.log('destArray===>', destArray);
     console.log('boardId===>', id);
@@ -101,12 +105,14 @@ const BoardPage = () => {
     //console.log('idArray', idArray);
     // const id = idArray[1];
     console.log(draggableId);
-    const boardId = id;
-    const taskId = draggableId;
-    if (title && taskId && boardId) {
-      const dataToSend = { title, boardId: id, taskId };
-      mutate(dataToSend);
-    }
+    //const boardId = id;
+    const taskId = parseInt(draggableId);
+
+    //
+    // if (title && taskId && boardId) {
+    const dataToSend = { title: title, boardId: id, taskId: taskId };
+    mutateAsync(dataToSend);
+    // }
   };
   return (
     <div style={{ minHeight: '100vh' }}>

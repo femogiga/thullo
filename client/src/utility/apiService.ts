@@ -55,13 +55,24 @@ const getById = (url: string, id:number) => {
     });
 };
 
+// const put = (url: string, data) => {
+//     const token = localStorage.getItem('token');
+//     return axios.put(`${baseUrl}${url}`, data, {
+//         headers: {
+//             // 'Content-Type': 'application/json',
+//             Authorization: `Bearer ${token}`,
+//             'Content-Type': 'multipart/form-data',
+//         },
+//     });
+// };
+
 const put = (url: string, data) => {
     const token = localStorage.getItem('token');
     return axios.put(`${baseUrl}${url}`, data, {
         headers: {
             // 'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data',
+
         },
     });
 };
