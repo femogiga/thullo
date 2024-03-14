@@ -21,12 +21,12 @@ import { useCardData } from '../../../api/mainBoardPageData';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 
-const BoardPage = () => {
+const BoardPageTwo = () => {
   const { taskCard } = useTaskCardData();
   const [title, setTitle] = useState('');
   //const { id } = useParams();
   const params = useParams();
-  const id = params.id;
+  //const id = params.id;
   const [visibleState, setVisibleState] = useState({
     backlog: false,
     inProgress: false,
@@ -46,43 +46,19 @@ const BoardPage = () => {
     (state) => state.pageInformation.visible
   );
   const visibleModalState = useSelector((state) => state.visibility.visible);
-  // const { id } = useParams();
+  const { id } = useParams();
   // const { boardByIdData } = useBoardDataId(parseInt(id));
   const { boardByIdData, panelByBoardIdData } = useMainPageData();
   console.log(panelByBoardIdData && panelByBoardIdData);
   const { isSuccess, error, mutateAsync } = useTaskCardMutation();
 
-  // const onDragEnd = (result) => {
-  //   const { destination, source, draggableId } = result
-  //   if (!destination) {
-  //     return
-  //   }
-  //   if (destination.dropabbleId=== source.dropabbleId && destination.index === source.index) {
-  //     return;
-  //   }
-
-  //   const column = panelByBoardIdData[source.droppableId]
-  //   const newTaskIds = Array.from(column.id)
-  //   console.log('draggableId', draggableId);
-  // };
-  // const [data, setPanelByBoardIdData] = useState([panelByBoardIdData]);
-  //useEffect(() => {}, [data]);
-
-  // const onDragEnd = (result) => {
-  //   const { destination, source, draggableId } = result;
-
-  //   if (
-  //     !destination ||
-  //     (destination.droppableId === source.droppableId &&
-  //       destination.index === source.index)
-  //   ) {
-  //     return;
-  //   }
-
-  //   const column = panelByBoardIdData.find(col => draggableId.contains(col.title))
-  // };
-
-  //const [data, setData] = useState(panelByBoardIdData);
+  const [cardData, setCardData] = useState();
+  useEffect(() => {
+    fetch(`http://localhost:7000/mainboard/board/${id}`)
+      .then((response) => response.json())
+      .then((response) => setCardData(response))
+      .catch((error) => console.error(error));
+  }, [id]);
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
     console.log(result);
@@ -108,12 +84,14 @@ const BoardPage = () => {
     //const boardId = id;
     const taskId = parseInt(draggableId);
 
-    //
     // if (title && taskId && boardId) {
     const dataToSend = { title: title, boardId: id, taskId: taskId };
     mutateAsync(dataToSend);
     // }
   };
+
+  console.log('cardData====>', cardData);
+  const panels = cardData?.panels;
   return (
     <div style={{ minHeight: '100vh' }}>
       <Header boardName={boardByIdData && boardByIdData[0]?.name} />
@@ -136,8 +114,8 @@ const BoardPage = () => {
           </motion.div>
         </AnimatePresence>
         <DragDropContext onDragEnd={onDragEnd}>
-          {panelByBoardIdData &&
-            panelByBoardIdData.map((panel, index) => {
+          {panels &&
+            panels?.map((panel, index) => {
               //const { cardData } = useCardData(panel?.id);
               //
               return (
@@ -158,9 +136,7 @@ const BoardPage = () => {
                           title={panel?.title}
                           index={index}
                           panel={panel}
-                          task={taskCard?.filter(
-                            (item) => item?.panelId === panel?.id
-                          )}
+                          task={panel?.tasks}
                           onClick={() =>
                             handleDeleteRenameVisibility('backlog')
                           }
@@ -280,4 +256,4 @@ const BoardPage = () => {
   );
 };
 
-export default BoardPage;
+export default BoardPageTwo;

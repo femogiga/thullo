@@ -8,6 +8,7 @@ import { store } from './store';
 import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
 import AllBoardPage from './components/pages/allboard/AllBoardPage.tsx';
 import BoardPage from './components/pages/mainboard/BoardPage.tsx';
+import BoardPageTwo from './components/pages/mainboard/BoardPageTwo.tsx';
 const queryClient = new QueryClient();
 
 const Root = () => {

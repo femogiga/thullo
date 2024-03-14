@@ -9,9 +9,39 @@ import IconButton from '@mui/material/IconButton';
 import NameAvatar from '../auxillary/NameAvatar';
 import { usePageInformation } from './hook';
 import { useSelector } from 'react-redux';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useState } from 'react';
+import {
+  setDescriptionTextVisible,
+  setEditOpen,
+} from '../../features/visibilitySlice';
+import { useDispatch } from 'react-redux';
+import { useBoardDataId } from '../../api/boardData';
+import { useParams } from 'react-router-dom';
+import DescriptionText from './DescriptionText';
+import AddButton from '../auxillary/AddButton';
+import ActionButton from '../auxillary/ActionButton';
+import CrudButton from '../auxillary/CrudButton';
 const BoardInformation = () => {
-  const { handleShowMenuClose } = usePageInformation();
+  const { handleShowMenuClose } = usePageInformation('');
+  const { id } = useParams();
+  const { boardByIdData } = useBoardDataId(id);
+  console.log('boardByIdData', boardByIdData);
+  const [value, setValue] = useState();
+  const dispatch = useDispatch();
+  const editOpen = useSelector((state) => state.visibility.editOpen);
+  const descriptionTextVisible = useSelector(
+    (state) => state.visibility.descriptionTextVisible
+  );
 
+  const handleEditOpen = (e) => {
+    e.preventDefault();
+    setValue(boardByIdData[0]?.description);
+    dispatch(setEditOpen(true));
+    dispatch(setDescriptionTextVisible(false));
+  };
+  console.log('descriptionTextVisible', descriptionTextVisible);
   return (
     <article
       className='boardInformation'
@@ -62,6 +92,7 @@ const BoardInformation = () => {
           <Typography sx={{ fontSize: '10px' }}>Description</Typography>
         </Stack>
         <Button
+          onClick={handleEditOpen}
           sx={{
             textTransform: 'capitalize',
             width: '62px',
@@ -77,8 +108,8 @@ const BoardInformation = () => {
           <Typography sx={{ fontSize: '10px' }}>Edit</Typography>
         </Button>
       </Stack>
-      <div style={{ fontSize: '14px', fontWeight: '400', color: 'black' }}>
-        <p>Simple board to start on a board</p>
+      <div style={{ fontSize: '14px', fontWeight: '400', color: 'black',marginBlockEnd:'1rem' }}>
+        {/* <p>Simple board to start on a board</p>
         <p className='flow-1'>
           <span style={{ fontWeight: '600' }}>* Backlog </span>:Lorem ipsum
           dolor sit amet consectetur, adipisicing elit. Illo, molestias
@@ -104,9 +135,28 @@ const BoardInformation = () => {
         <p className='flow-1'>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
           maiores doloribus nemo velit consequatur perspiciatis
-        </p>
+        </p> */}
+        {descriptionTextVisible && (
+          <DescriptionText description={boardByIdData[0]?.description} />
+        )}
+        {editOpen && (
+          <ReactQuill theme='snow' value={value} onChange={setValue} />
+        )}
       </div>
 
+      {editOpen && (<Stack direction={'row'} columnGap={'1rem'} sx={{ marginBlockEnd: '1rem' }}>
+        <CrudButton
+          icon={''}
+          text={'Save'}
+          colours={{ bg: '#219653', color: 'white' }}
+        />
+        <CrudButton
+          icon={''}
+          text={'Cancel'}
+          colours={{ bg: '', color: '#828282' }}
+        />
+      </Stack>)
+      }
       <Stack direction='row' alignItems='center' justifyContent='' gap='.3rem'>
         <FeedIcon sx={{ fontSize: '10px' }} />
         <Typography sx={{ fontSize: '10px' }}>Team</Typography>

@@ -45,7 +45,7 @@ export const usePanelDataByBoardId = (boardId) => {
 // useAllPanelData.js
 
 export const useAllPanelDatatwo = (id) => { // Modify the hook to accept an id parameter
-    const{id:boardId} = useParams()
+    const { id: boardId } = useParams()
     const { data: panelIds } = useQuery({
         queryKey: ['allPanel'],
         queryFn: () => apiService.get('/panels').then((res) => res.data),

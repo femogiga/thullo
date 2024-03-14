@@ -1,4 +1,6 @@
 const { knex } = require('../Knex.js');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const getMainBoardPanels = async (req, res, next) => {
   try {
@@ -38,4 +40,30 @@ const getTasksByPanelId = async (req, res, next) => {
   }
 };
 
-module.exports = { getMainBoardPanels, getTasksByPanelId };
+const getCardPrisma = async (req, res, next) => {
+  try {
+    const result = await prisma.board.findUnique({
+      where: {
+        id: parseInt(req.params.id),
+      },
+      include: {
+        panels: {
+          include: {
+            tasks: {
+              include: {
+                users: true,
+                labels: true, // Include the labels associated with each task
+              },
+            },
+          },
+        },
+      },
+    });
+    console.log(result);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getMainBoardPanels, getTasksByPanelId, getCardPrisma };

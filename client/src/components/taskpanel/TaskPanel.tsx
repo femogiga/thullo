@@ -10,12 +10,18 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
 
   const style = {
     // border: '1px solid black',
-    width: 'min-content',
+
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
     rowGap: '1rem',
+    padding: '1rem',
+    width: '280px',
+
+
+    //gap: '1rem',
+    //border:'1px solid black'
   };
   return (
     <div style={style}>
@@ -28,12 +34,13 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
           .map((task, taskIndex) => (
             <Draggable
               key={`draggable-${task.id}`}
-              draggableId={`${"" + task.id}`}
+              draggableId={`${'' + task.id}`}
               index={taskIndex}
               type='TASK'>
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
+
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}>
                   <TaskCard
@@ -41,7 +48,7 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
                     title={task.title}
                     description={task?.description}
                     imageUrl={task.imageUrl}
-                    labels={task.labels}
+                    labels={task?.labels}
                     users={task.users}
                   />
                 </div>

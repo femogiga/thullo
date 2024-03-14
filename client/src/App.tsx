@@ -13,15 +13,16 @@ import CardInformation from './components/cardinformation/CardInformation';
 import AllBoard from './components/allboard/AllBoard';
 import AllBoardPage from './components/pages/allboard/AllBoardPage';
 import BoardPage from './components/pages/mainboard/BoardPage';
+import BoardPageTwo from './components/pages/mainboard/BoardPageTwo';
 
 const App: React.FC = () => {
   return (
     <div className='container'>
-      {/* <CardInformation/>  */}
+      {/* <CardInformation/> */}
       {/* <AllBoard/> */}
       {/* <AllBoardPage/> */}
-      <BoardPage/>
-
+      {/* <BoardPage /> */}
+      <BoardInformation/>
     </div>
   );
 };
