@@ -16,12 +16,12 @@ export const useAllUserData = () => {
 
 
 export const useUserDataById = (id) => {
-    const { isPending, error, data } = useQuery({
+    const { isPending, error, data: userByIdData } = useQuery({
         queryKey: ['usersById'],
         queryFn: () =>
             apiService
                 .get(`/users/${id}`)
                 .then((res) => res.data),
     });
-    return { isPending, error, data };
+    return { isPending, error, userByIdData };
 };

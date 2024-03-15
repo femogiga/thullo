@@ -9,38 +9,114 @@ import IconButton from '@mui/material/IconButton';
 import NameAvatar from '../auxillary/NameAvatar';
 import { usePageInformation } from './hook';
 import { useSelector } from 'react-redux';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useState } from 'react';
+import quillEmoji from 'quill-emoji';
+import { useEffect, useState } from 'react';
 import {
   setDescriptionTextVisible,
   setEditOpen,
 } from '../../features/visibilitySlice';
 import { useDispatch } from 'react-redux';
-import { useBoardDataId } from '../../api/boardData';
+import { useBoardDataId, useBoardUpdateMutation } from '../../api/boardData';
 import { useParams } from 'react-router-dom';
 import DescriptionText from './DescriptionText';
 import AddButton from '../auxillary/AddButton';
 import ActionButton from '../auxillary/ActionButton';
 import CrudButton from '../auxillary/CrudButton';
+import { QueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
+import { useUserDataById } from '../../api/userData';
+
 const BoardInformation = () => {
-  const { handleShowMenuClose } = usePageInformation('');
+  const queryClient = useQueryClient();
+  const { handleShowMenuClose } = usePageInformation();
   const { id } = useParams();
   const { boardByIdData } = useBoardDataId(id);
-  console.log('boardByIdData', boardByIdData);
-  const [value, setValue] = useState();
+  console.log(boardByIdData);
+  const { mutateAsync } = useBoardUpdateMutation();
+  const adminId = boardByIdData[0]?.adminId;
+  console.log(adminId);
+  const { userByIdData } = useUserDataById(adminId);
+  console.log('adminUser', userByIdData);
+  //console.log('boardByIdData', boardByIdData);
+  //const fullName = userByIdData[0]?.firstname + ' ' + userByIdData[0]?.lastname//
+  const [value, setValue] = useState('');
+  const [description, setDescription] = useState(boardByIdData[0]?.description);
+  ////
   const dispatch = useDispatch();
   const editOpen = useSelector((state) => state.visibility.editOpen);
   const descriptionTextVisible = useSelector(
     (state) => state.visibility.descriptionTextVisible
   );
+  useEffect(() => {}, [value, description]);
+  const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
+  Quill.register(
+    {
+      'formats/emoji': EmojiBlot,
+      'modules/emoji-shortname': ShortNameEmoji,
+      'modules/emoji-toolbar': ToolbarEmoji,
+      'modules/emoji-textarea': TextAreaEmoji,
+    },
+    true
+  );
 
+  const quillModules = {
+    'emoji-toolbar': true,
+    'emoji-textarea': true,
+    'emoji-shortname': true,
+    location: 0,
+    toolbar: [
+      [
+        { header: [1, 2, 3, 4, 5, 6, false] },
+
+        { size: ['small', false, 'large', 'huge'] },
+      ],
+      ['emoji'],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote', 'color'],
+
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+        { font: [] },
+      ],
+      ['link'],
+
+      [{ color: [] }, { background: [] }],
+
+      ['clean'],
+    ],
+    // 'emoji-toolbar': true,
+    // 'emoji-textarea': true,
+    // 'emoji-shortname': true,
+  };
+
+  const handleSave = () => {
+    // const queryClient = new QueryClient();
+
+    const data = { ...boardByIdData[0], description: value };
+    console.log('data====>', data);
+    mutateAsync(data);
+    setDescription(value);
+    // queryClient.invalidateQueries({ queryKey: 'boardDataById' });
+    dispatch(setEditOpen(false));
+    dispatch(setDescriptionTextVisible(true));
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    dispatch(setEditOpen(false));
+    dispatch(setDescriptionTextVisible(true));
+  };
   const handleEditOpen = (e) => {
     e.preventDefault();
     setValue(boardByIdData[0]?.description);
     dispatch(setEditOpen(true));
     dispatch(setDescriptionTextVisible(false));
   };
+  console.log(value);
   console.log('descriptionTextVisible', descriptionTextVisible);
   return (
     <article
@@ -108,7 +184,13 @@ const BoardInformation = () => {
           <Typography sx={{ fontSize: '10px' }}>Edit</Typography>
         </Button>
       </Stack>
-      <div style={{ fontSize: '14px', fontWeight: '400', color: 'black',marginBlockEnd:'1rem' }}>
+      <div
+        style={{
+          fontSize: '14px',
+          fontWeight: '400',
+          color: 'black',
+          marginBlockEnd: '1rem',
+        }}>
         {/* <p>Simple board to start on a board</p>
         <p className='flow-1'>
           <span style={{ fontWeight: '600' }}>* Backlog </span>:Lorem ipsum
@@ -137,26 +219,37 @@ const BoardInformation = () => {
           maiores doloribus nemo velit consequatur perspiciatis
         </p> */}
         {descriptionTextVisible && (
-          <DescriptionText description={boardByIdData[0]?.description} />
+          <DescriptionText description={description} />
         )}
         {editOpen && (
-          <ReactQuill theme='snow' value={value} onChange={setValue} />
+          <ReactQuill
+            theme='snow'
+            value={value}
+            onChange={setValue}
+            modules={quillModules}
+          />
         )}
       </div>
 
-      {editOpen && (<Stack direction={'row'} columnGap={'1rem'} sx={{ marginBlockEnd: '1rem' }}>
-        <CrudButton
-          icon={''}
-          text={'Save'}
-          colours={{ bg: '#219653', color: 'white' }}
-        />
-        <CrudButton
-          icon={''}
-          text={'Cancel'}
-          colours={{ bg: '', color: '#828282' }}
-        />
-      </Stack>)
-      }
+      {editOpen && (
+        <Stack
+          direction={'row'}
+          columnGap={'1rem'}
+          sx={{ marginBlockEnd: '1rem' }}>
+          <CrudButton
+            icon={''}
+            text={'Save'}
+            colours={{ bg: '#219653', color: 'white' }}
+            onClick={handleSave}
+          />
+          <CrudButton
+            icon={''}
+            text={'Cancel'}
+            colours={{ bg: '', color: '#828282' }}
+            onClick={handleCancel}
+          />
+        </Stack>
+      )}
       <Stack direction='row' alignItems='center' justifyContent='' gap='.3rem'>
         <FeedIcon sx={{ fontSize: '10px' }} />
         <Typography sx={{ fontSize: '10px' }}>Team</Typography>
@@ -191,7 +284,12 @@ const BoardInformation = () => {
         </div>
       </Stack> */}
 
-      <NameAvatar src={''} text='Admin' variant='withLabel' />
+      <NameAvatar
+        fullName={'fullName'}
+        src={userByIdData && userByIdData[0]?.imgUrl}
+        text='Admin'
+        variant='withLabel'
+      />
       <NameAvatar src={''} text='Delete' variant='withLabel' />
       <NameAvatar src={''} text='Delete' variant='withLabel' />
     </article>

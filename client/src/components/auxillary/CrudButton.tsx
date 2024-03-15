@@ -8,7 +8,7 @@ interface CrudButtonProps {
   colours: { bg: string; color: string };
 }
 
-const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours }) => {
+const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours ,onClick}) => {
   // colours = {
   //   bg: 'blue',
   //   color:'white'
@@ -17,6 +17,7 @@ const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours }) => {
     <div>
       <Stack direction='row' spacing='1rem'>
         <Button
+          onClick={onClick}
           sx={{
             textTransform: 'capitalize',
             width: '62px',

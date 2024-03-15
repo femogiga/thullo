@@ -10,7 +10,7 @@ const NameAvatar = ({ src, text, variant,fullName }) => {
   return (
     <Stack direction='row' alignItems='center' justifyContent='space-between'>
       <Stack direction='row' alignItems='center' columnGap='1rem'>
-        <MiniCard height={28} width={28} src='' />
+        <MiniCard height={28} width={28} src={src} />
 
         <div>
           <p style={{ fontSize: '12px', color: 'black', fontWeight: '600' }}>

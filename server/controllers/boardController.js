@@ -22,27 +22,30 @@ const getBoardById = async (req, res) => {
 };
 
 const updateBoard = async (req, res) => {
-  const { name, adminId } = req.body;
+  const { name, adminId,description } = req.body;
   try {
     const result = await knex('Board')
       .where('id', '=', parseInt(req.params.id))
       .update({
         name: name,
         adminId: parseInt(adminId),
+        description: description,
       });
 
-    res.status(200).json({ result, message: 'successfully updated' });
+    res.status(200).json({ result });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };
 
 const createBoard = async (req, res) => {
-  const { name, adminId } = req.body;
+  const { name, adminId,description } = req.body;
   try {
     const result = await knex('Board').insert({
       name: name,
       adminId: parseInt(adminId),
+
     });
 
     res.status(201).json({ result, message: 'successfully created' });

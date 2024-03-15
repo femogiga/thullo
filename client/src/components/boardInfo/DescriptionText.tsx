@@ -1,10 +1,12 @@
 import { Box, Button } from '@mui/material';
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 const DescriptionText: React.FC = ({ description }) => {
-
+  useEffect(() => {}, [description]);
   return (
-    <Box dangerouslySetInnerHTML={{ __html: description }} sx={{marginBlockEnd:'1rem'}}>
+    <Box
+      dangerouslySetInnerHTML={{ __html: description }}
+      sx={{ marginBlockEnd: '1rem' }}>
       {/* <p>Simple board to start on a board</p>
       <p className='flow-1'>
         <span style={{ fontWeight: '600' }}>* Backlog </span>:Lorem ipsum dolor
@@ -30,9 +32,8 @@ const DescriptionText: React.FC = ({ description }) => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia maiores
         doloribus nemo velit consequatur perspiciatis
       </p> */}
-
     </Box>
   );
-}
+};
 
 export default DescriptionText

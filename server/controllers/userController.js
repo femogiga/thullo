@@ -17,7 +17,7 @@ const getUserById = async (req, res) => {
       .from('User')
       .where('id', '=', parseInt(req.params.id))
       .select('id', 'firstname', 'lastname', 'email', 'imgUrl');
-
+    console.log(result);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
