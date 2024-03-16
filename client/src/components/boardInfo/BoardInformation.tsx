@@ -25,7 +25,13 @@ import AddButton from '../auxillary/AddButton';
 import ActionButton from '../auxillary/ActionButton';
 import CrudButton from '../auxillary/CrudButton';
 import { useQueryClient } from '@tanstack/react-query';
-import { useAllUserData, useGetAdmin, useUserDataById } from '../../api/userData';
+import {
+  useAllUserData,
+  useGetAdmin,
+  useGetBoardUsers,
+  useUserDataById,
+} from '../../api/userData';
+import { genFullname } from '../../utility/fullName';
 
 const BoardInformation = () => {
   const queryClient = useQueryClient();
@@ -33,17 +39,17 @@ const BoardInformation = () => {
   const { id } = useParams();
   const { boardByIdData } = useBoardDataId(id);
   console.log(boardByIdData);
-
-
+  const { boardUsersData } = useGetBoardUsers(1);
+  console.log(boardUsersData);
   const { allUsersData } = useAllUserData();
   const { userByIdData } = useUserDataById(3);
   const { adminUserData } = useGetAdmin(id);
-  const adminUser = adminUserData && adminUserData[0]
-  const fullName=  adminUser.firstname + " " + adminUser.lastname
+  const adminUser = adminUserData && adminUserData[0];
+  const fullName = adminUser?.firstname + ' ' + adminUser?.lastname;
   console.table(allUsersData);
   //
   console.log('userByIdData', adminUser);
-//
+  //
   const { mutateAsync } = useBoardUpdateMutation();
   //console.log('boardByIdData', boardByIdData);
   //const fullName = userByIdData[0]?.firstname + ' ' + userByIdData[0]?.lastname//
@@ -291,13 +297,21 @@ const BoardInformation = () => {
       </Stack> */}
 
       <NameAvatar
-        fullName={fullName}
+        fullName={genFullname(adminUser?.firstname, adminUser?.lastname)}
         src={adminUser?.imgUrl}
         text='Admin'
         variant='withLabel'
       />
-      <NameAvatar src={''} text='Delete' variant='withLabel' />
-      <NameAvatar src={''} text='Delete' variant='withLabel' />
+      {boardUsersData &&
+        boardUsersData.map((user) => (
+          <NameAvatar
+            id={`avater-${user?.id}`}
+            src={user?.imgUrl}
+            text='Delete'
+            variant='withLabel'
+            fullName={genFullname(user?.firstname, user?.lastname)}
+          />
+        ))}
     </article>
   );
 };

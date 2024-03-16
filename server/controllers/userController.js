@@ -25,6 +25,27 @@ const getUserById = async (req, res) => {
   }
 };
 
+const getUserByBoardId = async (req, res) => {
+  //console.log('id====>', req.params.id);
+  try {
+    const result = await knex
+      .from('Panel')
+      .where('boardId', '=', parseInt(req.params.boardId))
+      .rightJoin('Task', 'Task.panelId', '=', 'Panel.id')
+      .innerJoin('UsersOnTasks', 'UsersOnTasks.taskId', '=', 'Task.id')
+      .innerJoin('User', 'UsersOnTasks.authorId', '=', 'User.id')
+      .select('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.imgUrl')
+      .distinct();
+    //.select('id', 'firstname', 'lastname', 'email', 'imgUrl');
+
+    console.log(result);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
+
 const updateUser = async (req, res) => {
   const { id, firstname, lastname, email, imgUrl, password } = req.body;
   try {
@@ -78,4 +99,5 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
+  getUserByBoardId,
 };

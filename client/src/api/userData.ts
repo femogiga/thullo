@@ -7,6 +7,8 @@ import {
 import apiService from '../utility/apiService';
 import { getAllUsers, getUserById } from './functions/request';
 import { useBoardDataId } from './boardData';
+import { useMainPageData } from '../components/pages/mainboard/hooks/useMainPageData';
+import { useTaskDataByPanelId } from './taskData';
 
 export const useAllUserData = () => {
     const { isPending, error, data:allUserData } = useQuery({
@@ -47,6 +49,21 @@ export const useGetAdmin = (boardId) => {
     })
     return {status,fetchStatus,adminUserData}
 }
+
+
+export const useGetBoardUsers = (id) => {
+    const { isPending, error, data: boardUsersData } = useQuery({
+        queryKey: ['boardUsers'],
+        queryFn: () =>
+            apiService
+                .get(`/users/boardusers/${id}`)
+                .then((res) => res.data),
+    });
+
+    return { isPending, error, boardUsersData }
+}
+
+
 
 // export const useAllUserData = () => {
 //     const { isPending, error, data: allUsersData } = useQuery({
