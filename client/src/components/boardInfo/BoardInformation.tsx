@@ -24,9 +24,8 @@ import DescriptionText from './DescriptionText';
 import AddButton from '../auxillary/AddButton';
 import ActionButton from '../auxillary/ActionButton';
 import CrudButton from '../auxillary/CrudButton';
-import { QueryClient } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUserDataById } from '../../api/userData';
+import { useAllUserData, useGetAdmin, useUserDataById } from '../../api/userData';
 
 const BoardInformation = () => {
   const queryClient = useQueryClient();
@@ -34,11 +33,18 @@ const BoardInformation = () => {
   const { id } = useParams();
   const { boardByIdData } = useBoardDataId(id);
   console.log(boardByIdData);
+
+
+  const { allUsersData } = useAllUserData();
+  const { userByIdData } = useUserDataById(3);
+  const { adminUserData } = useGetAdmin(id);
+  const adminUser = adminUserData && adminUserData[0]
+  const fullName=  adminUser.firstname + " " + adminUser.lastname
+  console.table(allUsersData);
+  //
+  console.log('userByIdData', adminUser);
+//
   const { mutateAsync } = useBoardUpdateMutation();
-  const adminId = boardByIdData[0]?.adminId;
-  console.log(adminId);
-  const { userByIdData } = useUserDataById(adminId);
-  console.log('adminUser', userByIdData);
   //console.log('boardByIdData', boardByIdData);
   //const fullName = userByIdData[0]?.firstname + ' ' + userByIdData[0]?.lastname//
   const [value, setValue] = useState('');
@@ -149,11 +155,11 @@ const BoardInformation = () => {
         <PersonPinIcon sx={{ fontSize: '10px' }} /> <span>Made by</span>
       </Stack>
       <Stack direction='row' alignItems='center' columnGap='1rem'>
-        <MiniCard height={28} width={28} src='' />
+        <MiniCard height={28} width={28} src={adminUser && adminUser?.imgUrl} />
 
         <div>
           <p style={{ fontSize: '12px', color: 'black', fontWeight: '600' }}>
-            Daniel Jensen
+            {fullName || 'Daniel Jensen'}
           </p>
           <p style={{ fontSize: '10px' }}>on 4 July,2020</p>
         </div>
@@ -285,8 +291,8 @@ const BoardInformation = () => {
       </Stack> */}
 
       <NameAvatar
-        fullName={'fullName'}
-        src={userByIdData && userByIdData[0]?.imgUrl}
+        fullName={fullName}
+        src={adminUser?.imgUrl}
         text='Admin'
         variant='withLabel'
       />

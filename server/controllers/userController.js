@@ -12,6 +12,7 @@ const getAllUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
+  //console.log('id====>', req.params.id);
   try {
     const result = await knex
       .from('User')
