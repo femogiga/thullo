@@ -27,6 +27,7 @@ import CrudButton from '../auxillary/CrudButton';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   useAllUserData,
+  useDeleteBoardUserMutation,
   useGetAdmin,
   useGetBoardUsers,
   useUserDataById,
@@ -36,6 +37,9 @@ import { genFullname } from '../../utility/fullName';
 const BoardInformation = () => {
   const queryClient = useQueryClient();
   const { handleShowMenuClose } = usePageInformation();
+  const { deleteMutate } = useDeleteBoardUserMutation();
+  const params = useParams();
+
   const { id } = useParams();
   const { boardByIdData } = useBoardDataId(id);
   console.log(boardByIdData);
@@ -116,7 +120,14 @@ const BoardInformation = () => {
     dispatch(setEditOpen(false));
     dispatch(setDescriptionTextVisible(true));
   };
+  const handleDeleteUser = (e, authorId) => {
+    e.preventDefault();
+    const boardId = parseInt(params?.id);
+    const data ={authorId,boardId}
+    deleteMutate(data);
+    queryClient.invalidateQueries({ queryKey: ['boardUsers'] });
 
+  };
   const handleCancel = (e) => {
     e.preventDefault();
     dispatch(setEditOpen(false));
@@ -305,8 +316,10 @@ const BoardInformation = () => {
       {boardUsersData &&
         boardUsersData.map((user) => (
           <NameAvatar
-            id={`avater-${user?.id}`}
+            id={`avatar-${user?.id}`}
+            userOnTaskId={user?.id}
             src={user?.imgUrl}
+            onClick={(e)=> handleDeleteUser(e, user?.id)}
             text='Delete'
             variant='withLabel'
             fullName={genFullname(user?.firstname, user?.lastname)}
