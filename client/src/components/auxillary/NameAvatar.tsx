@@ -2,7 +2,14 @@ import { Button, Stack, Typography } from '@mui/material';
 import MiniCard from '../minicard/MiniCard';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-const NameAvatar = ({ src, text, variant,fullName }) => {
+const NameAvatar = ({
+  src,
+  text,
+  variant,
+  fullName,
+  userOnTaskId,
+  onClick,
+}) => {
   const borderStyle =
     text === 'Admin'
       ? { color: '#BDBDBD ', border: '0px solid #BDBDBD ' }
@@ -21,6 +28,7 @@ const NameAvatar = ({ src, text, variant,fullName }) => {
       <Stack direction='row' alignItems='flex-end' gap='.3rem'>
         {variant == 'withLabel' ? (
           <Button
+            onClick={onClick}
             sx={{
               textTransform: 'capitalize',
               width: '62px',

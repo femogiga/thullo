@@ -63,6 +63,32 @@ export const useGetBoardUsers = (id) => {
     return { isPending, error, boardUsersData }
 }
 
+export const useDeleteBoardUserMutation = () => {
+    const queryClient = useQueryClient();
+
+    const { isSuccess, error, mutateAsync: deleteMutate } = useMutation({
+        mutationKey: ['deleteUser'],
+        mutationFn: async (data) => {
+            const {boardId,authorId} = data;
+            const response = await apiService.remove(`/usersontasks/${boardId}/users/${authorId}`);
+            return response.data;
+        },
+        onSettled: () => {
+
+            queryClient.invalidateQueries({ queryKey: ['boardUsers'] })
+            //queryClient.invalidateQueries()
+
+
+            //window.location.reload();
+//
+
+        }
+
+
+    });
+    return { isSuccess, error, deleteMutate };
+};
+
 
 
 // export const useAllUserData = () => {

@@ -7,10 +7,11 @@ const {
 } = require('../controllers/usersOnTasksController');
 const router = require('express').Router();
 
+
+router.delete('/:boardIndex/users/:authorId', deleteUsersOnTasks);
 router.get('/:id', getUsersOnTasksById);
 //router.put('/:id', updateUsersOnTasks);
 router.get('/', getAllUsersOnTasks);
 router.post('/', createUsersOnTasks);
-router.delete('/:id', deleteUsersOnTasks);
 
 module.exports = router;

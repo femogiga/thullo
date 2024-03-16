@@ -55,6 +55,16 @@ const getById = (url: string, id:number) => {
     });
 };
 
+const remove = (url: string) => {
+    return axios.delete(`${baseUrl}${url}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
+
+
 // const put = (url: string, data) => {
 //     const token = localStorage.getItem('token');
 //     return axios.put(`${baseUrl}${url}`, data, {
@@ -97,4 +107,5 @@ export default {
     authpost,
     postWithImage,
     authRegister,
+    remove
 };

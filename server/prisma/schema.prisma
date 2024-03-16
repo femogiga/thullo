@@ -60,6 +60,7 @@ model Task {
 }
 
 model UsersOnTasks{
+  boardIndex Int?
    user User @relation(fields: [authorId] , references:[id])
   authorId Int
   task Task @relation(fields: [taskId] , references:[id])

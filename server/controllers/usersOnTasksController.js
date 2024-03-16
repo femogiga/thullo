@@ -58,11 +58,13 @@ const deleteUsersOnTasks = async (req, res) => {
     const result = await knex
       .from('UsersOnTasks')
       .where('authorId', '=', parseInt(req.params.authorId))
-      .andWhere('taskId', '=', parseInt(req.params.taskId))
+      .andWhere('boardIndex', '=', parseInt(req.params.boardIndex))
       .delete('*');
-
-    res.status(200).json({ result, message: 'successfully deleted' });
+    console.log(result);
+    res.status(200).json({ message: 'successfully deleted' });
   } catch (error) {
+        console.log(error);
+
     res.status(500).json(error);
   }
 };

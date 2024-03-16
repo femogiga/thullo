@@ -30,7 +30,7 @@ export const useBoardDataId = (id) => {
 
 export const useBoardUpdateMutation = () => {
     const { id } = useParams()
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     const { isSuccess, error, mutateAsync } = useMutation({
         mutationFn: async (data) => {
             const response = await apiService.put(`/boards/${id}`, data);
