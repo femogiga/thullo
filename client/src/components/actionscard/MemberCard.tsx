@@ -17,8 +17,11 @@ import { NameLabel } from './../auxillary/NameLabel';
 import MemberSelect from './auxillary/MemberSelect';
 import CrudButton from '../auxillary/CrudButton';
 import SearchIcon from '@mui/icons-material/Search';
+import { useDispatch } from 'react-redux';
+import { setMemberCardVisible } from '../../features/PageInformationSlice';
 
 const MemberCard = () => {
+  
   return (
     <Card
       className='member-card'

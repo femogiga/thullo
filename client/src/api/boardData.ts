@@ -40,7 +40,7 @@ export const useBoardUpdateMutation = () => {
 
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
-            queryClient.invalidateQueries({ queryKey: ['allBoard'] })
+            queryClient.invalidateQueries({ queryKey: ['panelById'] })
 
             //window.location.reload();
 

@@ -18,11 +18,11 @@ import BoardPageTwo from './components/pages/mainboard/BoardPageTwo';
 const App: React.FC = () => {
   return (
     <div className='container'>
-      {/* <CardInformation/> */}
+      <CardInformation />
       {/* <AllBoard/> */}
       {/* <AllBoardPage/> */}
       {/* <BoardPage /> */}
-      <BoardInformation/>
+      {/* <BoardInformation /> */}
     </div>
   );
 };

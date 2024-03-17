@@ -30,14 +30,64 @@ import AddListButton from '../auxillary/AddListButton';
 import MemberCard from '../actionscard/MemberCard';
 import { CoverCard } from '../actionscard/CoverCard';
 import LabelCard from '../actionscard/LabelCard';
-const CardInformation = () => {
+import { useDispatch } from 'react-redux';
+import {
+  setCardInfoVisible,
+  setColorCardVisible,
+  setCoverCardVisible,
+  setMemberCardVisible,
+} from '../../features/PageInformationSlice';
+import { FocusEvent } from 'react';
+import { useSelector } from 'react-redux';
+const CardInformation: React.FC = () => {
+  const dispatch = useDispatch();
+  const colorCardVisible = useSelector(
+    (state) => state.pageInformation.colorCardVisible
+  );
+  const coverCardVisible = useSelector(
+    (state) => state.pageInformation.coverCardVisible
+  );
+  const memberCardVisible = useSelector(
+    (state) => state.pageInformation.memberCardVisible
+  );
+
+  const handleCancel = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    dispatch(setCardInfoVisible(false));
+  };
+
+  const handleMemberCard = (e) => {
+    e.preventDefault();
+    dispatch(setMemberCardVisible(true));
+    dispatch(setCoverCardVisible(false));
+    dispatch(setColorCardVisible(false));
+  };
+
+  const handleCoverCard = (e) => {
+    e.preventDefault();
+    dispatch(setCoverCardVisible(true));
+    dispatch(setMemberCardVisible(false));
+    dispatch(setColorCardVisible(false));
+  };
+
+  const handleColorCard = (e) => {
+    e.preventDefault();
+    dispatch(setColorCardVisible(true));
+    dispatch(setMemberCardVisible(false));
+    dispatch(setCoverCardVisible(false));
+  };
   return (
     <article
       style={{
+        minWidth: '41.313rem',
         maxWidth: '41.313rem',
         position: 'absolute',
         padding: '1rem',
-        boxShadow: '0 2px 4px 0 rgba(0,0,0,0.05)',
+        boxShadow: '0 2px 85px 0 rgba(0,0,0,0.1)',
+        zIndex: '6',
+        top: '7rem',
+        backgroundColor: 'rgba(255,255,255,1)',
+        backdropFilter: 'blur(505px)',
         // border: '1px solid black',
         // translate: '50%',
         // zIndex: '4',
@@ -66,7 +116,8 @@ const CardInformation = () => {
               backgroundColor: 'orangered',
             },
             borderRadius: '8px',
-          }}>
+          }}
+          onClick={handleCancel}>
           <ClearIcon sx={{ fontSize: '15px' }} />
         </IconButton>
       </div>
@@ -148,48 +199,62 @@ const CardInformation = () => {
               icon={<PersonPinIcon sx={{ fontSize: '12px' }} />}
             />
           </div>
-          <ActionButton startIcon={<GroupIcon />} buttonText={'Members'} />
-          <ActionButton startIcon={<LabelIcon />} buttonText={'Labels'} />
-          <ActionButton startIcon={<ImageIcon />} buttonText={'Cover'} />
-          <Stack>
-            <div style={{ marginBlockEnd: '1rem' }}>
-              <IconLabel
-                labelText={'Members'}
-                icon={<GroupIcon sx={{ fontSize: '12px' }} />}
-              />
-            </div>
-            <Stack
-              direction='column'
-              display='flex'
-              spacing={1.5}
-              sx={{ marginBlockEnd: '1.5rem' }}>
-              <NameAvatar
-                fullName={'Jimmy Flaunt'}
-                src={''}
-                text=''
-                variant='withoutLabel'
-              />
-              <NameAvatar
-                fullName={'Tony Mark'}
-                src={''}
-                text=''
-                variant='withoutLabel'
-              />
-              <NameAvatar
-                fullName={'Natalie Griffin'}
-                src={''}
-                text=''
-                variant='withoutLabel'
-              />
+          <ActionButton
+            startIcon={<GroupIcon />}
+            buttonText={'Members'}
+            onClick={handleMemberCard}
+          />
+          <ActionButton
+            startIcon={<LabelIcon />}
+            buttonText={'Labels'}
+            onClick={handleColorCard}
+          />
+          <ActionButton
+            startIcon={<ImageIcon />}
+            buttonText={'Cover'}
+            onClick={handleCoverCard}
+          />
+          {memberCardVisible && (
+            <Stack>
+              <div style={{ marginBlockEnd: '1rem' }}>
+                <IconLabel
+                  labelText={'Members'}
+                  icon={<GroupIcon sx={{ fontSize: '12px' }} />}
+                />
+              </div>
+              <Stack
+                direction='column'
+                display='flex'
+                spacing={1.5}
+                sx={{ marginBlockEnd: '1.5rem' }}>
+                <NameAvatar
+                  fullName={'Jimmy Flaunt'}
+                  src={''}
+                  text=''
+                  variant='withoutLabel'
+                />
+                <NameAvatar
+                  fullName={'Tony Mark'}
+                  src={''}
+                  text=''
+                  variant='withoutLabel'
+                />
+                <NameAvatar
+                  fullName={'Natalie Griffin'}
+                  src={''}
+                  text=''
+                  variant='withoutLabel'
+                />
+              </Stack>
+              <Box>
+                <AddCardButton buttonText={'Assign a member'} />
+              </Box>
             </Stack>
-            <Box>
-              <AddCardButton buttonText={'Assign a member'} />
-            </Box>
-          </Stack>
+          )}
           <Box position={'relative'} top='1rem'>
-            <MemberCard />
-            <CoverCard />
-            <LabelCard />
+            {memberCardVisible && <MemberCard />}
+            {coverCardVisible && <CoverCard />}
+            {colorCardVisible && <LabelCard />}
           </Box>
         </Grid>
       </Grid>

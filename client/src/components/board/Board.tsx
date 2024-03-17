@@ -5,14 +5,14 @@ const Board = ({ children ,direction}) => {
     <Stack
       direction={direction}
       spacing='2rem'
-
       sx={{
         display: 'flex',
         padding: '1rem',
         backgroundColor: '#F8F9FD',
         borderRadius: '2rem',
         justifyContent: 'center',
-       
+       // backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      
       }}>
       {children}
     </Stack>

@@ -1,7 +1,7 @@
 import { Button, Stack } from '@mui/material';
 import React from 'react';
 
-const ActionButton = ({ startIcon, buttonText }) => {
+const ActionButton = ({ startIcon, buttonText,onClick }) => {
   /**
    ** Button with a start icon
    *
@@ -10,6 +10,7 @@ const ActionButton = ({ startIcon, buttonText }) => {
   return (
     <Stack direction='row' spacing={2} style={{ marginBlockEnd: '1rem' }}>
       <Button
+        onClick={onClick}
         variant='text'
         startIcon={startIcon}
         sx={{

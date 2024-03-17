@@ -4,9 +4,29 @@ import AddCardButton from '../auxillary/AddCardButton';
 import PanelName from './PanelName';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { setCardInfoVisible } from '../../features/PageInformationSlice';
 
-const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
+interface IPanel {
+  panelId: number;
+  task;
+  title:string;
+  onClick :(e:MouseEvent)=>void;
+  panel;
+  index :number;
+}
+
+const TaskPanel:React.FC<IPanel> = ({ panelId, task, title, onClick, panel, index }) => {
   const [visibleState, setVisibleState] = useState(false);
+  const dispatch = useDispatch()
+
+
+
+  const handleCardClick = (e: MouseEvent) => {
+    e.preventDefault();
+    dispatch(setCardInfoVisible(true))
+  }
 
   const style = {
     // border: '1px solid black',
@@ -40,7 +60,6 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
-
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}>
                   <TaskCard
@@ -50,6 +69,7 @@ const TaskPanel = ({ panelId, task, title, onClick, panel, index }) => {
                     imageUrl={task.imageUrl}
                     labels={task?.labels}
                     users={task.users}
+                    onClick={handleCardClick}
                   />
                 </div>
               )}

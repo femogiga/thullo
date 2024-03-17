@@ -20,6 +20,8 @@ import {
 import { useCardData } from '../../../api/mainBoardPageData';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
+import CardInformation from '../../cardinformation/CardInformation';
+import { setCardInfoVisible } from '../../../features/PageInformationSlice';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
@@ -46,6 +48,9 @@ const BoardPage = () => {
     (state) => state.pageInformation.visible
   );
   const visibleModalState = useSelector((state) => state.visibility.visible);
+  const cardInfoVisible = useSelector(
+    (state) => state.pageInformation.cardInfoVisible
+  );
   // const { id } = useParams();
   // const { boardByIdData } = useBoardDataId(parseInt(id));
   const { boardByIdData, panelByBoardIdData } = useMainPageData();
@@ -104,7 +109,7 @@ const BoardPage = () => {
     // const idArray = draggableId.split('-');
     //console.log('idArray', idArray);
     // const id = idArray[1];
-    console.log(draggableId);
+    //console.log(draggableId);
     //const boardId = id;
     const taskId = parseInt(draggableId);
 
@@ -256,6 +261,11 @@ const BoardPage = () => {
             {visibleState.completed && <DeleteRename />}
           </Box>
         </TaskPanel> */}
+        {cardInfoVisible && (
+
+            <CardInformation />
+
+        )}
       </Board>
       {/* <CardInformation /> */}
       {/* <AllBoard/> */}
