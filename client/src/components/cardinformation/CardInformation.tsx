@@ -37,7 +37,6 @@ import {
   setCoverCardVisible,
   setMemberCardVisible,
 } from '../../features/PageInformationSlice';
-import { FocusEvent } from 'react';
 import { useSelector } from 'react-redux';
 const CardInformation: React.FC = () => {
   const dispatch = useDispatch();
@@ -54,6 +53,9 @@ const CardInformation: React.FC = () => {
   const handleCancel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCardInfoVisible(false));
+    dispatch(setColorCardVisible(false));
+    dispatch(setMemberCardVisible(false));
+    dispatch(setCoverCardVisible(false));
   };
 
   const handleMemberCard = (e) => {

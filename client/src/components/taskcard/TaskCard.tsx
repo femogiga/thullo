@@ -25,12 +25,13 @@ const TaskCard = ({ title, description, imageUrl, labels, users, onClick }) => {
   useEffect(() => {}, [show]);
 
   const handleAddUserButton = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     //dispatch()
     setShow(!show);
   };
   return (
-    <Link onClick={onClick} to={''}>
+    <Link onClick={onClick}>
       <div>
         <Card
           sx={{
