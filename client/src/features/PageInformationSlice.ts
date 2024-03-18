@@ -12,6 +12,8 @@ const pageInformationSlice = createSlice({
         colorCardVisible: false,
         coverCardVisible: false,
         memberCardVisible: false,
+        addMemberVisible: false,
+        taskId : 0
     },
     reducers: {
         setPageVisibility: (state, action) => {
@@ -32,8 +34,14 @@ const pageInformationSlice = createSlice({
         setMemberCardVisible: (state, action) => {
             state.memberCardVisible = action.payload
         },
+        setAddMemberVisible: (state, action) => {
+            state.addMemberVisible = action.payload
+        },
+        setTaskId: (state, action) => {
+            state.taskId = action.payload
+        },
     }
 })
 
-export const { setPageVisibility, setCardInfoVisible, setDarken, setColorCardVisible, setCoverCardVisible, setMemberCardVisible } = pageInformationSlice.actions
+export const { setPageVisibility, setCardInfoVisible, setDarken, setColorCardVisible, setCoverCardVisible, setMemberCardVisible, setAddMemberVisible, setTaskId } = pageInformationSlice.actions
 export default pageInformationSlice.reducer

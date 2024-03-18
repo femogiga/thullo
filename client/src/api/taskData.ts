@@ -15,15 +15,15 @@ export const useAllTaskData = () => {
 };
 
 
-export const useTaskDataId = (id) => {
-    const { isPending, error, data: taskByPanelIdData } = useQuery({
+export const useTaskDataById = (id) => {
+    const { isPending, error, data: taskByIdData } = useQuery({
         queryKey: ['tasksById'],
         queryFn: () =>
             apiService
-                .get(`/tasks/${id}`)
+                .get(`/tasks/card/${id}`)
                 .then((res) => res.data),
     });
-    return { isPending, error, taskByPanelIdData };
+    return { isPending, error, taskByIdData };
 };
 
 

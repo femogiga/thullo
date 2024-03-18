@@ -6,7 +6,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setCardInfoVisible } from '../../features/PageInformationSlice';
+import { setCardInfoVisible, setTaskId } from '../../features/PageInformationSlice';
 
 interface IPanel {
   panelId: number;
@@ -23,8 +23,9 @@ const TaskPanel:React.FC<IPanel> = ({ panelId, task, title, onClick, panel, inde
 
 
 
-  const handleCardClick = (e: MouseEvent) => {
+  const handleCardClick = (e: MouseEvent,taskId:number) => {
     e.preventDefault();
+    dispatch(setTaskId(taskId))
     dispatch(setCardInfoVisible(true))
   }
 
@@ -69,7 +70,8 @@ const TaskPanel:React.FC<IPanel> = ({ panelId, task, title, onClick, panel, inde
                     imageUrl={task.imageUrl}
                     labels={task?.labels}
                     users={task.users}
-                    onClick={handleCardClick}
+                    onClick={(e)=>handleCardClick(e,task?.id)}
+
                   />
                 </div>
               )}

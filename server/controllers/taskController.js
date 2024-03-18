@@ -13,8 +13,9 @@ const getTaskById = async (req, res) => {
   try {
     const result = await knex
       .from('Task')
-      .select('*')
-      .where('id', '=', parseInt(req.params.id));
+      .where('id', '=', parseInt(req.params.id))
+      .select('*');
+
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);

@@ -32,14 +32,19 @@ import { CoverCard } from '../actionscard/CoverCard';
 import LabelCard from '../actionscard/LabelCard';
 import { useDispatch } from 'react-redux';
 import {
+  setAddMemberVisible,
   setCardInfoVisible,
   setColorCardVisible,
   setCoverCardVisible,
   setMemberCardVisible,
 } from '../../features/PageInformationSlice';
 import { useSelector } from 'react-redux';
-const CardInformation: React.FC = () => {
+import { useTaskDataById } from '../../api/taskData';
+const CardInformation: React.FC = (taskId) => {
   const dispatch = useDispatch();
+  const activeTaskId = useSelector((state) => state.pageInformation.taskId);
+  const { taskByIdData } = useTaskDataById(activeTaskId);
+  console.log('taskId=====>', taskByIdData);
   const colorCardVisible = useSelector(
     (state) => state.pageInformation.colorCardVisible
   );
@@ -49,6 +54,9 @@ const CardInformation: React.FC = () => {
   const memberCardVisible = useSelector(
     (state) => state.pageInformation.memberCardVisible
   );
+  const addMemberVisible = useSelector(
+    (state) => state.pageInformation.addMemberVisible
+  );
 
   const handleCancel = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -56,6 +64,12 @@ const CardInformation: React.FC = () => {
     dispatch(setColorCardVisible(false));
     dispatch(setMemberCardVisible(false));
     dispatch(setCoverCardVisible(false));
+    //dispatch(setAddMemberVisible(false));
+  };
+
+  const handleAddMemberVisible = (e) => {
+    e.preventDefault();
+    dispatch(setAddMemberVisible(true));
   };
 
   const handleMemberCard = (e) => {
@@ -70,6 +84,7 @@ const CardInformation: React.FC = () => {
     dispatch(setCoverCardVisible(true));
     dispatch(setMemberCardVisible(false));
     dispatch(setColorCardVisible(false));
+    //dispatch(setAddMemberVisible(false));
   };
 
   const handleColorCard = (e) => {
@@ -77,6 +92,7 @@ const CardInformation: React.FC = () => {
     dispatch(setColorCardVisible(true));
     dispatch(setMemberCardVisible(false));
     dispatch(setCoverCardVisible(false));
+    //dispatch(setAddMemberVisible(false));
   };
   return (
     <article
@@ -101,8 +117,12 @@ const CardInformation: React.FC = () => {
             height: '130px',
             objectFit: 'cover',
             borderRadius: '12px',
+            marginBlockEnd: '1rem',
           }}
-          src='https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&w='
+          src={
+            taskByIdData && taskByIdData[0]?.imageUrl ||
+            'https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&w='
+          }
         />
         <IconButton
           aria-label='close'
@@ -129,8 +149,9 @@ const CardInformation: React.FC = () => {
             gutterBottom
             component='div'
             sx={{ display: 'flex', alignItems: 'center', gap: '.3rem' }}>
-            <BackHandIcon sx={{ fontSize: '15px', fill: '#5C4033' }} /> Move
-            anything that is actually started here
+            <BackHandIcon sx={{ fontSize: '15px', fill: '#5C4033' }} />
+            {(taskByIdData && taskByIdData[0]?.title) ||
+              'Move anything that is actually started here'}
           </Typography>
           <Box>
             <Typography sx={{ fontSize: '10px', fontWeight: '600' }}>
@@ -195,7 +216,7 @@ const CardInformation: React.FC = () => {
         </Grid>
 
         <Grid item xs={3}>
-          <div>
+          <div style={{ marginBlockEnd: '1rem' }}>
             <IconLabel
               labelText={'Actions'}
               icon={<PersonPinIcon sx={{ fontSize: '12px' }} />}
@@ -204,7 +225,7 @@ const CardInformation: React.FC = () => {
           <ActionButton
             startIcon={<GroupIcon />}
             buttonText={'Members'}
-            onClick={handleMemberCard}
+            onClick={handleAddMemberVisible}
           />
           <ActionButton
             startIcon={<LabelIcon />}
@@ -216,7 +237,7 @@ const CardInformation: React.FC = () => {
             buttonText={'Cover'}
             onClick={handleCoverCard}
           />
-          {memberCardVisible && (
+          {addMemberVisible && (
             <Stack>
               <div style={{ marginBlockEnd: '1rem' }}>
                 <IconLabel
@@ -249,7 +270,10 @@ const CardInformation: React.FC = () => {
                 />
               </Stack>
               <Box>
-                <AddCardButton buttonText={'Assign a member'} />
+                <AddCardButton
+                  onClick={handleMemberCard}
+                  buttonText={'Assign a member'}
+                />
               </Box>
             </Stack>
           )}

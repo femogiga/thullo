@@ -9,10 +9,9 @@ const {
   updateTaskPosition,
 } = require('../controllers/taskController');
 const router = require('express').Router();
-
+router.get('/card/:id', getTaskById);
 router.get('/card', getAllTasksWithUsersAndLabels);
 router.get('/:panelId', getTaskByPanelId);
-router.get('/:id', getTaskById);
 router.put('/cardposition', updateTaskPosition);
 router.put('/:id', updateTask);
 router.get('/', getAllTask);
