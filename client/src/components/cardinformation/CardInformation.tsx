@@ -44,23 +44,24 @@ import {
   useCardPanelDataByIdCard,
   usePanelDataById,
 } from '../../api/panelData';
+import { QuillInput } from '../auxillary/QuillInput';
+import { setCardInfoEditOpen } from '../../features/visibilitySlice';
 const CardInformation: React.FC = (taskId) => {
   const dispatch = useDispatch();
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
   const activePanelId = useSelector((state) => state.pageInformation.panelId);
+  const cardInfoEditOpen = useSelector((state) => state.visibility.cardInfoEditOpen)
 
   const { taskByIdData } = useTaskDataById(activeTaskId);
-  /*
-   * TODO: fix the panel by id data. it is fetching 3 records instead of unique
-   */
+
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
-  console.log(activePanelId);
+ // console.log(activePanelId);
   // const { panelByIdData } = usePanelDataById(
   //   taskByIdData && taskByIdData[0]?.panelId
   // );
-  console.log('panelByIdDatatoday=====>', cardPanelByIdData);
+  //console.log('panelByIdDatatoday=====>', cardPanelByIdData);
 
-  console.log('taskId=====>', taskByIdData);
+  //console.log('taskId=====>', taskByIdData);
   const colorCardVisible = useSelector(
     (state) => state.pageInformation.colorCardVisible
   );
@@ -110,6 +111,12 @@ const CardInformation: React.FC = (taskId) => {
     dispatch(setCoverCardVisible(false));
     dispatch(setAddMemberVisible(false));
   };
+
+
+  const handleEditButton = (e) => {
+    e.preventDefault()
+    dispatch(setCardInfoEditOpen(!cardInfoEditOpen));
+  }
   return (
     <article
       style={{
@@ -186,29 +193,35 @@ const CardInformation: React.FC = (taskId) => {
               icon={<FeedIcon sx={{ fontSize: '10px' }} />}
             />
             <CrudButton
+              onClick={handleEditButton}
               text={'Edit'}
-              icon={<EditIcon sx={{ fontSize: '10px' }} />}
+              icon={<EditIcon sx={{ fontSize: '10px' }}
+              />}
             />
           </Stack>
           <Box>
-            {(taskByIdData && taskByIdData[0]?.description) || (
-              <div>
-                <Typography sx={{ fontSize: '14px' }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-                  amet quibusdam, aspernatur pariatur ipsa quos nulla quam alias
-                  id vel praesentium minima saepe velit nostrum illo tempore
-                  veniam laborum iste.
-                </Typography>
-                <Typography sx={{ fontSize: '14px' }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-                  amet quibusdam, aspernatur pariatur ipsa quos nulla quam alias
-                  id vel praesentium minima saepe velit nostrum illo tempore
-                  veniam laborum iste.
-                </Typography>
-                <Typography sx={{ fontSize: '14px' }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </Typography>
-              </div>
+            {cardInfoEditOpen ? (
+              <QuillInput />
+            ) : (
+              (taskByIdData && taskByIdData[0]?.description) || (
+                <div>
+                  <Typography sx={{ fontSize: '14px' }}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Enim amet quibusdam, aspernatur pariatur ipsa quos nulla
+                    quam alias id vel praesentium minima saepe velit nostrum
+                    illo tempore veniam laborum iste.
+                  </Typography>
+                  <Typography sx={{ fontSize: '14px' }}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Enim amet quibusdam, aspernatur pariatur ipsa quos nulla
+                    quam alias id vel praesentium minima saepe velit nostrum
+                    illo tempore veniam laborum iste.
+                  </Typography>
+                  <Typography sx={{ fontSize: '14px' }}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </Typography>
+                </div>
+              )
             )}
           </Box>
           <Stack

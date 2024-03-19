@@ -14,15 +14,17 @@ import AllBoard from './components/allboard/AllBoard';
 import AllBoardPage from './components/pages/allboard/AllBoardPage';
 import BoardPage from './components/pages/mainboard/BoardPage';
 import BoardPageTwo from './components/pages/mainboard/BoardPageTwo';
+import { QuillInput } from './components/auxillary/QuillInput';
 
 const App: React.FC = () => {
   return (
     <div className='container'>
-      <CardInformation />
+      {/* <CardInformation /> */}
       {/* <AllBoard/> */}
       {/* <AllBoardPage/> */}
       {/* <BoardPage /> */}
       {/* <BoardInformation /> */}
+      <QuillInput/>
     </div>
   );
 };
