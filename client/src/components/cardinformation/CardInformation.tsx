@@ -40,10 +40,26 @@ import {
 } from '../../features/PageInformationSlice';
 import { useSelector } from 'react-redux';
 import { useTaskDataById } from '../../api/taskData';
+import {
+  useCardPanelDataByIdCard,
+  usePanelDataById,
+} from '../../api/panelData';
 const CardInformation: React.FC = (taskId) => {
   const dispatch = useDispatch();
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
+  const activePanelId = useSelector((state) => state.pageInformation.panelId);
+
   const { taskByIdData } = useTaskDataById(activeTaskId);
+  /*
+   * TODO: fix the panel by id data. it is fetching 3 records instead of unique
+   */
+  const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
+  console.log(activePanelId);
+  // const { panelByIdData } = usePanelDataById(
+  //   taskByIdData && taskByIdData[0]?.panelId
+  // );
+  console.log('panelByIdDatatoday=====>', cardPanelByIdData);
+
   console.log('taskId=====>', taskByIdData);
   const colorCardVisible = useSelector(
     (state) => state.pageInformation.colorCardVisible
@@ -64,7 +80,7 @@ const CardInformation: React.FC = (taskId) => {
     dispatch(setColorCardVisible(false));
     dispatch(setMemberCardVisible(false));
     dispatch(setCoverCardVisible(false));
-    //dispatch(setAddMemberVisible(false));
+    dispatch(setAddMemberVisible(false));
   };
 
   const handleAddMemberVisible = (e) => {
@@ -84,7 +100,7 @@ const CardInformation: React.FC = (taskId) => {
     dispatch(setCoverCardVisible(true));
     dispatch(setMemberCardVisible(false));
     dispatch(setColorCardVisible(false));
-    //dispatch(setAddMemberVisible(false));
+    dispatch(setAddMemberVisible(false));
   };
 
   const handleColorCard = (e) => {
@@ -92,7 +108,7 @@ const CardInformation: React.FC = (taskId) => {
     dispatch(setColorCardVisible(true));
     dispatch(setMemberCardVisible(false));
     dispatch(setCoverCardVisible(false));
-    //dispatch(setAddMemberVisible(false));
+    dispatch(setAddMemberVisible(false));
   };
   return (
     <article
@@ -120,7 +136,7 @@ const CardInformation: React.FC = (taskId) => {
             marginBlockEnd: '1rem',
           }}
           src={
-            taskByIdData && taskByIdData[0]?.imageUrl ||
+            (taskByIdData && taskByIdData[0]?.imageUrl) ||
             'https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&w='
           }
         />
@@ -156,7 +172,7 @@ const CardInformation: React.FC = (taskId) => {
           <Box>
             <Typography sx={{ fontSize: '10px', fontWeight: '600' }}>
               <span style={{ color: '#BDBDBD' }}>in list</span>{' '}
-              <span> in Progress</span>
+              <span> {cardPanelByIdData && cardPanelByIdData[0]?.title}</span>
             </Typography>
           </Box>
 
@@ -175,21 +191,25 @@ const CardInformation: React.FC = (taskId) => {
             />
           </Stack>
           <Box>
-            <Typography sx={{ fontSize: '14px' }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim amet
-              quibusdam, aspernatur pariatur ipsa quos nulla quam alias id vel
-              praesentium minima saepe velit nostrum illo tempore veniam laborum
-              iste.
-            </Typography>
-            <Typography sx={{ fontSize: '14px' }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim amet
-              quibusdam, aspernatur pariatur ipsa quos nulla quam alias id vel
-              praesentium minima saepe velit nostrum illo tempore veniam laborum
-              iste.
-            </Typography>
-            <Typography sx={{ fontSize: '14px' }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </Typography>
+            {(taskByIdData && taskByIdData[0]?.description) || (
+              <div>
+                <Typography sx={{ fontSize: '14px' }}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
+                  amet quibusdam, aspernatur pariatur ipsa quos nulla quam alias
+                  id vel praesentium minima saepe velit nostrum illo tempore
+                  veniam laborum iste.
+                </Typography>
+                <Typography sx={{ fontSize: '14px' }}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
+                  amet quibusdam, aspernatur pariatur ipsa quos nulla quam alias
+                  id vel praesentium minima saepe velit nostrum illo tempore
+                  veniam laborum iste.
+                </Typography>
+                <Typography sx={{ fontSize: '14px' }}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </Typography>
+              </div>
+            )}
           </Box>
           <Stack
             direction='row'

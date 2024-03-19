@@ -18,14 +18,25 @@ export const useAllPanelData = () => {
 
 
 export const usePanelDataById = (id) => {
-    const { isPending, error, data } = useQuery({
+    const { isPending, error, data:panelByIdData } = useQuery({
         queryKey: ['panelById'],
         queryFn: () =>
             apiService
                 .get(`/panels/${id}`)
                 .then((res) => res.data),
     });
-    return { isPending, error, data };
+    return { isPending, error, panelByIdData };
+};
+
+export const useCardPanelDataByIdCard = (id) => {
+    const { isPending, error, data: cardPanelByIdData } = useQuery({
+        queryKey: ['panelByIdcard'],
+        queryFn: () =>
+            apiService
+                .get(`/panels/${id}/card`)
+                .then((res) => res.data),
+    });
+    return { isPending, error, cardPanelByIdData };
 };
 
 export const usePanelDataByBoardId = (boardId) => {
