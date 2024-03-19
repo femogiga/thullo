@@ -117,6 +117,11 @@ const CardInformation: React.FC = (taskId) => {
     e.preventDefault()
     dispatch(setCardInfoEditOpen(!cardInfoEditOpen));
   }
+
+  const handleQuillSaveButton = (e) => {
+        e.preventDefault();
+console.log('working' )
+   }
   return (
     <article
       style={{
@@ -195,13 +200,12 @@ const CardInformation: React.FC = (taskId) => {
             <CrudButton
               onClick={handleEditButton}
               text={'Edit'}
-              icon={<EditIcon sx={{ fontSize: '10px' }}
-              />}
+              icon={<EditIcon sx={{ fontSize: '10px' }} />}
             />
           </Stack>
           <Box>
             {cardInfoEditOpen ? (
-              <QuillInput />
+              <QuillInput onClick={handleQuillSaveButton} />
             ) : (
               (taskByIdData && taskByIdData[0]?.description) || (
                 <div>

@@ -73,7 +73,6 @@ const TaskPanel:React.FC<IPanel> = ({ panelId, task, title, onClick, panel, inde
                     labels={task?.labels}
                     users={task.users}
                     onClick={(e) => handleCardClick(e, task?.id,panelId)}
-                    panelId = {panelId}
 
                   />
                 </div>
