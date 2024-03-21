@@ -9,7 +9,7 @@ const visibilitySlice = createSlice({
         visible: false,
         editOpen: false,
         descriptionTextVisible: true,
-        cardInfoEditOpen: false
+        cardInfoEditOpen: false,
     },
     reducers: {
         setVisibleModalVisibility: (state, action) => {
@@ -24,6 +24,7 @@ const visibilitySlice = createSlice({
         setCardInfoEditOpen: (state, action) => {
             state.cardInfoEditOpen = action.payload
         },
+
     }
 })
 

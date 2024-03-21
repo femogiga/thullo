@@ -15,6 +15,7 @@ import AllBoardPage from './components/pages/allboard/AllBoardPage';
 import BoardPage from './components/pages/mainboard/BoardPage';
 import BoardPageTwo from './components/pages/mainboard/BoardPageTwo';
 import { QuillInput } from './components/auxillary/QuillInput';
+import AddCardInput from './components/auxillary/CreateTaskForm';
 
 const App: React.FC = () => {
   return (
@@ -24,7 +25,8 @@ const App: React.FC = () => {
       {/* <AllBoardPage/> */}
       {/* <BoardPage /> */}
       {/* <BoardInformation /> */}
-      <QuillInput/>
+      {/* <QuillInput/> */}
+      <AddCardInput />
     </div>
   );
 };

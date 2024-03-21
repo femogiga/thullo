@@ -6,30 +6,49 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setCardInfoVisible, setPanelId, setTaskId } from '../../features/PageInformationSlice';
+import {
+  setCardInfoVisible,
+  setPanelId,
+  setTaskId,
+} from '../../features/PageInformationSlice';
+import AddCardInput from '../auxillary/CreateTaskForm';
+import CreateTaskForm from '../auxillary/CreateTaskForm';
+import { setCreateTaskFormVisible } from '../../features/visibilitySlice';
 
 interface IPanel {
   panelId: number;
   task;
-  title:string;
-  onClick :(e:MouseEvent)=>void;
+  title: string;
+  onClick: (e: MouseEvent) => void;
   panel;
-  index :number;
+  index: number;
 }
 
-const TaskPanel:React.FC<IPanel> = ({ panelId, task, title, onClick, panel, index }) => {
+const TaskPanel: React.FC<IPanel> = ({
+  panelId,
+  task,
+  title,
+  onClick,
+  panel,
+  index,
+}) => {
   const [visibleState, setVisibleState] = useState(false);
-  const dispatch = useDispatch()
+    const [createFormVisibleState, setCreateFormVisibleState] = useState(false);
 
+  const dispatch = useDispatch();
+  
 
-
-  const handleCardClick = (e: MouseEvent,taskId:number,panelId:number) => {
+  const handleCardClick = (e: MouseEvent, taskId: number, panelId: number) => {
     e.preventDefault();
-    dispatch(setTaskId(taskId))
-    dispatch(setPanelId(panelId))
-    dispatch(setCardInfoVisible(true))
+    dispatch(setTaskId(taskId));
+    dispatch(setPanelId(panelId));
+    dispatch(setCardInfoVisible(true));
+  };
 
-  }
+  const handleCreateTaskFormVisibility = () => {
+    // dispatch(setCreateTaskFormVisible(!createTaskFormVisible));
+    setCreateFormVisibleState(!createFormVisibleState)
+  };
 
   const style = {
     // border: '1px solid black',
@@ -41,7 +60,6 @@ const TaskPanel:React.FC<IPanel> = ({ panelId, task, title, onClick, panel, inde
     rowGap: '1rem',
     padding: '1rem',
     width: '280px',
-
 
     //gap: '1rem',
     //border:'1px solid black'
@@ -72,15 +90,14 @@ const TaskPanel:React.FC<IPanel> = ({ panelId, task, title, onClick, panel, inde
                     imageUrl={task.imageUrl}
                     labels={task?.labels}
                     users={task.users}
-                    onClick={(e) => handleCardClick(e, task?.id,panelId)}
-
+                    onClick={(e) => handleCardClick(e, task?.id, panelId)}
                   />
                 </div>
               )}
             </Draggable>
           ))}
-
-      <AddCardButton />
+      {createFormVisibleState && <CreateTaskForm />}
+      <AddCardButton onClick={handleCreateTaskFormVisibility} />
     </div>
   );
 };
