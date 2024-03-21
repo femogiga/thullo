@@ -68,15 +68,15 @@ const BoardInformation = () => {
   );
   useEffect(() => {}, [value, description]);
   const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
-  Quill.register(
-    {
-      'formats/emoji': EmojiBlot,
-      'modules/emoji-shortname': ShortNameEmoji,
-      'modules/emoji-toolbar': ToolbarEmoji,
-      'modules/emoji-textarea': TextAreaEmoji,
-    },
-    true
-  );
+  // Quill.register(
+  //   {
+  //     'formats/emoji': EmojiBlot,
+  //     'modules/emoji-shortname': ShortNameEmoji,
+  //     'modules/emoji-toolbar': ToolbarEmoji,
+  //     'modules/emoji-textarea': TextAreaEmoji,
+  //   },
+  //   true
+  // );
 
   // const quillModules = {
   //   'emoji-toolbar': true,
@@ -124,10 +124,9 @@ const BoardInformation = () => {
   const handleDeleteUser = (e, authorId) => {
     e.preventDefault();
     const boardId = parseInt(params?.id);
-    const data ={authorId,boardId}
+    const data = { authorId, boardId };
     deleteMutate(data);
     queryClient.invalidateQueries({ queryKey: ['boardUsers'] });
-
   };
   const handleCancel = (e) => {
     e.preventDefault();
@@ -252,7 +251,12 @@ const BoardInformation = () => {
           //   onChange={setValue}
           //   modules={quillModules}
           // />
-          <QuillInput value={value} onChange={setValue} onSave={handleSave} onCancel={handleCancel } />
+          <QuillInput
+            value={value}
+            onChange={setValue}
+            onSave={handleSave}
+            onCancel={handleCancel}
+          />
         )}
       </div>
 
@@ -321,7 +325,7 @@ const BoardInformation = () => {
             id={`avatar-${user?.id}`}
             userOnTaskId={user?.id}
             src={user?.imgUrl}
-            onClick={(e)=> handleDeleteUser(e, user?.id)}
+            onClick={(e) => handleDeleteUser(e, user?.id)}
             text='Delete'
             variant='withLabel'
             fullName={genFullname(user?.firstname, user?.lastname)}
