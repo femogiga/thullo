@@ -33,10 +33,9 @@ const TaskPanel: React.FC<IPanel> = ({
   index,
 }) => {
   const [visibleState, setVisibleState] = useState(false);
-    const [createFormVisibleState, setCreateFormVisibleState] = useState(false);
+  const [createFormVisibleState, setCreateFormVisibleState] = useState(false);
 
   const dispatch = useDispatch();
-  
 
   const handleCardClick = (e: MouseEvent, taskId: number, panelId: number) => {
     e.preventDefault();
@@ -47,8 +46,10 @@ const TaskPanel: React.FC<IPanel> = ({
 
   const handleCreateTaskFormVisibility = () => {
     // dispatch(setCreateTaskFormVisible(!createTaskFormVisible));
-    setCreateFormVisibleState(!createFormVisibleState)
+    setCreateFormVisibleState(!createFormVisibleState);
   };
+
+  
 
   const style = {
     // border: '1px solid black',
@@ -96,8 +97,8 @@ const TaskPanel: React.FC<IPanel> = ({
               )}
             </Draggable>
           ))}
-      {createFormVisibleState && <CreateTaskForm />}
-      <AddCardButton onClick={handleCreateTaskFormVisibility} />
+      {createFormVisibleState && <CreateTaskForm panelId={panelId} />}
+      <AddCardButton buttonText={''} onClick={handleCreateTaskFormVisibility} />
     </div>
   );
 };

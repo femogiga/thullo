@@ -69,5 +69,32 @@ export const useTaskCardMutation = () => {
 
 
     });
+
+
     return { isSuccess, error, mutateAsync };
+};
+
+
+export const useCreateTaskMutation = () => {
+    const { isSuccess, error, mutateAsync: createTaskMutation } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.post('/tasks', data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            const queryClient = new QueryClient()
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+
+
+
+        }
+
+
+    });
+
+
+    return { isSuccess, error, createTaskMutation };
 };
