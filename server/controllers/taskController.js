@@ -71,7 +71,7 @@ const updateTask = async (req, res) => {
         panelId: parseInt(panelId),
       });
 
-    res.status(200).json({ result, message: 'successfully updated' });
+    res.status(201).json({ result, message: 'successfully updated' });
   } catch (error) {
     res.status(500).json(error);
   }

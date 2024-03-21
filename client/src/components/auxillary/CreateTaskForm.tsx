@@ -4,7 +4,7 @@ import ActionButton from './ActionButton';
 import CrudButton from './CrudButton';
 import { useCreateTaskMutation } from '../../api/taskData';
 
-const CreateTaskForm: React.FC = ({ panelId }) => {
+const CreateTaskForm: React.FC = ({ panelId, panel, showForm }) => {
   const [taskTitle, setTaskTitle] = useState('');
   const { createTaskMutation } = useCreateTaskMutation();
 
@@ -13,9 +13,11 @@ const CreateTaskForm: React.FC = ({ panelId }) => {
   };
   const handleCreateTask = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const data = { title: taskTitle, panelId: panelId };
-    createTaskMutation(data);
+    const data = { title: taskTitle, panelId: panelId, status: panel?.title };
+    const response = createTaskMutation(data);
     console.log('data=====>', data);
+    setTaskTitle('');
+    showForm('');
   };
 
   return (
