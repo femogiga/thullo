@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import CrudButton from './CrudButton';
 import { Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
-export const QuillInput = ({onClick}) => {
-  const [value, setValue] = useState('');
+export const QuillInput = ({value,onChange,onSave,onCancel}) => {
+  // const [value, setValue] = useState('');
   const editOpen = useSelector((state) => state.visibility.editOpen);
   const quillModules = {
     'emoji-toolbar': true,
@@ -46,7 +46,7 @@ export const QuillInput = ({onClick}) => {
       <ReactQuill
         theme='snow'
         value={value}
-        onChange={setValue}
+        onChange={onChange}
         modules={quillModules}
       />
 
@@ -58,13 +58,13 @@ export const QuillInput = ({onClick}) => {
             icon={''}
             text={'Save'}
             colours={{ bg: '#219653', color: 'white' }}
-            onClick={onClick}
+          onClick={onSave}
           />
           <CrudButton
             icon={''}
             text={'Cancel'}
             colours={{ bg: '', color: '#828282' }}
-            onClick={'handleCancel'}
+            onClick={onCancel}
           />
         </Stack>
 

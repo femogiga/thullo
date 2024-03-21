@@ -46,12 +46,14 @@ import {
 } from '../../api/panelData';
 import { QuillInput } from '../auxillary/QuillInput';
 import { setCardInfoEditOpen } from '../../features/visibilitySlice';
+import { useState } from 'react';
+
 const CardInformation: React.FC = (taskId) => {
   const dispatch = useDispatch();
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
   const activePanelId = useSelector((state) => state.pageInformation.panelId);
   const cardInfoEditOpen = useSelector((state) => state.visibility.cardInfoEditOpen)
-
+const [value,setValue] = useState('')
   const { taskByIdData } = useTaskDataById(activeTaskId);
 
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
@@ -205,7 +207,7 @@ console.log('working' )
           </Stack>
           <Box>
             {cardInfoEditOpen ? (
-              <QuillInput onClick={handleQuillSaveButton} />
+              <QuillInput onSave={handleQuillSaveButton} onCancel={handleCancel } value={value} onChange={setValue} />
             ) : (
               (taskByIdData && taskByIdData[0]?.description) || (
                 <div>

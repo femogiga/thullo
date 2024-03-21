@@ -33,6 +33,7 @@ import {
   useUserDataById,
 } from '../../api/userData';
 import { genFullname } from '../../utility/fullName';
+import { QuillInput } from '../auxillary/QuillInput';
 
 const BoardInformation = () => {
   const queryClient = useQueryClient();
@@ -77,37 +78,37 @@ const BoardInformation = () => {
     true
   );
 
-  const quillModules = {
-    'emoji-toolbar': true,
-    'emoji-textarea': true,
-    'emoji-shortname': true,
-    location: 0,
-    toolbar: [
-      [
-        { header: [1, 2, 3, 4, 5, 6, false] },
+  // const quillModules = {
+  //   'emoji-toolbar': true,
+  //   'emoji-textarea': true,
+  //   'emoji-shortname': true,
+  //   location: 0,
+  //   toolbar: [
+  //     [
+  //       { header: [1, 2, 3, 4, 5, 6, false] },
 
-        { size: ['small', false, 'large', 'huge'] },
-      ],
-      ['emoji'],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote', 'color'],
+  //       { size: ['small', false, 'large', 'huge'] },
+  //     ],
+  //     ['emoji'],
+  //     ['bold', 'italic', 'underline', 'strike', 'blockquote', 'color'],
 
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-        { font: [] },
-      ],
-      ['link'],
+  //     [
+  //       { list: 'ordered' },
+  //       { list: 'bullet' },
+  //       { indent: '-1' },
+  //       { indent: '+1' },
+  //       { font: [] },
+  //     ],
+  //     ['link'],
 
-      [{ color: [] }, { background: [] }],
+  //     [{ color: [] }, { background: [] }],
 
-      ['clean'],
-    ],
-    // 'emoji-toolbar': true,
-    // 'emoji-textarea': true,
-    // 'emoji-shortname': true,
-  };
+  //     ['clean'],
+  //   ],
+  //   // 'emoji-toolbar': true,
+  //   // 'emoji-textarea': true,
+  //   // 'emoji-shortname': true,
+  // };
 
   const handleSave = () => {
     // const queryClient = new QueryClient();
@@ -245,16 +246,17 @@ const BoardInformation = () => {
           <DescriptionText description={description} />
         )}
         {editOpen && (
-          <ReactQuill
-            theme='snow'
-            value={value}
-            onChange={setValue}
-            modules={quillModules}
-          />
+          // <ReactQuill
+          //   theme='snow'
+          //   value={value}
+          //   onChange={setValue}
+          //   modules={quillModules}
+          // />
+          <QuillInput value={value} onChange={setValue} onSave={handleSave} onCancel={handleCancel } />
         )}
       </div>
 
-      {editOpen && (
+      {/* {editOpen && (
         <Stack
           direction={'row'}
           columnGap={'1rem'}
@@ -272,7 +274,7 @@ const BoardInformation = () => {
             onClick={handleCancel}
           />
         </Stack>
-      )}
+      )} */}
       <Stack direction='row' alignItems='center' justifyContent='' gap='.3rem'>
         <FeedIcon sx={{ fontSize: '10px' }} />
         <Typography sx={{ fontSize: '10px' }}>Team</Typography>
