@@ -50,13 +50,14 @@ export const useTaskCardData = () => {
 
 
 export const useTaskCardMutation = () => {
+    const queryClient = useQueryClient()
+
     const { isSuccess, error, mutateAsync } = useMutation({
         mutationFn: async (data) => {
             const response = await apiService.put('/tasks/cardposition', data);
             return response.data;
         },
         onSuccess: (data) => {
-            const queryClient = new QueryClient()
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['taskCard'] })
             queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
@@ -76,13 +77,14 @@ export const useTaskCardMutation = () => {
 
 
 export const useCreateTaskMutation = () => {
+    const queryClient = useQueryClient()
+
     const { isSuccess, error, mutateAsync: createTaskMutation } = useMutation({
         mutationFn: async (data) => {
             const response = await apiService.post('/tasks', data);
             return response.data;
         },
         onSuccess: (data) => {
-            const queryClient = new QueryClient()
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['taskCard'] })
             queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
