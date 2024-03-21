@@ -6,6 +6,7 @@ import CrudButton from './CrudButton';
 import { Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 import quillEmoji from 'quill-emoji';
+import 'quill-emoji/dist/quill-emoji.css';
 
 export const QuillInput = ({ value, onChange, onSave, onCancel }) => {
   // const [value, setValue] = useState('');
@@ -21,9 +22,9 @@ export const QuillInput = ({ value, onChange, onSave, onCancel }) => {
     true
   );
   const quillModules = {
-    'emoji-toolbar': true,
-    'emoji-textarea': true,
-    'emoji-shortname': true,
+    // 'emoji-toolbar': true,
+    // 'emoji-textarea': true,
+    // 'emoji-shortname': true,
 
     toolbar: [
       [
@@ -31,7 +32,7 @@ export const QuillInput = ({ value, onChange, onSave, onCancel }) => {
 
         { size: ['small', false, 'large', 'huge'] },
       ],
-      ['emoji'],
+
       ['bold', 'italic', 'underline', 'strike', 'blockquote', 'color'],
 
       [
@@ -42,14 +43,16 @@ export const QuillInput = ({ value, onChange, onSave, onCancel }) => {
         { font: [] },
       ],
       ['link'],
+      ['emoji'],
 
       [{ color: [] }, { background: [] }],
-
       ['clean'],
+
     ],
-    // 'emoji-toolbar': true,
-    // 'emoji-textarea': true,
-    // 'emoji-shortname': true,
+
+    'emoji-toolbar': true,
+    'emoji-textarea': true,
+    'emoji-shortname': true,
   };
 
   console.log(value);
