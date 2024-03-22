@@ -31,7 +31,7 @@ const getLabelByTaskId = async (req, res) => {
       .leftJoin('Label', 'Label.id', '=', 'TasksOnLabels.labelId')
       .select('Label.label as label', 'Label.labelColor as labelColor')
       .distinct()
-      .limit(2);
+      .limit(2)
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -62,10 +62,11 @@ const createLabel = async (req, res) => {
     const result = await knex('Label').insert({
       label: label,
       labelColor: labelColor,
-    });
+    }).returning(['id','label', 'labelColor']);
 
     res.status(201).json({ result, message: 'successfully created' });
   } catch (error) {
+    console.error(error)
     res.status(500).json(error);
   }
 };

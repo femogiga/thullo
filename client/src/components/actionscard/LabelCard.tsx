@@ -25,14 +25,18 @@ import {
   useLabelMutation,
 } from '../../api/labelData';
 import { useSelector } from 'react-redux';
+import { useTaskOnLabelMutation } from '../../api/TasksOnLabelsData';
+import { setColorCardVisible } from '../../features/PageInformationSlice';
+import { useDispatch } from 'react-redux';
 const LabelCard: React.FC = ({ taskId }) => {
   /**
    ** LabelCard is used to apply color , labels and classification   in task
    *
    *
    */
-
+  const dispatch = useDispatch();
   const { labelMutation } = useLabelMutation();
+  const { taskOnLabelMutation } = useTaskOnLabelMutation();
   const { labelByTaskIdData } = useLabelByTaskIdData(taskId);
 
   const [label, setLabel] = useState('');
@@ -51,7 +55,17 @@ const LabelCard: React.FC = ({ taskId }) => {
     e.preventDefault();
     const data = { label, labelColor: color };
     console.log('chipData----->', data);
-    labelMutation(data);
+    const res = labelMutation(data);
+    res
+      .then((res) => {
+        const result = res.result[0];
+        const taskonLabelDataToSend = { labelId: result.id, taskId: taskId };
+
+        taskOnLabelMutation(taskonLabelDataToSend);
+        dispatch(setColorCardVisible(false));
+        console.log('taskonLabel', taskonLabelDataToSend);
+      })
+      .then((res) => console.log(res));
   };
   // const data = { label, color };
   useEffect(() => {}, [color]);
