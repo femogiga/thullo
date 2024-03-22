@@ -1,7 +1,12 @@
 import { Box, Button } from '@mui/material';
 import React, { useEffect, useRef } from 'react'
 
-const DescriptionText: React.FC = ({ description }) => {
+
+interface IdescriptionProp {
+  description:string
+}
+
+const DescriptionText: React.FC<IdescriptionProp> = ({ description }) => {
   useEffect(() => {}, [description]);
   return (
     <Box

@@ -87,6 +87,8 @@ const BoardPage = () => {
   //   const column = panelByBoardIdData.find(col => draggableId.contains(col.title))
   // };
 
+  useEffect(() => {}, [mutateAsync]);
+
   //const [data, setData] = useState(panelByBoardIdData);
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -115,9 +117,15 @@ const BoardPage = () => {
 
     //
     // if (title && taskId && boardId) {
-    const dataToSend = { title: title, boardId: id, taskId: taskId };
-    mutateAsync(dataToSend);
-    // }
+    if (taskId) {
+      const dataToSend = {
+        title: title,
+        boardId: id,
+        taskId: taskId && taskId,
+      };
+      mutateAsync(dataToSend);
+      // }
+    }
   };
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -261,11 +269,7 @@ const BoardPage = () => {
             {visibleState.completed && <DeleteRename />}
           </Box>
         </TaskPanel> */}
-        {cardInfoVisible && (
-
-            <CardInformation />
-
-        )}
+        {cardInfoVisible && <CardInformation />}
       </Board>
       {/* <CardInformation /> */}
       {/* <AllBoard/> */}

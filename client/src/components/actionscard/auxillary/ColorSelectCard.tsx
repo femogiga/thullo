@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ColorSelectCard = ({ bgColor }) => {
+const ColorSelectCard:React.FC = ({ name ,bgColor ,onClick}) => {
   return (
-    <Link to=''>
+    <Link onClick={onClick} name={name}>
       <Box
         sx={{
           width: '50px',

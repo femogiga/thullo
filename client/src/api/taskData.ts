@@ -100,3 +100,30 @@ export const useCreateTaskMutation = () => {
 
     return { isSuccess, error, createTaskMutation };
 };
+
+
+export const useUpdateTaskMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: updateTaskMutation } = useMutation({
+        mutationFn: async (data) => {
+            const { id } = data
+            const response = await apiService.put(`/tasks/${id}`, data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+
+
+
+        }
+
+
+    });
+
+
+    return { isSuccess, error, updateTaskMutation };
+};

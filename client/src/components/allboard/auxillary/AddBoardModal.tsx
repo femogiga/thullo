@@ -24,7 +24,7 @@ const AddBoardModal = () => {
         padding: '1rem',
         borderRadius: '12px',
         boxShadow: '0 2px 4px 1px rgba(0,0,0,.1)',
-        backgroundColor: 'rgba(255,255,255)'
+        backgroundColor: 'rgba(255,255,255)',
       }}>
       <div style={{ marginBlockEnd: '1rem' }}>
         <img
@@ -54,9 +54,8 @@ const AddBoardModal = () => {
       <Stack
         direction={'row'}
         spacing={2}
-        sx={{ textTransform: 'capitalize' }}
-        justifyContent={'space-between'}
-        sx={{ marginBlockEnd: '1rem' }}>
+        sx={{ textTransform: 'capitalize', marginBlockEnd: '1rem' }}
+        justifyContent={'space-between'}>
         <Button
           sx={{
             textTransform: 'capitalize',

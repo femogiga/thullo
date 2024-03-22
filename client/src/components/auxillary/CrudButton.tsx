@@ -6,6 +6,7 @@ interface CrudButtonProps {
   text: string;
   icon: React.ReactElement<SVGAElement>;
   colours: { bg: string; color: string };
+  onClick: (e:React.FormEvent<HTMLButtonElement>) => void;
 }
 
 const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours ,onClick}) => {

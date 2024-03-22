@@ -39,7 +39,7 @@ import {
   setMemberCardVisible,
 } from '../../features/PageInformationSlice';
 import { useSelector } from 'react-redux';
-import { useTaskDataById } from '../../api/taskData';
+import { useTaskDataById, useUpdateTaskMutation } from '../../api/taskData';
 import {
   useCardPanelDataByIdCard,
   usePanelDataById,
@@ -47,17 +47,21 @@ import {
 import { QuillInput } from '../auxillary/QuillInput';
 import { setCardInfoEditOpen } from '../../features/visibilitySlice';
 import { useState } from 'react';
+import DescriptionText from '../boardInfo/DescriptionText';
 
 const CardInformation: React.FC = (taskId) => {
   const dispatch = useDispatch();
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
   const activePanelId = useSelector((state) => state.pageInformation.panelId);
-  const cardInfoEditOpen = useSelector((state) => state.visibility.cardInfoEditOpen)
-const [value,setValue] = useState('')
+  const cardInfoEditOpen = useSelector(
+    (state) => state.visibility.cardInfoEditOpen
+  );
+  const [value, setValue] = useState('');
   const { taskByIdData } = useTaskDataById(activeTaskId);
 
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
- // console.log(activePanelId);
+  const { updateTaskMutation } = useUpdateTaskMutation();
+  // console.log(activePanelId);
   // const { panelByIdData } = usePanelDataById(
   //   taskByIdData && taskByIdData[0]?.panelId
   // );
@@ -77,6 +81,18 @@ const [value,setValue] = useState('')
     (state) => state.pageInformation.addMemberVisible
   );
 
+ console.log('taskdata', taskByIdData);
+  const handleTaskDescriptionUpdate = (e:React.SyntheticEvent) => {
+    e.preventDefault()
+    const data = {
+      ...taskByIdData[0],
+      description: value,
+      panelId: activePanelId,
+    };
+    console.log('taskdata',data)
+    updateTaskMutation(data)
+  }
+//
   const handleCancel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCardInfoVisible(false));
@@ -84,11 +100,14 @@ const [value,setValue] = useState('')
     dispatch(setMemberCardVisible(false));
     dispatch(setCoverCardVisible(false));
     dispatch(setAddMemberVisible(false));
+    dispatch(setCardInfoEditOpen(false));
   };
 
   const handleAddMemberVisible = (e) => {
     e.preventDefault();
     dispatch(setAddMemberVisible(true));
+    dispatch(setCoverCardVisible(false));
+    dispatch(setColorCardVisible(false));
   };
 
   const handleMemberCard = (e) => {
@@ -114,16 +133,18 @@ const [value,setValue] = useState('')
     dispatch(setAddMemberVisible(false));
   };
 
-
   const handleEditButton = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(setCardInfoEditOpen(!cardInfoEditOpen));
-  }
+    setValue(taskByIdData && taskByIdData[0]?.description);
+  };
 
   const handleQuillSaveButton = (e) => {
-        e.preventDefault();
-console.log('working' )
-   }
+    e.preventDefault();
+    console.log('working');
+  };
+
+
   return (
     <article
       style={{
@@ -207,9 +228,15 @@ console.log('working' )
           </Stack>
           <Box>
             {cardInfoEditOpen ? (
-              <QuillInput onSave={handleQuillSaveButton} onCancel={handleCancel } value={value} onChange={setValue} />
+              <QuillInput
+                onSave={handleTaskDescriptionUpdate}
+                onCancel={handleCancel}
+                value={value}
+                onChange={setValue}
+              />
             ) : (
-              (taskByIdData && taskByIdData[0]?.description) || (
+                     <DescriptionText description={taskByIdData && taskByIdData[0]?.description} />
+    || (
                 <div>
                   <Typography sx={{ fontSize: '14px' }}>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.

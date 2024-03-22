@@ -73,6 +73,7 @@ const updateTask = async (req, res) => {
 
     res.status(201).json({ result, message: 'successfully updated' });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };
