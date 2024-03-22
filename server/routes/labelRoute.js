@@ -4,8 +4,11 @@ const {
   updateLabel,
   createLabel,
   deleteLabel,
+  getLabelByTaskId,
 } = require('../controllers/labelController');
 const router = require('express').Router();
+
+router.get('/tasks/:id', getLabelByTaskId);
 
 router.get('/:id', getLabelById);
 router.put('/:id', updateLabel);

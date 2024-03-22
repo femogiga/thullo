@@ -49,7 +49,7 @@ import { setCardInfoEditOpen } from '../../features/visibilitySlice';
 import { useState } from 'react';
 import DescriptionText from '../boardInfo/DescriptionText';
 
-const CardInformation: React.FC = (taskId) => {
+const CardInformation: React.FC = ({taskId}) => {
   const dispatch = useDispatch();
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
   const activePanelId = useSelector((state) => state.pageInformation.panelId);
@@ -343,10 +343,11 @@ const CardInformation: React.FC = (taskId) => {
               </Box>
             </Stack>
           )}
+          
           <Box position={'relative'} top='1rem'>
             {memberCardVisible && <MemberCard />}
             {coverCardVisible && <CoverCard />}
-            {colorCardVisible && <LabelCard />}
+            {colorCardVisible && <LabelCard taskId={activeTaskId} />}
           </Box>
         </Grid>
       </Grid>

@@ -21,6 +21,24 @@ const getLabelById = async (req, res) => {
   }
 };
 
+const getLabelByTaskId = async (req, res) => {
+  const id = req.params.taskId;
+  try {
+    const result = await knex
+      .from('Task')
+      .where('Task.id', '=', parseInt(req.params.id))
+      .leftJoin('TasksOnLabels', 'TasksOnLabels.taskId', '=', 'Task.id')
+      .leftJoin('Label', 'Label.id', '=', 'TasksOnLabels.labelId')
+      .select('Label.label as label', 'Label.labelColor as labelColor')
+      .distinct()
+      .limit(2);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
+
 const updateLabel = async (req, res) => {
   const { label, labelColor } = req.body;
   try {
@@ -28,8 +46,8 @@ const updateLabel = async (req, res) => {
       .where('id', '=', parseInt(req.params.id))
       //   .andWhere('authorId', '=', req.user.id)
       .update({
-          label: label,
-          labelColor: labelColor
+        label: label,
+        labelColor: labelColor,
       });
 
     res.status(200).json({ result, message: 'successfully updated' });
@@ -39,7 +57,7 @@ const updateLabel = async (req, res) => {
 };
 
 const createLabel = async (req, res) => {
-  const { label,  labelColor } = req.body;
+  const { label, labelColor } = req.body;
   try {
     const result = await knex('Label').insert({
       label: label,
@@ -68,6 +86,7 @@ const deleteLabel = async (req, res) => {
 module.exports = {
   getAllLabel,
   getLabelById,
+  getLabelByTaskId,
   updateLabel,
   createLabel,
   deleteLabel,

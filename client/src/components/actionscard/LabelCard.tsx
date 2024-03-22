@@ -19,12 +19,21 @@ import { colors } from './auxillary/colors';
 import IconLabel from '../auxillary/IconLabel';
 import Chips from '../taskcard/auxillary/Chips';
 import CrudButton from '../auxillary/CrudButton';
-const LabelCard = () => {
+import {
+  useLabelByIdData,
+  useLabelByTaskIdData,
+  useLabelMutation,
+} from '../../api/labelData';
+import { useSelector } from 'react-redux';
+const LabelCard: React.FC = ({ taskId }) => {
   /**
    ** LabelCard is used to apply color , labels and classification   in task
    *
    *
    */
+
+  const { labelMutation } = useLabelMutation();
+  const { labelByTaskIdData } = useLabelByTaskIdData(taskId);
 
   const [label, setLabel] = useState('');
   const [color, setColor] = useState('');
@@ -37,8 +46,14 @@ const LabelCard = () => {
     e.preventDefault();
     setColor(e.currentTarget.name);
   };
-  const data = { label, color };
-  console.log('chipData----->', data);
+
+  const handleAddLabel = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const data = { label, labelColor: color };
+    console.log('chipData----->', data);
+    labelMutation(data);
+  };
+  // const data = { label, color };
   useEffect(() => {}, [color]);
   return (
     <Card
@@ -117,9 +132,19 @@ const LabelCard = () => {
             labelText={'Available'}
             icon={<LabelIcon sx={{ fontSize: '14px' }} />}
           />
-          <Stack direction='row' spacing={1} sx={{ marginBlockEnd: '1rem' }}>
-            <Chips label={'Technical'} />
-            <Chips label={'Design'} />
+          <Stack
+            direction='row'
+            spacing={1}
+            flexWrap={'wrap'}
+            sx={{ marginBlockEnd: '1rem' }}>
+            {labelByTaskIdData &&
+              labelByTaskIdData.map((chipItem) => (
+                <Chips
+                  label={chipItem?.label}
+                  chip={{ bgColor: chipItem?.labelColor }}
+                />
+              ))}
+            {/* / <Chips label={'Design'} /> */}
             <Chips label={label} chip={{ bgColor: color }} />
           </Stack>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -127,6 +152,7 @@ const LabelCard = () => {
               text={'Add'}
               colours={{ color: 'white', bg: '#2F80ED' }}
               icon={null}
+              onClick={handleAddLabel}
             />
           </Box>
         </Paper>
