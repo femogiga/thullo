@@ -19,12 +19,21 @@ import LabelCard from './../actionscard/LabelCard';
 import { chipColor } from './../../utility/chipColor';
 import { Link } from 'react-router-dom';
 
-const TaskCard = ({ title, description, imageUrl, labels, users, onClick }) => {
+interface ITaskCard{
+  title: string,
+  description: string,
+  imageUrl: string,
+  labels: string[],
+  users: string[]
+  onClick:()=>void
+
+}
+const TaskCard:React.FC = ({ title, description, imageUrl, labels, users, onClick }) => {
   // const { handleAddUserButton, show, setShow } = useUserHook;
   const [show, setShow] = useState(false);
   useEffect(() => {}, [show]);
 
-  const handleAddUserButton = (e) => {
+  const handleAddUserButton = (e:React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
     //dispatch()

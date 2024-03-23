@@ -156,7 +156,7 @@ const CardInformation: React.FC = ({taskId}) => {
         zIndex: '6',
         top: '7rem',
         backgroundColor: 'rgba(255,255,255,1)',
-        backdropFilter: 'blur(505px)',
+        //backdropFilter: 'blur(505px)',
         // border: '1px solid black',
         // translate: '50%',
         // zIndex: '4',
@@ -343,7 +343,7 @@ const CardInformation: React.FC = ({taskId}) => {
               </Box>
             </Stack>
           )}
-          
+
           <Box position={'relative'} top='1rem'>
             {memberCardVisible && <MemberCard />}
             {coverCardVisible && <CoverCard />}

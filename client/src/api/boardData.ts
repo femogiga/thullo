@@ -51,3 +51,27 @@ export const useBoardUpdateMutation = () => {
     });
     return { isSuccess, error, mutateAsync };
 };
+
+
+export const useCreateBoardMutation = () => {
+    const queryClient = useQueryClient();
+    const { isSuccess, error, mutateAsync:createBoardMutate } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.post(`/boards`, data);
+            return response.data;
+        },
+        onSettled: (data) => {
+
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['panelById'] })
+
+            //window.location.reload();
+
+
+        }
+
+
+    });
+    return { isSuccess, error, createBoardMutate };
+};

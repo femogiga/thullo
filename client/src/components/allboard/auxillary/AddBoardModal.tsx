@@ -16,7 +16,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import AddIcon from '@mui/icons-material/Add';
 import CrudButton from '../../auxillary/CrudButton';
 
-const AddBoardModal = () => {
+const AddBoardModal: React.FC = ({ onCancel }) => {
   return (
     <Box
       sx={{
@@ -87,6 +87,7 @@ const AddBoardModal = () => {
         spacing={2}
         alignItems={'center'}>
         <Button
+          onClick={onCancel}
           sx={{
             textTransform: 'capitalize',
             color: '#828282',
@@ -94,7 +95,7 @@ const AddBoardModal = () => {
           Cancel
         </Button>
         <CrudButton
-          icon={<AddIcon sx={{ fontSize: 12 }} />}
+          icon={<AddIcon sx={{ fontSize: 9 }} />}
           text={'Create'}
           colours={{ color: 'white', bg: '#2F80ED' }}
         />
