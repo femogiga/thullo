@@ -19,7 +19,7 @@ import { photo } from './../../tests/testData';
 import { usePexelSearchData } from '../../api/pexelData';
 import { Link } from 'react-router-dom';
 
-export const CoverCard: React.FC = () => {
+export const CoverCard: React.FC = ({ onImageSelect }) => {
   const [searchTerm, setSearchTerm] = useState('PC');
 
   const { coverPhotoData } = usePexelSearchData(searchTerm || 'PC');
@@ -98,7 +98,7 @@ export const CoverCard: React.FC = () => {
             justifyContent={'space-between'}>
             {coverPhotoData &&
               coverPhotoData.photos.map((photo) => (
-                <Link to={''}>
+                <Link to={''} id={photo?.src?.small} onClick={onImageSelect}>
                   <MiniCard
                     src={photo?.src?.small}
                     width={'50px'}

@@ -10,13 +10,17 @@ import { useAllBoardPageData } from '../../api/allBoardPageData';
 import IsLoading from './../auxillary/IsLoading';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCreateBoardOpen } from '../../features/visibilitySlice';
+import { setAddBoardCoverOpen, setCreateBoardOpen } from '../../features/visibilitySlice';
+import { CoverCard } from '../actionscard/CoverCard';
+import { useState } from 'react';
 
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
+  const[coverImage,setCoverImage]=useState("")
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
   );
+  const addBoardCoverOpen = useSelector((state)=>state.visibility.addBoardCoverOpen)
   const { isPending, error, data } = useAllBoardData();
   const {
     isPending: allBoardPagepending,
@@ -32,7 +36,12 @@ const AllBoard: React.FC = () => {
    const handleAddBoardModalClose = (e: React.SyntheticEvent) => {
      e.preventDefault();
      dispatch(setCreateBoardOpen(false));
-   };
+  };
+
+  const handleCoverButtonClick=(e:React.SyntheticEvent) => {
+    e.preventDefault()
+    dispatch(setAddBoardCoverOpen(!addBoardCoverOpen));
+  }
   //console.log(allBoardPageData);
   const { createBoardMutate } = useCreateBoardMutation();
 
@@ -40,6 +49,14 @@ const AllBoard: React.FC = () => {
   //   const data = {name,adminId,thumbnail,description}
   //     const res = createBoardMutate(data)
   // }
+
+
+  const handleCoverImageClick = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    setCoverImage(e.currentTarget.id)
+
+  }
+  console.log(coverImage)
   return (
     <Box className='container' sx={{ position: 'relative' }}>
       <Board direction={'column'}>
@@ -95,7 +112,22 @@ const AllBoard: React.FC = () => {
         </Box>
         {createBoardModalVisible && (
           <Box sx={{ position: 'absolute', zIndex: '10', right: '44%' }}>
-            <AddBoardModal onCancel={handleAddBoardModalClose} />
+            <AddBoardModal
+              onCover={handleCoverButtonClick}
+              onCancel={handleAddBoardModalClose}
+              coverImage={coverImage}
+            />
+          </Box>
+        )}
+        {addBoardCoverOpen && (
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: '10',
+              left: '30%',
+              top: '60%',
+            }}>
+            <CoverCard onImageSelect={handleCoverImageClick} />
           </Box>
         )}
       </Board>
