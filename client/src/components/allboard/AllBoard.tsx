@@ -10,17 +10,22 @@ import { useAllBoardPageData } from '../../api/allBoardPageData';
 import IsLoading from './../auxillary/IsLoading';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setAddBoardCoverOpen, setCreateBoardOpen } from '../../features/visibilitySlice';
+import {
+  setAddBoardCoverOpen,
+  setCreateBoardOpen,
+} from '../../features/visibilitySlice';
 import { CoverCard } from '../actionscard/CoverCard';
 import { useState } from 'react';
 
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
-  const[coverImage,setCoverImage]=useState("")
+  const [coverImage, setCoverImage] = useState('');
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
   );
-  const addBoardCoverOpen = useSelector((state)=>state.visibility.addBoardCoverOpen)
+  const addBoardCoverOpen = useSelector(
+    (state) => state.visibility.addBoardCoverOpen
+  );
   const { isPending, error, data } = useAllBoardData();
   const {
     isPending: allBoardPagepending,
@@ -33,15 +38,16 @@ const AllBoard: React.FC = () => {
     dispatch(setCreateBoardOpen(!createBoardModalVisible));
   };
 
-   const handleAddBoardModalClose = (e: React.SyntheticEvent) => {
-     e.preventDefault();
-     dispatch(setCreateBoardOpen(false));
+  const handleAddBoardModalClose = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    dispatch(setCreateBoardOpen(false));
+    dispatch(setAddBoardCoverOpen(false));
   };
 
-  const handleCoverButtonClick=(e:React.SyntheticEvent) => {
-    e.preventDefault()
+  const handleCoverButtonClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     dispatch(setAddBoardCoverOpen(!addBoardCoverOpen));
-  }
+  };
   //console.log(allBoardPageData);
   const { createBoardMutate } = useCreateBoardMutation();
 
@@ -50,13 +56,11 @@ const AllBoard: React.FC = () => {
   //     const res = createBoardMutate(data)
   // }
 
-
   const handleCoverImageClick = (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    setCoverImage(e.currentTarget.id)
-
-  }
-  console.log(coverImage)
+    e.preventDefault();
+    setCoverImage(e.currentTarget.id);
+  };
+  console.log(coverImage);
   return (
     <Box className='container' sx={{ position: 'relative' }}>
       <Board direction={'column'}>
@@ -111,7 +115,13 @@ const AllBoard: React.FC = () => {
           </Stack>
         </Box>
         {createBoardModalVisible && (
-          <Box sx={{ position: 'absolute', zIndex: '10', right: '44%' }}>
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: '10',
+              top: '1rem',
+              right: '44%',
+            }}>
             <AddBoardModal
               onCover={handleCoverButtonClick}
               onCancel={handleAddBoardModalClose}
@@ -125,7 +135,7 @@ const AllBoard: React.FC = () => {
               position: 'absolute',
               zIndex: '10',
               left: '30%',
-              top: '60%',
+              top: '28%',
             }}>
             <CoverCard onImageSelect={handleCoverImageClick} />
           </Box>

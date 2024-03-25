@@ -98,7 +98,7 @@ export const CoverCard: React.FC = ({ onImageSelect }) => {
             justifyContent={'space-between'}>
             {coverPhotoData &&
               coverPhotoData.photos.map((photo) => (
-                <Link to={''} id={photo?.src?.small} onClick={onImageSelect}>
+                <Link to={''} id={photo?.src?.original} onClick={onImageSelect}>
                   <MiniCard
                     src={photo?.src?.small}
                     width={'50px'}

@@ -34,15 +34,15 @@ const AddBoardModal: React.FC = ({ onCancel, onCover, coverImage }) => {
   const handleCreateBoard = () => {
     const data = { name: boardname, adminId: 2, thumbnail: coverImage };
     const res = createBoardMutate(data);
-    console.log(data);
+    //console.log(data);
     dispatch(setAddBoardCoverOpen(false));
     dispatch(setCreateBoardOpen(false));
-    console.log(res);
+    //console.log(res);
     res.then((data) => data.result[0])
       .then((data) => navigate(`/boards/${data.id}`));
     //navigate('/boards')
   };
-  console.log(boardname);
+  //console.log(boardname);
   return (
     <Box
       sx={{

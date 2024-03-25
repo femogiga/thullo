@@ -44,13 +44,14 @@ const createBoard = async (req, res) => {
   try {
     const result = await knex('Board').insert({
       name: name,
-      adminId: parseInt(adminId),
+      adminId:1 || parseInt(adminId) ,
       thumbnail: thumbnail,
 
     }).returning(["id"]);
 
     res.status(201).json({ result, message: 'successfully created' });
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 };
