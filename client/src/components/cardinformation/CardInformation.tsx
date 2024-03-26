@@ -46,10 +46,12 @@ import {
 } from '../../api/panelData';
 import { QuillInput } from '../auxillary/QuillInput';
 import { setCardInfoEditOpen } from '../../features/visibilitySlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DescriptionText from '../boardInfo/DescriptionText';
 
-const CardInformation: React.FC = ({taskId}) => {
+const CardInformation: React.FC = ({ taskId }) => {
+  const [coverImage, setCoverImage] = useState('');
+
   const dispatch = useDispatch();
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
   const activePanelId = useSelector((state) => state.pageInformation.panelId);
@@ -61,6 +63,7 @@ const CardInformation: React.FC = ({taskId}) => {
 
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
   const { updateTaskMutation } = useUpdateTaskMutation();
+  useEffect(() => {}, [coverImage]);
   // console.log(activePanelId);
   // const { panelByIdData } = usePanelDataById(
   //   taskByIdData && taskByIdData[0]?.panelId
@@ -81,18 +84,18 @@ const CardInformation: React.FC = ({taskId}) => {
     (state) => state.pageInformation.addMemberVisible
   );
 
- console.log('taskdata', taskByIdData);
-  const handleTaskDescriptionUpdate = (e:React.SyntheticEvent) => {
-    e.preventDefault()
+  //console.log('taskdata', taskByIdData);
+  const handleTaskDescriptionUpdate = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     const data = {
       ...taskByIdData[0],
       description: value,
       panelId: activePanelId,
     };
-    console.log('taskdata',data)
-    updateTaskMutation(data)
-  }
-//
+    console.log('taskdata', data);
+    updateTaskMutation(data);
+  };
+  //
   const handleCancel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCardInfoVisible(false));
@@ -139,10 +142,28 @@ const CardInformation: React.FC = ({taskId}) => {
     setValue(taskByIdData && taskByIdData[0]?.description);
   };
 
-  const handleQuillSaveButton = (e) => {
-    e.preventDefault();
-    console.log('working');
-  };
+  // const handleQuillSaveButton = (e) => {
+  //   e.preventDefault();
+  //   console.log('working');
+  // };
+
+ const handleCoverImageClick = (e: React.MouseEvent) => {
+   e.preventDefault();
+   const clickedImageId = e.currentTarget.id;
+   setCoverImage((prevCoverImage) => {
+     if (clickedImageId) {
+       const data = {
+         ...taskByIdData[0],
+         imageUrl: clickedImageId,
+       };
+      // console.log('taskdata', data);
+       updateTaskMutation(data);
+       return clickedImageId;
+     }
+     return prevCoverImage;
+   });
+ };
+
 
 
   return (
@@ -171,6 +192,7 @@ const CardInformation: React.FC = ({taskId}) => {
             marginBlockEnd: '1rem',
           }}
           src={
+            coverImage ||
             (taskByIdData && taskByIdData[0]?.imageUrl) ||
             'https://images.pexels.com/photos/777001/pexels-photo-777001.jpeg?auto=compress&cs=tinysrgb&w='
           }
@@ -235,8 +257,11 @@ const CardInformation: React.FC = ({taskId}) => {
                 onChange={setValue}
               />
             ) : (
-                     <DescriptionText description={taskByIdData && taskByIdData[0]?.description} />
-    || (
+              (
+                <DescriptionText
+                  description={taskByIdData && taskByIdData[0]?.description}
+                />
+              ) || (
                 <div>
                   <Typography sx={{ fontSize: '14px' }}>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -346,7 +371,9 @@ const CardInformation: React.FC = ({taskId}) => {
 
           <Box position={'relative'} top='1rem'>
             {memberCardVisible && <MemberCard />}
-            {coverCardVisible && <CoverCard />}
+            {coverCardVisible && (
+              <CoverCard onImageSelect={handleCoverImageClick} />
+            )}
             {colorCardVisible && <LabelCard taskId={activeTaskId} />}
           </Box>
         </Grid>

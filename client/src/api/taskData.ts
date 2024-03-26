@@ -58,9 +58,11 @@ export const useTaskCardMutation = () => {
             return response.data;
         },
         onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['taskCard'] })
-            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['tasksById'] })
+
 
             window.location.reload();
 
