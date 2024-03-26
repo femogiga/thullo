@@ -22,6 +22,7 @@ import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 import CardInformation from '../../cardinformation/CardInformation';
 import { setCardInfoVisible } from '../../../features/PageInformationSlice';
+import AddListButton from '../../auxillary/AddListButton';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
@@ -270,6 +271,9 @@ const BoardPage = () => {
           </Box>
         </TaskPanel> */}
         {cardInfoVisible && <CardInformation />}
+        <div>
+          <AddListButton />
+        </div>
       </Board>
       {/* <CardInformation /> */}
       {/* <AllBoard/> */}

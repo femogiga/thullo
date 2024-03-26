@@ -68,7 +68,7 @@ const TaskPanel: React.FC<IPanel> = ({
   return (
     <div style={style}>
       {/* {children} */}
-      <PanelName id={panelId} listName={title} icon={'🛷'} onClick={onClick} />
+      <PanelName id={panelId} listName={title} icon={null} onClick={onClick} />
 
       {task &&
         task

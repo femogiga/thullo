@@ -4,8 +4,10 @@
 CREATE OR REPLACE FUNCTION create_panel_for_board()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public."Panel" (title, "boardId")
-    VALUES ('Backlog', NEW.id);
+    INSERT INTO public."Panel" (title, "boardId") VALUES ('Backlog 🛷', NEW.id);
+    INSERT INTO public."Panel" (title, "boardId") VALUES ('In Progress 📚', NEW.id);
+    INSERT INTO public."Panel" (title, "boardId") VALUES ('In Review ⚙️', NEW.id);
+    INSERT INTO public."Panel" (title, "boardId") VALUES ('Completed 👌', NEW.id);
     RETURN NULL; -- Since you don't need to return anything for an INSERT trigger
 END;
 $$ LANGUAGE plpgsql;

@@ -5,7 +5,7 @@ const PanelName = ({ icon, listName, onClick }) => {
   return (
     <Stack direction='row' alignItems='center' justifyContent='space-between'>
       <p style={style}>
-        {listName} <span className='icon'>{icon || '🤔'}</span>
+        {listName} <span className='icon'>{icon}</span>
       </p>
       <Button variant='text' onClick={onClick}>
         <MoreHorizIcon />
