@@ -14,6 +14,7 @@ import {
 import AddCardInput from '../auxillary/CreateTaskForm';
 import CreateTaskForm from '../auxillary/CreateTaskForm';
 import { setCreateTaskFormVisible } from '../../features/visibilitySlice';
+import DeleteRename from '../auxillary/DeleteRename';
 
 interface IPanel {
   panelId: number;
@@ -22,6 +23,7 @@ interface IPanel {
   onClick: (e: MouseEvent) => void;
   panel;
   index: number;
+  visibleState: boolean;
 }
 
 const TaskPanel: React.FC<IPanel> = ({
@@ -31,12 +33,13 @@ const TaskPanel: React.FC<IPanel> = ({
   onClick,
   panel,
   index,
+  visibleState,
+  isPanelVisible,
 }) => {
-  const [visibleState, setVisibleState] = useState(false);
   const [createFormVisibleState, setCreateFormVisibleState] = useState(false);
 
   const dispatch = useDispatch();
-  console.log('status=====>',panel)
+  console.log('status=====>', panel);
   const handleCardClick = (e: MouseEvent, taskId: number, panelId: number) => {
     e.preventDefault();
     dispatch(setTaskId(taskId));
@@ -48,8 +51,6 @@ const TaskPanel: React.FC<IPanel> = ({
     // dispatch(setCreateTaskFormVisible(!createTaskFormVisible));
     setCreateFormVisibleState(!createFormVisibleState);
   };
-
-
 
   const style = {
     // border: '1px solid black',
@@ -68,7 +69,13 @@ const TaskPanel: React.FC<IPanel> = ({
   return (
     <div style={style}>
       {/* {children} */}
-      <PanelName id={panelId} listName={title} icon={null} onClick={onClick} />
+      <PanelName
+        id={panelId}
+        listName={title}
+        icon={null}
+        onClick={onClick}
+        //visibleState={visibleState}
+      />
 
       {task &&
         task
@@ -105,6 +112,17 @@ const TaskPanel: React.FC<IPanel> = ({
         />
       )}
       <AddCardButton buttonText={''} onClick={handleCreateTaskFormVisibility} />
+      {isPanelVisible && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '3rem',
+            right: '-6rem',
+            zIndex: '6',
+          }}>
+          <DeleteRename />
+        </div>
+      )}
     </div>
   );
 };

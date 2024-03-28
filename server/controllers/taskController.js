@@ -109,6 +109,35 @@ const deleteTask = async (req, res) => {
   }
 };
 
+// const updateTaskPosition = async (req, res) => {
+//   const { title, boardId, taskId } = req.body;
+//   console.log('taskId======>', taskId);
+//   console.log('title======>', title);
+//   console.log('boardId======>', boardId);
+
+//   try {
+//     const panel = await knex
+//       .from('Panel')
+//       .where('title', '=', title)
+//       .andWhere('boardId', '=', parseInt(boardId))
+//       // .where('title', '=', 'Completed')
+//       // .andWhere('boardId', '=', 1)
+//       .select('*');
+//     const newPanelId = parseInt(panel[0]?.id);
+//     const task = await knex('Task')
+//       //.where('id', '=', 2)
+//       .where('id', '=', parseInt(taskId))
+//       .update({ panelId: newPanelId });
+//     // .update({ panelId: 2 });
+
+//     console.log('panel=====>', task);
+//     res.status(200).json({ task, message: 'successfully updated' });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json(error);
+//   }
+// };
+
 const updateTaskPosition = async (req, res) => {
   const { title, boardId, taskId } = req.body;
   console.log('taskId======>', taskId);
@@ -120,23 +149,31 @@ const updateTaskPosition = async (req, res) => {
       .from('Panel')
       .where('title', '=', title)
       .andWhere('boardId', '=', parseInt(boardId))
-      // .where('title', '=', 'Completed')
-      // .andWhere('boardId', '=', 1)
       .select('*');
+
+    if (!panel || panel.length === 0) {
+      return res.status(404).json({ message: 'Panel not found' });
+    }
+
     const newPanelId = parseInt(panel[0]?.id);
+
     const task = await knex('Task')
-      //.where('id', '=', 2)
       .where('id', '=', parseInt(taskId))
       .update({ panelId: newPanelId });
-    // .update({ panelId: 2 });
 
-    console.log('panel=====>', task);
-    res.status(200).json({ task, message: 'successfully updated' });
+    console.log('task=====>', task);
+
+    if (task === 0) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    res.status(200).json({ task, message: 'Successfully updated' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 module.exports = {
   getAllTask,

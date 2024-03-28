@@ -27,38 +27,55 @@ import AddPanelModal from '../../auxillary/AddPanelModal';
 import { useCreatePanelMutation } from '../../../api/panelData';
 import { useDispatch } from 'react-redux';
 import { setAddPanelModalOpen } from '../../../features/visibilitySlice';
+import DeleteRename from '../../auxillary/DeleteRename';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
   const { createPanelMutation } = useCreatePanelMutation();
   const [title, setTitle] = useState('');
-  const [panelTitle,setPanelTitle]=useState('')
+  const [panelTitle, setPanelTitle] = useState('');
+  const [dragId, setDragId] = useState(null);
   //const { id } = useParams();
   const params = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const id = params.id;
-  const [visibleState, setVisibleState] = useState({
-    backlog: false,
-    inProgress: false,
-    inReview: false,
-    completed: false,
-  });
-  const handleDeleteRenameVisibility = (panel) => {
-    setVisibleState((prevState) => ({
-      ...prevState,
-      [panel]: !prevState[panel],
+  //const [visibleState, setVisibleState] = useState({
+  //   backlog: false,
+  //   inProgress: false,
+  //   inReview: false,
+  //   completed: false,
+  // });
+  // const handleDeleteRenameVisibility = (panel) => {
+  //   setVisibleState((prevState) => ({
+  //     ...prevState,
+  //     [panel]: !prevState[panel],
+  //   }));
+  // };
+  const [visibleStates, setVisibleStates] = useState({});
+
+  // Function to toggle visibility of a panel based on its index
+  const handleDeleteRenameVisibility = (index) => {
+    setVisibleStates((prevStates) => ({
+      ...prevStates,
+      [index]: !prevStates[index],
     }));
   };
+  const [visibleState, setVisibleState] = useState(false);
+
+  // const handleDeleteRenameVisibility = (panel) => {
+  //   setVisibleState((prevState) => !prevState);
+  // };
 
   const handleCreatePanel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const panelData = { boardId: id, title: panelTitle };
     console.log(panelData);
-    const res = createPanelMutation(panelData)
-    res.then(() =>dispatch(setAddPanelModalOpen(false)))
+    const res = createPanelMutation(panelData);
+    res.then(() => dispatch(setAddPanelModalOpen(false)));
   };
 
-  useEffect(() => {}, [params]);
+  useEffect(() => {}, [params, id]);
+  useEffect(() => {}, [dragId, title]);
 
   const pageInfoVisibility = useSelector(
     (state) => state.pageInformation.visible
@@ -76,11 +93,9 @@ const BoardPage = () => {
   console.log(panelByBoardIdData && panelByBoardIdData);
   const { isSuccess, error, mutateAsync } = useTaskCardMutation();
 
-
   const handlePanelTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPanelTitle(e.target.value);
-
-  }
+  };
   // const onDragEnd = (result) => {
   //   const { destination, source, draggableId } = result
   //   if (!destination) {
@@ -125,9 +140,10 @@ const BoardPage = () => {
     ) {
       return;
     }
-    const destTextArray = destination.droppableId.split('-');
+    const destTextArray = destination?.droppableId?.split('-');
     //const title = destTextArray[0];
-    setTitle(destTextArray[0]);
+    const titleText = destTextArray[0];
+    setTitle(titleText);
     console.log(title);
     //console.log('destArray===>', destArray);
     console.log('boardId===>', id);
@@ -138,14 +154,16 @@ const BoardPage = () => {
     //console.log(draggableId);
     //const boardId = id;
     const taskId = parseInt(draggableId);
-
+    console.log(destination.droppableId);
     //
     // if (title && taskId && boardId) {
-    if (taskId) {
+    if (!isNaN(taskId) && title) {
+      setDragId(taskId);
       const dataToSend = {
-        title: title,
+        title: destination.droppableId,
         boardId: id,
-        taskId: taskId && taskId,
+        // taskId: taskId && taskId,
+        taskId: taskId,
       };
       mutateAsync(dataToSend);
       // }
@@ -176,6 +194,9 @@ const BoardPage = () => {
           {panelByBoardIdData &&
             panelByBoardIdData.map((panel, index) => {
               //const { cardData } = useCardData(panel?.id);
+              const panelIndex = `panel-${index}`;
+              const isPanelVisible = visibleStates[panelIndex];
+
               //
               return (
                 <>
@@ -195,13 +216,21 @@ const BoardPage = () => {
                           title={panel?.title}
                           index={index}
                           panel={panel}
+                          visibleState={visibleState}
                           task={taskCard?.filter(
                             (item) => item?.panelId === panel?.id
                           )}
                           onClick={() =>
-                            handleDeleteRenameVisibility('backlog')
+                            handleDeleteRenameVisibility(panelIndex)
                           }
+                          isPanelVisible={isPanelVisible}
                         />
+                        {/* {isPanelVisible && (
+                          <div style={{ position: 'absolute', top: '14rem' ,left:'5rem'}}>
+                            <DeleteRename />
+                          </div>
+                        )} */}
+
                         {provided.placeholder}
                       </div>
                     )}
