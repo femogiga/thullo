@@ -24,12 +24,18 @@ import CardInformation from '../../cardinformation/CardInformation';
 import { setCardInfoVisible } from '../../../features/PageInformationSlice';
 import AddListButton from '../../auxillary/AddListButton';
 import AddPanelModal from '../../auxillary/AddPanelModal';
+import { useCreatePanelMutation } from '../../../api/panelData';
+import { useDispatch } from 'react-redux';
+import { setAddPanelModalOpen } from '../../../features/visibilitySlice';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
+  const { createPanelMutation } = useCreatePanelMutation();
   const [title, setTitle] = useState('');
+  const [panelTitle,setPanelTitle]=useState('')
   //const { id } = useParams();
   const params = useParams();
+  const dispatch = useDispatch()
   const id = params.id;
   const [visibleState, setVisibleState] = useState({
     backlog: false,
@@ -46,6 +52,10 @@ const BoardPage = () => {
 
   const handleCreatePanel = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    const panelData = { boardId: id, title: panelTitle };
+    console.log(panelData);
+    const res = createPanelMutation(panelData)
+    res.then(() =>dispatch(setAddPanelModalOpen(false)))
   };
 
   useEffect(() => {}, [params]);
@@ -66,6 +76,11 @@ const BoardPage = () => {
   console.log(panelByBoardIdData && panelByBoardIdData);
   const { isSuccess, error, mutateAsync } = useTaskCardMutation();
 
+
+  const handlePanelTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPanelTitle(e.target.value);
+
+  }
   // const onDragEnd = (result) => {
   //   const { destination, source, draggableId } = result
   //   if (!destination) {
@@ -281,7 +296,12 @@ const BoardPage = () => {
         {cardInfoVisible && <CardInformation />}
         <div>
           <AddListButton />
-          {addPanelModalOpen && <AddPanelModal onSave={''}  />}
+          {addPanelModalOpen && (
+            <AddPanelModal
+              onSave={handleCreatePanel}
+              onChange={handlePanelTitleChange}
+            />
+          )}
         </div>
       </Board>
       {/* <CardInformation /> */}

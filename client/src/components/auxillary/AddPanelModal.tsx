@@ -9,9 +9,8 @@ import {
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CrudButton from './CrudButton';
-import { useSelector } from 'react-redux';
 
-const AddPanelModal = (onSave) => {
+const AddPanelModal = ({ onChange, onSave }) => {
   return (
     <Stack
       direction={'column'}
@@ -20,15 +19,13 @@ const AddPanelModal = (onSave) => {
         boxShadow: '0 2px 4px 1px rgba(0,0,0,.1)',
         borderRadius: '8px',
         padding: '1rem',
-        width: '96%',
+        width: '15.3rem',
         backgroundColor: 'white',
       }}>
-      <Link to=''>
-        <Typography sx={{ fontSize: '10px', color: '#828282' }}>
-          title
-        </Typography>
-        <TextField />
-      </Link>
+      <Box>
+        <Typography sx={{ fontSize: '', color: '#828282' }}>Title</Typography>
+        <TextField onChange={onChange} />
+      </Box>
       {/* <Divider /> */}
 
       <CrudButton
