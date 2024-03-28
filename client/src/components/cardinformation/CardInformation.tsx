@@ -147,24 +147,22 @@ const CardInformation: React.FC = ({ taskId }) => {
   //   console.log('working');
   // };
 
- const handleCoverImageClick = (e: React.MouseEvent) => {
-   e.preventDefault();
-   const clickedImageId = e.currentTarget.id;
-   setCoverImage((prevCoverImage) => {
-     if (clickedImageId) {
-       const data = {
-         ...taskByIdData[0],
-         imageUrl: clickedImageId,
-       };
-      // console.log('taskdata', data);
-       updateTaskMutation(data);
-       return clickedImageId;
-     }
-     return prevCoverImage;
-   });
- };
-
-
+  const handleCoverImageClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const clickedImageId = e.currentTarget.id;
+    setCoverImage((prevCoverImage) => {
+      if (clickedImageId) {
+        const data = {
+          ...taskByIdData[0],
+          imageUrl: clickedImageId,
+        };
+        // console.log('taskdata', data);
+        updateTaskMutation(data);
+        return clickedImageId;
+      }
+      return prevCoverImage;
+    });
+  };
 
   return (
     <article

@@ -23,6 +23,7 @@ import { useParams } from 'react-router-dom';
 import CardInformation from '../../cardinformation/CardInformation';
 import { setCardInfoVisible } from '../../../features/PageInformationSlice';
 import AddListButton from '../../auxillary/AddListButton';
+import AddPanelModal from '../../auxillary/AddPanelModal';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
@@ -43,6 +44,10 @@ const BoardPage = () => {
     }));
   };
 
+  const handleCreatePanel = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+  };
+
   useEffect(() => {}, [params]);
 
   const pageInfoVisibility = useSelector(
@@ -51,6 +56,9 @@ const BoardPage = () => {
   const visibleModalState = useSelector((state) => state.visibility.visible);
   const cardInfoVisible = useSelector(
     (state) => state.pageInformation.cardInfoVisible
+  );
+  const addPanelModalOpen = useSelector(
+    (state) => state.visibility.addPanelModalOpen
   );
   // const { id } = useParams();
   // const { boardByIdData } = useBoardDataId(parseInt(id));
@@ -273,6 +281,7 @@ const BoardPage = () => {
         {cardInfoVisible && <CardInformation />}
         <div>
           <AddListButton />
+          {addPanelModalOpen && <AddPanelModal onSave={''}  />}
         </div>
       </Board>
       {/* <CardInformation /> */}

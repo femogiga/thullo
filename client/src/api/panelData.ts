@@ -80,3 +80,29 @@ export const useAllPanelDatatwo = (id) => { // Modify the hook to accept an id p
 
     return taskData; // Return the task data
 }
+
+
+export const useCreatePanelMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: createPanelMutation } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.post('/panels', data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+
+
+
+        }
+
+
+    });
+
+
+    return { isSuccess, error, createPanelMutation };
+};

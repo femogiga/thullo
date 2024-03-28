@@ -1,15 +1,21 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import FeedIcon from '@mui/icons-material/Feed';
 import EditIcon from '@mui/icons-material/Edit';
+import { JSXElementConstructor } from 'react';
 
 interface CrudButtonProps {
   text: string;
-  icon: React.ReactElement<SVGAElement>;
+  icon: React.Component | null;
   colours: { bg: string; color: string };
-  onClick: (e:React.FormEvent<HTMLButtonElement>) => void;
+  onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 
-const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours ,onClick}) => {
+const CrudButton: React.FC<CrudButtonProps> = ({
+  text,
+  icon,
+  colours,
+  onClick,
+}) => {
   // colours = {
   //   bg: 'blue',
   //   color:'white'

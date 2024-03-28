@@ -1,20 +1,34 @@
 import { Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-const AddListButton = () => {
+import DeleteRename from './DeleteRename';
+import { useDispatch } from 'react-redux';
+import { setAddPanelModalOpen } from '../../features/visibilitySlice';
+import { useSelector } from 'react-redux';
+const AddListButton: React.FC = () => {
   /**
    ** this button is for  adding List only
    *
    *
    *
    */
+
+  const dispatch = useDispatch()
+ const addPanelModalOpen = useSelector(
+      (state) => state.visibility.addPanelModalOpen
+    );
+  const handleCreatePanelModalVisibility = () => {
+    dispatch(setAddPanelModalOpen(!addPanelModalOpen));
+  }
   return (
     <div>
       <Button
+        onClick={handleCreatePanelModalVisibility}
         sx={{
           width: '244px',
           display: 'flex',
           justifyContent: 'space-between',
           backgroundColor: '#DAE4FD',
+          marginBlockEnd: '.4rem',
         }}
         endIcon={<AddIcon />}>
         <Typography
