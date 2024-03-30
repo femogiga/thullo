@@ -94,8 +94,11 @@ const CardInformation: React.FC = ({ taskId }) => {
     };
     console.log('taskdata', data);
     updateTaskMutation(data);
+        dispatch(setCardInfoEditOpen(false));
+
   };
   //
+  useEffect(() => { },[value])
   const handleCancel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCardInfoVisible(false));

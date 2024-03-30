@@ -89,7 +89,7 @@ export const useCreateTaskMutation = () => {
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['taskCard'] })
             queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
-            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['tasksById'] })
 
 
 
@@ -116,7 +116,7 @@ export const useUpdateTaskMutation = () => {
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['taskCard'] })
             queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
-            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['tasksById'] })
 
 
 

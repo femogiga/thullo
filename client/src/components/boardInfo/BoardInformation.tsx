@@ -39,7 +39,6 @@ const BoardInformation = () => {
   const queryClient = useQueryClient();
   const { handleShowMenuClose } = usePageInformation();
   const { deleteMutate } = useDeleteBoardUserMutation();
-  const params = useParams();
 
   const { id } = useParams();
   const { boardByIdData } = useBoardDataId(id);
@@ -152,6 +151,7 @@ const BoardInformation = () => {
         padding: '1rem 2rem',
         boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
         backgroundColor: 'rgba(255,255,255)',
+        minHeight:'90vh'
 
         // opacity:0
       }}>

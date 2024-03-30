@@ -50,7 +50,6 @@ const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
     );
   };
 
-
   const handleTitleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     console.log(e.target.value);
@@ -147,12 +146,13 @@ const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
               text='Yes'
               colours={{ bg: '#EB5757', color: 'white' }}
               onClick={handleYesClick}
+              icon={null}
             />
             <CrudButton
               text='No'
               colours={{ bg: '#4F4F4F', color: 'white' }}
               onClick={handleNoClick}
-              icon=''
+              icon={null}
             />
           </Stack>
         </div>

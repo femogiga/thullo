@@ -5,7 +5,7 @@ import { JSXElementConstructor } from 'react';
 
 interface CrudButtonProps {
   text: string;
-  icon: React.Component | null;
+  icon: React.FC | null;
   colours: { bg: string; color: string };
   onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
