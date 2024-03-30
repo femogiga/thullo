@@ -12,7 +12,8 @@ const visibilitySlice = createSlice({
         cardInfoEditOpen: false,
         createBoardOpen: false,
         addBoardCoverOpen: false,
-        addPanelModalOpen:false
+        addPanelModalOpen: false,
+        renameInputVisible:false
     },
     reducers: {
         setVisibleModalVisibility: (state, action) => {
@@ -37,11 +38,16 @@ const visibilitySlice = createSlice({
         setAddPanelModalOpen: (state, action) => {
             state.addPanelModalOpen = action.payload
 
-         }
+        },
+        setRenameInputVisible: (state, action) => {
+            state.renameInputVisible = action.payload
+
+        }
+
 
     }
 })
 
 
-export const { setVisibleModalVisibility, setEditOpen, setDescriptionTextVisible, setCardInfoEditOpen, setCreateBoardOpen, setAddBoardCoverOpen, setAddPanelModalOpen } = visibilitySlice.actions
+export const { setVisibleModalVisibility, setEditOpen, setDescriptionTextVisible, setCardInfoEditOpen, setCreateBoardOpen, setAddBoardCoverOpen, setAddPanelModalOpen, setRenameInputVisible } = visibilitySlice.actions
 export default visibilitySlice.reducer

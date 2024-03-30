@@ -120,7 +120,7 @@ const TaskPanel: React.FC<IPanel> = ({
             right: '-6rem',
             zIndex: '6',
           }}>
-          <DeleteRename />
+          <DeleteRename panelId={panelId} />
         </div>
       )}
     </div>

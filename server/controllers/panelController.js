@@ -2,7 +2,7 @@ const { knex } = require('../Knex');
 
 const getAllPanel = async (req, res) => {
   try {
-    const result = await knex.from('Panel').select('*');
+    const result = await knex.from('Panel').select('*').orderBy('id', 'asc');
     console.log(result);
     res.status(200).json(result);
   } catch (error) {
@@ -15,7 +15,8 @@ const getPanelById = async (req, res) => {
     const result = await knex
       .from('Panel')
       .select('*')
-      .where('id', '=', parseInt(req.params.id));
+      .where('id', '=', parseInt(req.params.id))
+      .orderBy('id', 'asc');
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -27,7 +28,9 @@ const getPanelByBoardId = async (req, res) => {
     const result = await knex
       .from('Panel')
       .select('*')
-      .where('boardId', '=', parseInt(req.params.boardId));
+      .where('boardId', '=', parseInt(req.params.boardId))
+      .orderBy('id', 'asc');
+
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -42,6 +45,22 @@ const updatePanel = async (req, res) => {
       //   .andWhere('authorId', '=', req.user.id)
       .update({
         content: content,
+      });
+
+    res.status(200).json({ result, message: 'successfully updated' });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const updatePanelByPanelId = async (req, res) => {
+  const { title, boardId, panelId } = req.body;
+  try {
+    const result = await knex('Panel')
+      .where('id', '=', parseInt(panelId))
+      .andWhere('boardId', '=', parseInt(boardId))
+      .update({
+        title: title,
       });
 
     res.status(200).json({ result, message: 'successfully updated' });
@@ -84,4 +103,5 @@ module.exports = {
   updatePanel,
   createPanel,
   deletePanel,
+  updatePanelByPanelId,
 };

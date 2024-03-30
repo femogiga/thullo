@@ -18,7 +18,7 @@ export const useAllPanelData = () => {
 
 
 export const usePanelDataById = (id) => {
-    const { isPending, error, data:panelByIdData } = useQuery({
+    const { isPending, error, data: panelByIdData } = useQuery({
         queryKey: ['panelById'],
         queryFn: () =>
             apiService
@@ -105,4 +105,29 @@ export const useCreatePanelMutation = () => {
 
 
     return { isSuccess, error, createPanelMutation };
+};
+
+export const useUpdatePanelMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: updatePanelMutation } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.put('/panels', data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            //queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+
+
+
+        }
+
+
+    });
+
+
+    return { isSuccess, error, updatePanelMutation };
 };
