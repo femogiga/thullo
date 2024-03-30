@@ -12,41 +12,81 @@ import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Visibility from './Visibility';
 import { useDispatch } from 'react-redux';
-import { setRenameInputVisible } from '../../features/visibilitySlice';
+import {
+  setDeletePanelButtonsVisible,
+  setRenameInputVisible,
+} from '../../features/visibilitySlice';
 import { SmartButton } from '@mui/icons-material';
 import { useUpdatePanelMutation } from '../../api/panelData';
+import CrudButton from './CrudButton';
 
-const DeleteRename: React.FC = ({panelId,isPanelVisible}) => {
+const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
   const dispatch = useDispatch();
-  const { id } = useParams()
-  console.log('id: ' + id)
+  const { id } = useParams();
+  console.log('id: ' + id);
   const renameInputVisible = useSelector(
     (state) => state.visibility.renameInputVisible
   );
-    const {updatePanelMutation } = useUpdatePanelMutation()
+  const deletePanelButtonsVisible = useSelector(
+    (state) => state.visibility.deletePanelButtonsVisible
+  );
+  const { updatePanelMutation } = useUpdatePanelMutation();
 
-    const[title,setTitle] = useState('')
+  const [title, setTitle] = useState('');
   const handleRenameLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch(setRenameInputVisible(!renameInputVisible));
+    dispatch(
+      setDeletePanelButtonsVisible({
+        operation: true,
+        buttons: false,
+      })
+    );
   };
 
   const handleTitleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     console.log(e.target.value);
-  }
+  };
 
   const handleTitleUpdate = (e) => {
-    e.preventDefault()
-    const data = { title: title,panelId:panelId ,boardId:id}
-    const response = updatePanelMutation(data)
-    dispatch(setRenameInputVisible(false))
+    e.preventDefault();
+    const data = { title: title, panelId: panelId, boardId: id };
+    const response = updatePanelMutation(data);
+    dispatch(setRenameInputVisible(false));
+  };
+  const handleListPanelDeleteClick = (
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const { operation, buttons } = deletePanelButtonsVisible;
+    dispatch(setRenameInputVisible(false));
 
-  }
-  const handleListPanelDelete = () => {
-    
-  }
+    dispatch(
+      setDeletePanelButtonsVisible({
+        operations: false,
+        buttons: !buttons,
+      })
+    );
+  };
+
+  const handleYesClick = (e: React.MouseEvent<HTMLButtonElement>) => {};
+
+  const handleNoClick = (e: React.FormEvent<HTMLButtonElement>) => {
+    const { operation, buttons } = deletePanelButtonsVisible;
+
+    e.preventDefault();
+
+    dispatch(
+      setDeletePanelButtonsVisible({
+        operation: true,
+        buttons: false,
+      })
+    );
+    // window.location.reload();
+  };
   return (
     <Stack
       direction={'column'}
@@ -75,11 +115,39 @@ const DeleteRename: React.FC = ({panelId,isPanelVisible}) => {
         )}
       </form>
       <Divider />
-      <Link to='/'>
-        <Typography sx={{ fontSize: '10px', color: '#828282' }}>
-          Delete this list
-        </Typography>
-      </Link>
+      {deletePanelButtonsVisible.operation && (
+        <Link onClick={handleListPanelDeleteClick}>
+          <Typography sx={{ fontSize: '10px', color: '#828282' }}>
+            Delete this list
+          </Typography>
+        </Link>
+      )}
+      {deletePanelButtonsVisible.buttons && (
+        <div>
+          <Typography
+            sx={{
+              fontSize: '10px',
+              color: '#828282',
+              marginBlockEnd: '.5rem',
+            }}>
+            Are you sure you want to delete this list?
+          </Typography>
+
+          <Stack direction='row' spacing={0.5}>
+            <CrudButton
+              text='Yes'
+              colours={{ bg: '#EB5757', color: 'white' }}
+              onClick={''}
+            />
+            <CrudButton
+              text='No'
+              colours={{ bg: '#4F4F4F', color: 'white' }}
+              onClick={handleNoClick}
+              icon=''
+            />
+          </Stack>
+        </div>
+      )}
     </Stack>
   );
 };

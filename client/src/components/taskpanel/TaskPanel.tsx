@@ -24,6 +24,7 @@ interface IPanel {
   panel;
   index: number;
   visibleState: boolean;
+  isPanelVisible:boolean;
 }
 
 const TaskPanel: React.FC<IPanel> = ({
@@ -120,7 +121,7 @@ const TaskPanel: React.FC<IPanel> = ({
             right: '-6rem',
             zIndex: '6',
           }}>
-          <DeleteRename panelId={panelId} />
+          <DeleteRename panelId={panelId} isPanelVisible={isPanelVisible} />
         </div>
       )}
     </div>
