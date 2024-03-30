@@ -84,10 +84,26 @@ const createPanel = async (req, res) => {
 };
 
 const deletePanel = async (req, res) => {
+
   try {
     const result = await knex
       .from('Panel')
-      .where('id', '=', parseInt(req.params.id))
+      .where('id', '=', parseInt(req.params.panelId))
+      .delete('*');
+
+    res.status(200).json({ result, message: 'successfully deleted' });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const deletePanelTwo = async (req, res) => {
+  const { panelId, boardId } = req.body;
+  try {
+    const result = await knex
+      .from('Panel')
+      .where('id', '=', parseInt(panelId))
+      .andWhere(boardId, parseInt(boardId))
       .delete('*');
 
     res.status(200).json({ result, message: 'successfully deleted' });
@@ -104,4 +120,5 @@ module.exports = {
   createPanel,
   deletePanel,
   updatePanelByPanelId,
+  deletePanelTwo,
 };

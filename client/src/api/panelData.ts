@@ -131,3 +131,29 @@ export const useUpdatePanelMutation = () => {
 
     return { isSuccess, error, updatePanelMutation };
 };
+
+
+export const useDeletePanelMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: deletePanelMutation } = useMutation({
+        mutationFn: async (id) => {
+            const response = await apiService.remove(`/panels/${id}`);
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            //queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+
+
+
+        }
+
+
+    });
+
+
+    return { isSuccess, error, deletePanelMutation };
+};

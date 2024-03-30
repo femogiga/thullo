@@ -6,6 +6,7 @@ const {
   deletePanel,
   getPanelByBoardId,
   updatePanelByPanelId,
+  deletePanelTwo,
 } = require('../controllers/panelController');
 const router = require('express').Router();
 router.get('/:id/card', getPanelById);
@@ -15,6 +16,7 @@ router.put('/:id', updatePanel);
 router.put('/', updatePanelByPanelId);
 router.get('/', getAllPanel);
 router.post('/', createPanel);
-router.delete('/:id', deletePanel);
+router.delete('/:panelId', deletePanel);
+router.delete('/', deletePanelTwo);
 
 module.exports = router;

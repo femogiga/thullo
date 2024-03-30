@@ -17,13 +17,17 @@ import {
   setRenameInputVisible,
 } from '../../features/visibilitySlice';
 import { SmartButton } from '@mui/icons-material';
-import { useUpdatePanelMutation } from '../../api/panelData';
+import {
+  useDeletePanelMutation,
+  useUpdatePanelMutation,
+} from '../../api/panelData';
 import CrudButton from './CrudButton';
 
 const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   console.log('id: ' + id);
+  console.log(panelId);
   const renameInputVisible = useSelector(
     (state) => state.visibility.renameInputVisible
   );
@@ -31,6 +35,7 @@ const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
     (state) => state.visibility.deletePanelButtonsVisible
   );
   const { updatePanelMutation } = useUpdatePanelMutation();
+  const { deletePanelMutation } = useDeletePanelMutation();
 
   const [title, setTitle] = useState('');
   const handleRenameLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -44,6 +49,7 @@ const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
       })
     );
   };
+
 
   const handleTitleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -72,7 +78,10 @@ const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
     );
   };
 
-  const handleYesClick = (e: React.MouseEvent<HTMLButtonElement>) => {};
+  const handleYesClick = (e: React.FormEvent<HTMLButtonElement>) => {
+    const data = { boardId: id, panelId: panelId };
+    deletePanelMutation(panelId);
+  };
 
   const handleNoClick = (e: React.FormEvent<HTMLButtonElement>) => {
     const { operation, buttons } = deletePanelButtonsVisible;
@@ -137,7 +146,7 @@ const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
             <CrudButton
               text='Yes'
               colours={{ bg: '#EB5757', color: 'white' }}
-              onClick={''}
+              onClick={handleYesClick}
             />
             <CrudButton
               text='No'
