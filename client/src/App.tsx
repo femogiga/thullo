@@ -16,6 +16,8 @@ import BoardPage from './components/pages/mainboard/BoardPage';
 import BoardPageTwo from './components/pages/mainboard/BoardPageTwo';
 import { QuillInput } from './components/auxillary/QuillInput';
 import AddCardInput from './components/auxillary/CreateTaskForm';
+import Registerpage from './components/pages/authentication/Register';
+import Register from './components/pages/authentication/Register';
 
 const App: React.FC = () => {
   return (
@@ -26,7 +28,8 @@ const App: React.FC = () => {
       {/* <BoardPage /> */}
       {/* <BoardInformation /> */}
       {/* <QuillInput/> */}
-      <AddCardInput />
+      {/* <AddCardInput /> */}
+      <Register/>
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Chips = ({ label, labelColor,chip }) => {
         sx={{
           fontSize: '10px',
           fontWeight: '600',
-          backgroundColor: chip?.bgColor || '#D5E6FB',
+          backgroundColor: chip?.bgColor  || '#D5E6FB',
           color: chip?.color|| '#2F80ED',
           height: '18px',
         }}

@@ -42,8 +42,8 @@ const BoardInformation = () => {
 
   const { id } = useParams();
   const { boardByIdData } = useBoardDataId(id);
-  console.log(boardByIdData);
-  const { boardUsersData } = useGetBoardUsers(1);
+  console.log('boardIDdata', boardByIdData);
+  const { boardUsersData } = useGetBoardUsers(id);
   console.log(boardUsersData);
   const { allUsersData } = useAllUserData();
   const { userByIdData } = useUserDataById(3);
@@ -151,14 +151,14 @@ const BoardInformation = () => {
         padding: '1rem 2rem',
         boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
         backgroundColor: 'rgba(255,255,255)',
-        minHeight:'90vh'
+        minHeight: '90vh',
 
         // opacity:0
       }}>
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography
           sx={{ color: 'black', fontWeight: '600', fontSize: '12px' }}>
-          Devchallenges Board
+          {(boardByIdData && boardByIdData[0]?.name) || 'Devchallenges Board'}
         </Typography>
         <IconButton
           aria-label='close'
