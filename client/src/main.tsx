@@ -9,6 +9,8 @@ import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
 import AllBoardPage from './components/pages/allboard/AllBoardPage.tsx';
 import BoardPage from './components/pages/mainboard/BoardPage.tsx';
 import BoardPageTwo from './components/pages/mainboard/BoardPageTwo.tsx';
+import Register from './components/pages/authentication/Register.tsx';
+import Login from './components/pages/authentication/Login.tsx';
 const queryClient = new QueryClient();
 
 const Root = () => {
@@ -16,8 +18,10 @@ const Root = () => {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />} />
-        <Route path="/boards/:id" element={<BoardPage/>} />
+        <Route path='/boards/:id' element={<BoardPage />} />
         <Route path='/allboard' element={<AllBoardPage />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

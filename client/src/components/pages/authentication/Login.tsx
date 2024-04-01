@@ -21,11 +21,20 @@ import {
 import { AccountCircle } from '@mui/icons-material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Link } from 'react-router-dom';
-const Register:React.FC = () => {
+const Login: React.FC = () => {
   return (
-    <div>
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundImage: '',
+      }}>
       <Card
-        sx={{ maxWidth: 600, marginInline: 'auto', marginBlockStart: '10vh' }}>
+        sx={{
+          maxWidth: 500,
+          marginInline: 'auto',
+          marginBlockStart: '10vh',
+          minHeight: '40vh',
+        }}>
         <CardContent
           sx={{
             display: 'flex',
@@ -37,36 +46,7 @@ const Register:React.FC = () => {
             <img src={logo} />
             <p className='bold'>Thullo</p>
           </div>
-          <TextField
-            id='input-with-icon-textfield'
-            label=''
-            fullWidth
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-            variant='outlined'
-            placeholder='First name'
-            size='small'
-          />
-          <TextField
-            id='input-with-icon-textfield'
-            label=''
-            fullWidth
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-            variant='outlined'
-            placeholder='Last name'
-            size='small'
-          />
+
           <TextField
             id='input-with-icon-textfield'
             label=''
@@ -100,38 +80,7 @@ const Register:React.FC = () => {
               placeholder='Password'
               size='small'
             />
-            <TextField
-              id='input-with-icon-textfield'
-              label=''
-              fullWidth
-              type='password'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-              }}
-              variant='outlined'
-              placeholder='Retype password '
-              size='small'
-            />
           </Box>
-          <MuiFileInput
-            //   value={'value'}
-            //   onChange={'handleChange'}
-            placeholder='Insert a file'
-            size='small'
-            label='Profile picture'
-            getSizeText={(value) => 'Very big'}
-            InputProps={{
-              inputProps: {
-                accept: '.png, .jpeg',
-              },
-              startAdornment: <AttachFileIcon />,
-            }}
-            sx={{ width: '10rem' }}
-          />
         </CardContent>
         <CardActions
           sx={{
@@ -144,33 +93,21 @@ const Register:React.FC = () => {
             sx={{
               textTransform: 'capitalize',
               backgroundColor: '#219653',
+              minWidth: '15rem',
               color: 'white',
               '&:hover': {
                 backgroundColor: 'darkgreen',
               },
             }}>
-            Submit
-          </Button>
-          <Button
-            size='small'
-            sx={{
-              textTransform: 'capitalize',
-              backgroundColor: '#828282',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: '#4F4F4F',
-              },
-            }}>
-            Cancel
+            Sign in
           </Button>
         </CardActions>
         <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
           <Typography variant='body2' color='text.primary.light'>
-            Already registered ?{' '}
+            Don't have an account?
             <span style={{ padding: '.3rem' }}>
-              {' '}
-              <Link to='/login' style={{ color: 'blue' }}>
-                Login
+              <Link to='/register' style={{ color: 'blue' }}>
+                Register
               </Link>
             </span>
           </Typography>
@@ -180,4 +117,4 @@ const Register:React.FC = () => {
   );
 };
 
-export default Register;
+export default Login;
