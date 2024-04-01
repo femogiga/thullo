@@ -28,6 +28,7 @@ const Login: React.FC = () => {
         minHeight: '100vh',
         backgroundImage: '',
       }}>
+      <Header boardName={null} />
       <Card
         sx={{
           maxWidth: 500,

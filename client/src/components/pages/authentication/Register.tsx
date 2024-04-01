@@ -21,7 +21,7 @@ import {
 import { AccountCircle } from '@mui/icons-material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Link } from 'react-router-dom';
-const Register:React.FC = () => {
+const Register: React.FC = () => {
   return (
     <div>
       <Card
@@ -161,7 +161,7 @@ const Register:React.FC = () => {
                 backgroundColor: '#4F4F4F',
               },
             }}>
-            Cancel
+            Clear
           </Button>
         </CardActions>
         <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
