@@ -133,3 +133,45 @@ img {
   width: 28px;
   height: 28px;
 }
+
+@keyframes bgImageAnim {
+  from {
+    transform: translateY(100vh);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* src/styles/index.css */
+.login::after {
+  content: "";
+  background: url('./assets/cardsbeat.png') repeat;
+  position: absolute;
+  right: 7rem;
+  top: -0rem;
+  width: 30%;
+  height: 100%;
+  z-index: -2;
+  transform: skewY(1deg) rotateZ(-30deg);
+  overflow: hidden;
+  animation: bgImageAnim 4s 200ms linear ;
+}
+
+.login::before {
+  content: "";
+  background: url('./assets/cardsbeat.png') repeat;
+  position: absolute;
+  left: 6rem;
+  width: 30%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  transform: skew(1deg) rotate(30deg);
+    animation: bgImageAnim 4s 200ms linear;
+}
+
+.login::before:hover {
+  width: 30%
+}

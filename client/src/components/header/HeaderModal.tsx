@@ -58,8 +58,8 @@ const HeaderModal = () => {
               startIcon={<LockIcon sx={{ width: '1rem' }} />}>
               Login
             </Button>
-                  )}
-                  
+          )}
+
           {loginLogoutVisible.logoutOpen && (
             <Button
               onClick={() => handleLoginLogout('logout')}

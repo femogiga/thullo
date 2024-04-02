@@ -322,7 +322,23 @@ const BoardPage = () => {
             {visibleState.completed && <DeleteRename />}
           </Box>
         </TaskPanel> */}
-        {cardInfoVisible && <CardInformation />}
+
+        <AnimatePresence>
+          <motion.div
+            layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1}}
+            transition={{ duration: 2 }}
+            exit={{ opacity: 0 }}
+            style={{
+               position: 'absolute',
+              left: '30%',
+              top: '4rem',
+              zIndex: '4',
+            }}>
+            {cardInfoVisible && <CardInformation />}
+          </motion.div>
+        </AnimatePresence>
         <div>
           <AddListButton />
           {addPanelModalOpen && (

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import Visibility from './../auxillary/Visibility';
 import { useDispatch } from 'react-redux';
 import { setHeaderModalOpen } from '../../features/visibilitySlice';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Header = ({ boardName }) => {
   const headerStyle = {
@@ -76,7 +77,24 @@ const Header = ({ boardName }) => {
             right: '0',
             zIndex: '6',
           }}>
-          {headerModalOpen && <HeaderModal />}
+          <AnimatePresence>
+            <motion.div
+              layout
+              initial={{ opacity: 0, translateY: 500 }}
+              animate={{ opacity: 1, translateX: 0 }}
+              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, translateY: 500 }}
+              style={
+                {
+                  // position: 'absolute',
+                  // right: '2rem',
+                  // top: '4rem',
+                  // zIndex: '4',
+                }
+              }>
+              {headerModalOpen && <HeaderModal />}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </header>
