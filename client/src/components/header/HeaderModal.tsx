@@ -11,16 +11,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import Person2Icon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { useDispatch } from 'react-redux';
+import { setIsAuthenticated, setUser } from '../../features/authSlice';
 
 const HeaderModal = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [loginLogoutVisible, setLoginLogoutVisible] = useState({
     logoutOpen: true,
     loginOpen: false,
   });
 
+  // const handleLogout = () => {
+  //   dispatch(setIsAuthenticated(false));
+  //   dispatch(setUser(null));
+  // };
+
   const handleLoginLogout = (type: string) => {
     if (type === 'logout') {
+       dispatch(setIsAuthenticated(false));
+       dispatch(setUser(null));
       navigate('/login');
       setLoginLogoutVisible({ logoutOpen: false, loginOpen: true });
     } else {

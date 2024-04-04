@@ -10,6 +10,7 @@ import Visibility from './../auxillary/Visibility';
 import { useDispatch } from 'react-redux';
 import { setHeaderModalOpen } from '../../features/visibilitySlice';
 import { AnimatePresence, motion } from 'framer-motion';
+import { setIsAuthenticated, setUser } from '../../features/authSlice';
 
 const Header = ({ boardName }) => {
   const headerStyle = {
@@ -25,6 +26,12 @@ const Header = ({ boardName }) => {
   const headerModalOpen = useSelector(
     (state) => state.visibility.headerModalOpen
   );
+
+  // const handleLogout = () => {
+  //   dispatch(setIsAuthenticated(false))
+  //       dispatch(setUser(null));
+
+  // }
 
   const dispatch = useDispatch();
 

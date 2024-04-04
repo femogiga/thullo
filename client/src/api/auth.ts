@@ -3,12 +3,18 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-import apiService from '../utils/apiService';
 import { useNavigate } from 'react-router-dom';
+import apiService from '../utility/apiService'
+import { useDispatch } from 'react-redux';
+import { setIsAuthenticated, setUser } from '../features/authSlice';
 
 export const useLoginMutation = () => {
   let responseData = null;
-  const { isLoading, isSuccess, error, mutate } = useMutation({
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+
+  const { isSuccess, error, mutate: loginMutation } = useMutation({
     mutationFn: async (data) => {
       const response = await apiService.post('/auth/login', data);
       return response.data;
@@ -17,16 +23,20 @@ export const useLoginMutation = () => {
       responseData = data;
       localStorage.setItem('token', JSON.stringify(data.token));
       localStorage.setItem('userData', JSON.stringify(data.user));
+      dispatch(setIsAuthenticated(true))
+      dispatch(setUser(data.user))
+
+      navigate('/allboard');
     },
   });
-  return { isLoading, isSuccess, error, mutate, responseData };
+  return { isSuccess, error, loginMutation, responseData };
 };
 
 export const useRegisterMutation = () => {
   const navigate = useNavigate();
-  const { isLoading, isSuccess, error, mutate } = useMutation({
+  const { isSuccess, error, mutate: registerMutation } = useMutation({
     mutationFn: async (data) => {
-      const response = await apiService.authRegister('/register', data);
+      const response = await apiService.post('/auth/register', data);
 
       return response.data;
     },
@@ -35,12 +45,12 @@ export const useRegisterMutation = () => {
     },
   });
 
-  return { isLoading, isSuccess, error, mutate };
+  return { isSuccess, error, registerMutation };
 };
 
 export const useUpdateMutation = () => {
   const navigate = useNavigate();
-  const { isLoading, isSuccess, error, mutate } = useMutation({
+  const { isSuccess, error, mutate: updateMutation } = useMutation({
     mutationFn: async (data) => {
       const response = await apiService.put('/auth/update', data);
 
@@ -50,5 +60,5 @@ export const useUpdateMutation = () => {
       navigate('/home');
     },
   });
-  return { isLoading, isSuccess, error, mutate };
+  return { isSuccess, error, updateMutation };
 };

@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRoute = require('./authentication/authRoute');
+const authMiddleware = require('./authentication/authMiddleware')
 const boardRoute = require('./routes/boardRoute');
 const chatRoute = require('./routes/chatRoute');
 const labelRoute = require('./routes/labelRoute');
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors());
 
-// app.use('/auth', authMiddleware, authRoute);
+ app.use('/auth', authRoute);
 app.use('/boards', boardRoute);
 app.use('/chats', chatRoute);
 app.use('/labels', labelRoute);
