@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Header from '../../header/Header';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
@@ -21,7 +21,61 @@ import {
 import { AccountCircle } from '@mui/icons-material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Link } from 'react-router-dom';
+import { useRegisterMutation } from '../../../api/auth';
+
+interface IRegister {
+  firstname: string;
+  lastname: string;
+  email: 'string';
+  password: string;
+  picture: File;
+}
 const Register: React.FC = () => {
+  const { registerMutation } = useRegisterMutation();
+  const [registrationData, setRegistrationData] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    picture: null,
+  });
+
+  const [photo, setPhoto] = useState(null);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setRegistrationData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const { firstname, lastname, email, password, confirmPassword } =
+    registrationData;
+
+  const handleFileChange = (newFile) => {
+    setPhoto(newFile);
+  };
+
+  const handleRegistration = () => {
+    // const data = {
+    //   firstname,
+    //   lastname,
+    //   email,
+    //   password,
+    //   imgUrl:
+    //     'https://images.pexels.com/photos/1006202/pexels-photo-1006202.jpeg?auto=compress&cs=tinysrgb&w=600',
+    // };
+    const formData = new FormData();
+    formData.append('firstname', firstname);
+    formData.append('lastname', lastname);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('photo', photo);
+
+    const res = registerMutation(data);
+  };
+  console.log('registrationData', registrationData);
+  console.log('photo', photo);
   return (
     <div>
       <Card
@@ -38,7 +92,10 @@ const Register: React.FC = () => {
             <p className='bold'>Thullo</p>
           </div>
           <TextField
-            id='input-with-icon-textfield'
+            id='firstname'
+            name='firstname'
+            onChange={handleInputChange}
+            value={firstname}
             label=''
             fullWidth
             InputProps={{
@@ -53,7 +110,10 @@ const Register: React.FC = () => {
             size='small'
           />
           <TextField
-            id='input-with-icon-textfield'
+            id='lastname'
+            name='lastname'
+            onChange={handleInputChange}
+            value={lastname}
             label=''
             fullWidth
             InputProps={{
@@ -68,7 +128,10 @@ const Register: React.FC = () => {
             size='small'
           />
           <TextField
-            id='input-with-icon-textfield'
+            id='email'
+            name='email'
+            onChange={handleInputChange}
+            value={email}
             label=''
             fullWidth
             type='email'
@@ -85,7 +148,10 @@ const Register: React.FC = () => {
           />
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <TextField
-              id='input-with-icon-textfield'
+              id='password'
+              name='password'
+              onChange={handleInputChange}
+              value={password}
               label=''
               type='password'
               fullWidth
@@ -101,7 +167,10 @@ const Register: React.FC = () => {
               size='small'
             />
             <TextField
-              id='input-with-icon-textfield'
+              id='confirmPassword'
+              name='confirmPassword'
+              onChange={handleInputChange}
+              value={confirmPassword}
               label=''
               fullWidth
               type='password'
@@ -118,12 +187,14 @@ const Register: React.FC = () => {
             />
           </Box>
           <MuiFileInput
-            //   value={'value'}
-            //   onChange={'handleChange'}
+            id={'photo'}
+            name='photo'
+            onChange={handleFileChange}
+            value={photo}
             placeholder='Insert a file'
             size='small'
             label='Profile picture'
-            getSizeText={(value) => 'Very big'}
+            //getSizeText={(value) => 'Very big'}
             InputProps={{
               inputProps: {
                 accept: '.png, .jpeg',
@@ -140,6 +211,7 @@ const Register: React.FC = () => {
             width: '100%',
           }}>
           <Button
+            onClick={handleRegistration}
             size='small'
             sx={{
               textTransform: 'capitalize',
