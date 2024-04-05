@@ -4,7 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRoute = require('./authentication/authRoute');
-const authMiddleware = require('./authentication/authMiddleware')
+const authMiddleware = require('./authentication/authMiddleware');
 const boardRoute = require('./routes/boardRoute');
 const chatRoute = require('./routes/chatRoute');
 const labelRoute = require('./routes/labelRoute');
@@ -15,24 +15,24 @@ const taskOnLabelRoute = require('./routes/taskOnLabelRoute');
 const usersOnTasksRoute = require('./routes/usersOnTasksRoute');
 const allBoardRoute = require('./routes/allBoardPageRoute');
 const mainBoardRoute = require('./routes/mainBoardRoute');
-const unsplashRoute = require('./routes/unsplashRoute')
+const unsplashRoute = require('./routes/unsplashRoute');
 const app = express();
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors());
 
- app.use('/auth', authRoute);
-app.use('/boards',authMiddleware, boardRoute);
-app.use('/chats',authMiddleware, chatRoute);
-app.use('/labels',authMiddleware, labelRoute);
-app.use('/panels',authMiddleware, panelRoute);
-app.use('/tasks',authMiddleware, taskRoute);
-app.use('/users',authMiddleware, userRoute);
-app.use('/usersontasks',authMiddleware, usersOnTasksRoute);
-app.use('/tasksonlabels',authMiddleware, taskOnLabelRoute);
-app.use('/allboard',authMiddleware, allBoardRoute);
-app.use('/mainboard',authMiddleware, mainBoardRoute);
-app.use('/pexel',authMiddleware, unsplashRoute);
+app.use('/auth', authRoute);
+app.use('/boards', authMiddleware, boardRoute);
+app.use('/chats', authMiddleware, chatRoute);
+app.use('/labels', authMiddleware, labelRoute);
+app.use('/panels', authMiddleware, panelRoute);
+app.use('/tasks', authMiddleware, taskRoute);
+app.use('/users', authMiddleware, userRoute);
+app.use('/usersontasks', authMiddleware, usersOnTasksRoute);
+app.use('/tasksonlabels', authMiddleware, taskOnLabelRoute);
+app.use('/allboard', authMiddleware, allBoardRoute);
+app.use('/mainboard', authMiddleware, mainBoardRoute);
+app.use('/pexel', authMiddleware, unsplashRoute);
 
 const port = process.env.PORT || 9000;
 

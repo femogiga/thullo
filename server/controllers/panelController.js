@@ -49,6 +49,8 @@ const updatePanel = async (req, res) => {
 
     res.status(200).json({ result, message: 'successfully updated' });
   } catch (error) {
+        console.eror(error);
+
     res.status(500).json(error);
   }
 };
@@ -65,6 +67,7 @@ const updatePanelByPanelId = async (req, res) => {
 
     res.status(200).json({ result, message: 'successfully updated' });
   } catch (error) {
+    console.eror(error);
     res.status(500).json(error);
   }
 };
@@ -84,7 +87,6 @@ const createPanel = async (req, res) => {
 };
 
 const deletePanel = async (req, res) => {
-
   try {
     const result = await knex
       .from('Panel')

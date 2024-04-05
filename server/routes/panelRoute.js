@@ -1,4 +1,8 @@
 const {
+  checkAdminPanelDelete,
+  checkAdminPanelRename,
+} = require('../authentication/roleMiddleware');
+const {
   getAllPanel,
   getPanelById,
   updatePanel,
@@ -16,7 +20,7 @@ router.put('/:id', updatePanel);
 router.put('/', updatePanelByPanelId);
 router.get('/', getAllPanel);
 router.post('/', createPanel);
-router.delete('/:panelId', deletePanel);
-router.delete('/', deletePanelTwo);
+router.delete('/:panelId', checkAdminPanelDelete, deletePanel);
+//router.delete('/',checkAdmin, deletePanelTwo);
 
 module.exports = router;

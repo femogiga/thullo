@@ -137,8 +137,8 @@ export const useDeletePanelMutation = () => {
     const queryClient = useQueryClient()
 
     const { isSuccess, error, mutateAsync: deletePanelMutation } = useMutation({
-        mutationFn: async (id) => {
-            const response = await apiService.remove(`/panels/${id}`);
+        mutationFn: async (panelId) => {
+            const response = await apiService.remove(`/panels/${panelId}`);
             return response.data;
         },
         onSuccess: () => {

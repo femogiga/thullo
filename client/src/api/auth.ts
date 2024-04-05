@@ -6,7 +6,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import apiService from '../utility/apiService'
 import { useDispatch } from 'react-redux';
-import { setIsAuthenticated, setUser } from '../features/authSlice';
+import { setIsAuthenticated, setToken, setUser } from '../features/authSlice';
 
 export const useLoginMutation = () => {
   let responseData = null;
@@ -21,8 +21,9 @@ export const useLoginMutation = () => {
     },
     onSuccess: (data) => {
       responseData = data;
+      //localStorage.setItem('userData', JSON.stringify(data.user));
       localStorage.setItem('token', JSON.stringify(data.token));
-      localStorage.setItem('userData', JSON.stringify(data.user));
+
       dispatch(setIsAuthenticated(true))
       dispatch(setUser(data.user))
 

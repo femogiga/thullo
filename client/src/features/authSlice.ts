@@ -6,7 +6,7 @@ const authSlice = createSlice({
     initialState: {
         isFetching: false,
         user: null,
-        isAuthenticated: false
+        isAuthenticated: false,
 
     },
     reducers: {
@@ -18,7 +18,10 @@ const authSlice = createSlice({
         },
         setIsAuthenticated: (state, action) => {
             state.isAuthenticated = action.payload
-        }
+        },
+        // setToken: (state, action) => {
+        //     state.token = action.payload
+        // }
     },
     extraReducers: (builder) => {
         builder.addCase(PURGE, (initialState) => {
