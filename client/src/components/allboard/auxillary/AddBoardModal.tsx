@@ -23,6 +23,7 @@ import {
   setCreateBoardOpen,
 } from '../../../features/visibilitySlice';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AddBoardModal: React.FC = ({ onCancel, onCover, coverImage }) => {
   // const dataToCreateBoard = { coverImage };
@@ -30,9 +31,11 @@ const AddBoardModal: React.FC = ({ onCancel, onCover, coverImage }) => {
   const navigate = useNavigate();
   const [boardname, setBoardname] = useState('');
   const { createBoardMutate } = useCreateBoardMutation();
+  const adminId = useSelector((state) => state.auth.user.id)
+  console.log('adminId', adminId);
 
   const handleCreateBoard = () => {
-    const data = { name: boardname, adminId: 2, thumbnail: coverImage };
+    const data = { name: boardname, adminId:adminId, thumbnail: coverImage };
     const res = createBoardMutate(data);
     //console.log(data);
     dispatch(setAddBoardCoverOpen(false));

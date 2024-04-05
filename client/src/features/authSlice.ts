@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { PURGE } from 'redux-persist'
 
 const authSlice = createSlice({
     name: 'auth',
@@ -19,7 +19,14 @@ const authSlice = createSlice({
         setIsAuthenticated: (state, action) => {
             state.isAuthenticated = action.payload
         }
-    }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(PURGE, (initialState) => {
+            localStorage.removeItem('persist:root');
+            return initialState;
+        });
+    },
+
 })
 
 

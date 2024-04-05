@@ -13,9 +13,10 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { useDispatch } from 'react-redux';
 import { setIsAuthenticated, setUser } from '../../features/authSlice';
+import { persistor } from '../../store';
 
 const HeaderModal = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginLogoutVisible, setLoginLogoutVisible] = useState({
     logoutOpen: true,
@@ -29,10 +30,13 @@ const HeaderModal = () => {
 
   const handleLoginLogout = (type: string) => {
     if (type === 'logout') {
-       dispatch(setIsAuthenticated(false));
-       dispatch(setUser(null));
+      dispatch(setIsAuthenticated(false));
+      dispatch(setUser(null));
+      persistor.purge();
       navigate('/login');
       setLoginLogoutVisible({ logoutOpen: false, loginOpen: true });
+      localStorage.removeItem('userData');
+      localStorage.removeItem('token');
     } else {
       setLoginLogoutVisible({
         logoutOpen: true,

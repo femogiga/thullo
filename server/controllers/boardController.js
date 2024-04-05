@@ -44,7 +44,7 @@ const createBoard = async (req, res) => {
   try {
     const result = await knex('Board').insert({
       name: name,
-      adminId:2 || parseInt(adminId) ,
+      adminId: parseInt(adminId) ,
       thumbnail: thumbnail,
 
     }).returning(["id"]);

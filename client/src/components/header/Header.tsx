@@ -27,6 +27,9 @@ const Header = ({ boardName }) => {
     (state) => state.visibility.headerModalOpen
   );
 
+  const loggedInUser = useSelector((state) => state.auth.user);
+  console.log('User', loggedInUser);
+    const fullName = loggedInUser.firstname  + " " + loggedInUser.lastname
   // const handleLogout = () => {
   //   dispatch(setIsAuthenticated(false))
   //       dispatch(setUser(null));
@@ -70,10 +73,10 @@ const Header = ({ boardName }) => {
         <Link to='' onClick={handleHeaderLinkAccountClick}>
           <div className=' flex place-items col-gap-05 align-item-center'>
             <div className='auth-image'>
-              <MiniCard height={32} width={32} src='' />
+              <MiniCard height={32} width={32} src={loggedInUser?.imgUrl} />
             </div>
 
-            <p>Xanthe Neal</p>
+            <p>{ fullName || 'Xanthe Neal'}</p>
             <CaretDown size={18} />
           </div>
         </Link>

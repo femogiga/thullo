@@ -8,10 +8,20 @@ import {
   Box,
 } from '@mui/material';
 import { useAllBoardPageDataById } from '../../../api/allBoardPageData';
+import { useGetAdmin } from '../../../api/userData';
 
-const BoardCard = ({ name, thumbnail, boardId, userPhotos }) => {
-  // const { isPending, data:userPhotos } = useAllBoardPageDataById(boardId)
-  //console.log(userPhotos)
+const BoardCard = ({
+  admin,
+  name,
+  thumbnail,
+  boardId,
+  userPhotos,
+  adminId,
+}) => {
+  //  const { isPending, data:adminUser } = useAllBoardPageDataById(boardId)
+  console.log(admin);
+  console.log(admin); //
+
   return (
     <div className='board-card'>
       <Card
@@ -56,6 +66,17 @@ const BoardCard = ({ name, thumbnail, boardId, userPhotos }) => {
                   fontSize: 15,
                 },
               }}>
+              <Avatar
+                key={`adminphoto_${admin.id}`}
+                sx={{
+                  marginInlineEnd: '.5rem',
+                  borderRadius: '8px',
+                  width: 28,
+                  height: 28,
+                }}
+                alt='Remy Sharp'
+                src={admin.imgUrl}
+              />
               {userPhotos &&
                 userPhotos.map((photo, index) => (
                   <Avatar

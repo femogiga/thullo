@@ -16,6 +16,7 @@ import {
 } from '../../features/visibilitySlice';
 import { CoverCard } from '../actionscard/CoverCard';
 import { useState } from 'react';
+import { useAllUserData } from '../../api/userData';
 
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,11 @@ const AllBoard: React.FC = () => {
     error: allBoardError,
     data: allBoardPageData,
   } = useAllBoardPageData();
+  const { allUserData } = useAllUserData();
+  console.log(allUserData)
 
+
+  console.log(allBoardPageData, allBoardPageData)
   const handleOpenAddBoardModal = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCreateBoardOpen(!createBoardModalVisible));
@@ -101,6 +106,10 @@ const AllBoard: React.FC = () => {
                     boardId={board.id}
                     thumbnail={board.thumbnail}
                     userPhotos={board.userphotos}
+                    adminId={board?.adminId}
+                    admin={allUserData && allUserData.find(
+                      (user) => user?.id === board?.adminId
+                    )}
                   />
                 </Link>
               ))

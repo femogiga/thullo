@@ -22,17 +22,17 @@ app.use(morgan('tiny'));
 app.use(cors());
 
  app.use('/auth', authRoute);
-app.use('/boards', boardRoute);
-app.use('/chats', chatRoute);
-app.use('/labels', labelRoute);
-app.use('/panels', panelRoute);
-app.use('/tasks', taskRoute);
-app.use('/users', userRoute);
-app.use('/usersontasks', usersOnTasksRoute);
-app.use('/tasksonlabels', taskOnLabelRoute);
-app.use('/allboard', allBoardRoute);
-app.use('/mainboard', mainBoardRoute);
-app.use('/pexel', unsplashRoute);
+app.use('/boards',authMiddleware, boardRoute);
+app.use('/chats',authMiddleware, chatRoute);
+app.use('/labels',authMiddleware, labelRoute);
+app.use('/panels',authMiddleware, panelRoute);
+app.use('/tasks',authMiddleware, taskRoute);
+app.use('/users',authMiddleware, userRoute);
+app.use('/usersontasks',authMiddleware, usersOnTasksRoute);
+app.use('/tasksonlabels',authMiddleware, taskOnLabelRoute);
+app.use('/allboard',authMiddleware, allBoardRoute);
+app.use('/mainboard',authMiddleware, mainBoardRoute);
+app.use('/pexel',authMiddleware, unsplashRoute);
 
 const port = process.env.PORT || 9000;
 

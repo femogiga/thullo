@@ -34,6 +34,7 @@ const AllBoardPage = async (req, res) => {
         'Board.id',
         'Board.name',
         'Board.thumbnail',
+        'Board.adminId',
         knex.raw('ARRAY_AGG("User"."imgUrl") as userPhotos')
       )
       .from('Board')
