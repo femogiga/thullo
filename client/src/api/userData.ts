@@ -11,7 +11,7 @@ import { useMainPageData } from '../components/pages/mainboard/hooks/useMainPage
 import { useTaskDataByPanelId } from './taskData';
 
 export const useAllUserData = () => {
-    const { isPending, error, data:allUserData } = useQuery({
+    const { isPending, error, data: allUserData } = useQuery({
         queryKey: ['allUsers'],
         queryFn: () => apiService.get('/users').then((res) => res.data),
     });
@@ -37,7 +37,7 @@ export const useGetAdmin = (boardId) => {
     const {
         status,
         fetchStatus,
-        data:adminUserData
+        data: adminUserData
     } = useQuery({
         queryKey: ['adminByBoard', adminId],
         queryFn: () =>
@@ -47,7 +47,7 @@ export const useGetAdmin = (boardId) => {
         // The query will not execute until the userId exists
         enabled: !!adminId,
     })
-    return {status,fetchStatus,adminUserData}
+    return { status, fetchStatus, adminUserData }
 }
 
 
@@ -69,7 +69,7 @@ export const useDeleteBoardUserMutation = () => {
     const { isSuccess, error, mutateAsync: deleteMutate } = useMutation({
         mutationKey: ['deleteUser'],
         mutationFn: async (data) => {
-            const {boardId,authorId} = data;
+            const { boardId, authorId } = data;
             const response = await apiService.remove(`/usersontasks/${boardId}/users/${authorId}`);
             return response.data;
         },
@@ -80,7 +80,7 @@ export const useDeleteBoardUserMutation = () => {
 
 
             //window.location.reload();
-//
+            //
 
         }
 

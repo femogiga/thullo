@@ -48,6 +48,7 @@ import { QuillInput } from '../auxillary/QuillInput';
 import { setCardInfoEditOpen } from '../../features/visibilitySlice';
 import { useEffect, useState } from 'react';
 import DescriptionText from '../boardInfo/DescriptionText';
+import { useGetAdmin, useGetBoardUsers } from '../../api/userData';
 
 const CardInformation: React.FC = ({ taskId }) => {
   const [coverImage, setCoverImage] = useState('');
@@ -73,6 +74,11 @@ const CardInformation: React.FC = ({ taskId }) => {
   //console.log('panelByIdDatatoday=====>', cardPanelByIdData);
 
   //console.log('taskId=====>', taskByIdData);
+
+  const { adminUserData } = useGetAdmin(params.id);
+  const { boardUsersData } = useGetBoardUsers(params.id);
+  console.log('boardUser', boardUsersData);
+  //console.log(adminUserData);
   useEffect(() => {}, [params]);
   const colorCardVisible = useSelector(
     (state) => state.pageInformation.colorCardVisible
@@ -161,7 +167,7 @@ const CardInformation: React.FC = ({ taskId }) => {
         const data = {
           ...taskByIdData[0],
           imageUrl: clickedImageId,
-          boardId:params.id
+          boardId: params.id,
         };
         // console.log('taskdata', data);
         updateTaskMutation(data);
@@ -347,23 +353,32 @@ const CardInformation: React.FC = ({ taskId }) => {
                 spacing={1.5}
                 sx={{ marginBlockEnd: '1.5rem' }}>
                 <NameAvatar
-                  fullName={'Jimmy Flaunt'}
-                  src={''}
+                  fullName={
+                    adminUserData[0]?.firstname +
+                    ' ' +
+                    adminUserData[0]?.lastname
+                  }
+                  src={adminUserData[0]?.imgUrl}
                   text=''
                   variant='withoutLabel'
                 />
-                <NameAvatar
-                  fullName={'Tony Mark'}
-                  src={''}
-                  text=''
-                  variant='withoutLabel'
-                />
-                <NameAvatar
+
+                {boardUsersData &&
+                  boardUsersData.map((boardUser) => (
+                    <NameAvatar
+                      key={`boardUser-${boardUser.id}`}
+                      fullName={boardUser?.firstname + ' ' + boardUser?.lastname}
+                      src={boardUser?.imgUrl}
+                      text=''
+                      variant='withoutLabel'
+                    />
+                  ))}
+                {/* <NameAvatar
                   fullName={'Natalie Griffin'}
                   src={''}
                   text=''
                   variant='withoutLabel'
-                />
+                /> */}
               </Stack>
               <Box>
                 <AddCardButton

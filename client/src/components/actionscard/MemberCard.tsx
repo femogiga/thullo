@@ -12,16 +12,17 @@ import {
 } from '@mui/material';
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { NameLabel } from './../auxillary/NameLabel';
 import MemberSelect from './auxillary/MemberSelect';
 import CrudButton from '../auxillary/CrudButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch } from 'react-redux';
 import { setMemberCardVisible } from '../../features/PageInformationSlice';
+import { useGetAdmin } from '../../api/userData';
 
 const MemberCard = () => {
-  
+ 
   return (
     <Card
       className='member-card'
