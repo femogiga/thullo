@@ -3,17 +3,18 @@ import React, { ChangeEvent, useState } from 'react';
 import ActionButton from './ActionButton';
 import CrudButton from './CrudButton';
 import { useCreateTaskMutation } from '../../api/taskData';
+import { useParams } from 'react-router-dom';
 
 const CreateTaskForm: React.FC = ({ panelId, panel, showForm }) => {
   const [taskTitle, setTaskTitle] = useState('');
   const { createTaskMutation } = useCreateTaskMutation();
-
+  const params = useParams()
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(e.currentTarget.value);
   };
   const handleCreateTask = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const data = { title: taskTitle, panelId: panelId, status: panel?.title };
+    const data = { title: taskTitle, panelId: panelId, status: panel?.title,boardId:params.id };
     const response = createTaskMutation(data);
     console.log('data=====>', data);
     setTaskTitle('');

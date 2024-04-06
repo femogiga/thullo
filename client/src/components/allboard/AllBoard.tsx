@@ -5,7 +5,7 @@ import CrudButton from '../auxillary/CrudButton';
 import AddIcon from '@mui/icons-material/Add';
 import AddBoardModal from './auxillary/AddBoardModal';
 import { useAllBoardData, useCreateBoardMutation } from '../../api/boardData';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAllBoardPageData } from '../../api/allBoardPageData';
 import IsLoading from './../auxillary/IsLoading';
 import { useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ import { useAllUserData } from '../../api/userData';
 
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [coverImage, setCoverImage] = useState('');
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
@@ -34,10 +35,10 @@ const AllBoard: React.FC = () => {
     data: allBoardPageData,
   } = useAllBoardPageData();
   const { allUserData } = useAllUserData();
-  console.log(allUserData)
+  //console.log(allUserData)
 
 
-  console.log(allBoardPageData, allBoardPageData)
+  //console.log(allBoardPageData, allBoardPageData)
   const handleOpenAddBoardModal = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCreateBoardOpen(!createBoardModalVisible));
@@ -60,6 +61,11 @@ const AllBoard: React.FC = () => {
   //   const data = {name,adminId,thumbnail,description}
   //     const res = createBoardMutate(data)
   // }
+
+  const handleBoardCardClick = (e: React.SyntheticEvent,link) => {
+    navigate(link)
+    window.location.reload();
+   }
 
   const handleCoverImageClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -99,7 +105,8 @@ const AllBoard: React.FC = () => {
             ) : (
               allBoardPageData &&
               allBoardPageData.map((board) => (
-                <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
+                // <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
+                <Link onClick= {(e)=>handleBoardCardClick(e,`/boards/${board.id}`)} key={`board-${board.id}`}>
                   <BoardCard
                     key={board.id}
                     name={board.name}
@@ -107,9 +114,10 @@ const AllBoard: React.FC = () => {
                     thumbnail={board.thumbnail}
                     userPhotos={board.userphotos}
                     adminId={board?.adminId}
-                    admin={allUserData && allUserData.find(
-                      (user) => user?.id === board?.adminId
-                    )}
+                    admin={
+                      allUserData &&
+                      allUserData.find((user) => user?.id === board?.adminId)
+                    }
                   />
                 </Link>
               ))
