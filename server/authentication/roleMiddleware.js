@@ -43,22 +43,47 @@ const checkAdminPanelDelete = async (req, res, next) => {
 };
 
 const checkAdminPanelRename = async (req, res, next) => {
-    const boardId = req.body.boardId;
-    console.log('boardRename', boardId)
+  const boardId = req.body.boardId;
+  console.log('boardRename', boardId);
   const board = await knex
     .from('Board')
     .select('*')
     .where('id', '=', parseInt(boardId));
 
-    //console.log('boardRename', board)
-    if (!(board[0].adminId === parseInt(req.user.id))) {
-      res.status(401).json({ message: ' Unauthorized ' });
-      return;
-    }
+  //console.log('boardRename', board)
+  if (!(board[0].adminId === parseInt(req.user.id))) {
+    res.status(401).json({ message: ' Unauthorized ' });
+    return;
+  }
 
-    next();
-
+  next();
 };
 
+const checkBoardActions = (req, res, next) => {
+  const { name, adminId, description } = req.body;
+  if (!(parseInt(adminId) === parseInt(req.user.id))) {
+    res.status(401).json({ message: ' Unauthorized ' });
+    return;
+  }
+  next();
+};
 
-module.exports = { checkAdminPanelDelete, checkAdminPanelRename };
+checkUserOnTasksAction = async (req, res, next) => {
+  const { authorId, boardIndex } = req.params;
+  const activeBoard = await knex
+    .from('Board')
+    .select('adminId')
+    .where('id', parseInt(boardIndex))
+  if (!(parseInt(activeBoard[0].adminId) === parseInt(req.user.id)) ){
+    res.status(401).json({ message: ' Unauthorized ' });
+    return;
+  }
+  next();
+};
+
+module.exports = {
+  checkAdminPanelDelete,
+  checkAdminPanelRename,
+  checkBoardActions,
+  checkUserOnTasksAction,
+};

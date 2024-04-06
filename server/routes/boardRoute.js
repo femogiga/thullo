@@ -1,3 +1,5 @@
+const{checkBoardActions} = require('../authentication/roleMiddleware')
+
 const {
   getAllBoard,
   getBoardById,
@@ -8,7 +10,7 @@ const {
 const router = require('express').Router();
 
 router.get('/:id', getBoardById);
-router.put('/:id', updateBoard);
+router.put('/:id',checkBoardActions, updateBoard);
 router.get('/', getAllBoard);
 router.post('/', createBoard);
 router.delete('/:id', deleteBoard);

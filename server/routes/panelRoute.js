@@ -16,10 +16,10 @@ const router = require('express').Router();
 router.get('/:id/card', getPanelById);
 router.get('/:boardId', getPanelByBoardId);
 router.get('/:id', getPanelById);
-router.put('/:id', updatePanel);
-router.put('/', updatePanelByPanelId);
+router.put('/:id', checkAdminPanelRename, updatePanel);
+router.put('/', checkAdminPanelRename, updatePanelByPanelId);
 router.get('/', getAllPanel);
-router.post('/', createPanel);
+router.post('/', checkAdminPanelRename, createPanel);
 router.delete('/:panelId', checkAdminPanelDelete, deletePanel);
 //router.delete('/',checkAdmin, deletePanelTwo);
 

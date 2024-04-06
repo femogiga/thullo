@@ -41,6 +41,8 @@ const BoardInformation = () => {
   const { deleteMutate } = useDeleteBoardUserMutation();
 
   const { id } = useParams();
+  const params = useParams();
+
   const { boardByIdData } = useBoardDataId(id);
   console.log('boardIDdata', boardByIdData);
   const { boardUsersData } = useGetBoardUsers(id);
