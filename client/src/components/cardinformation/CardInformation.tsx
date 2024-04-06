@@ -24,7 +24,7 @@ import { CommentCard } from '../auxillary/CommentCard';
 import MiniCard from '../minicard/MiniCard';
 import { NameLabel } from './../auxillary/NameLabel';
 import NameAvatar from '../auxillary/NameAvatar';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import AddCardButton from '../auxillary/AddCardButton';
 import AddListButton from '../auxillary/AddListButton';
 import MemberCard from '../actionscard/MemberCard';
@@ -64,6 +64,8 @@ const CardInformation: React.FC = ({ taskId }) => {
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
   const { updateTaskMutation } = useUpdateTaskMutation();
   useEffect(() => {}, [coverImage]);
+  const params = useParams();
+  console.log(params.id);
   // console.log(activePanelId);
   // const { panelByIdData } = usePanelDataById(
   //   taskByIdData && taskByIdData[0]?.panelId
@@ -71,6 +73,7 @@ const CardInformation: React.FC = ({ taskId }) => {
   //console.log('panelByIdDatatoday=====>', cardPanelByIdData);
 
   //console.log('taskId=====>', taskByIdData);
+  useEffect(() => {}, [params]);
   const colorCardVisible = useSelector(
     (state) => state.pageInformation.colorCardVisible
   );
@@ -91,14 +94,14 @@ const CardInformation: React.FC = ({ taskId }) => {
       ...taskByIdData[0],
       description: value,
       panelId: activePanelId,
+      boardId: params.id,
     };
     console.log('taskdata', data);
     updateTaskMutation(data);
-        dispatch(setCardInfoEditOpen(false));
-
+    dispatch(setCardInfoEditOpen(false));
   };
   //
-  useEffect(() => { },[value])
+  useEffect(() => {}, [value]);
   const handleCancel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCardInfoVisible(false));
@@ -158,6 +161,7 @@ const CardInformation: React.FC = ({ taskId }) => {
         const data = {
           ...taskByIdData[0],
           imageUrl: clickedImageId,
+          boardId:params.id
         };
         // console.log('taskdata', data);
         updateTaskMutation(data);

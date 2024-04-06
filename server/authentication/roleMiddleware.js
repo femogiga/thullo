@@ -68,13 +68,39 @@ const checkBoardActions = (req, res, next) => {
   next();
 };
 
-checkUserOnTasksAction = async (req, res, next) => {
+const checkUserOnTasksAction = async (req, res, next) => {
   const { authorId, boardIndex } = req.params;
   const activeBoard = await knex
     .from('Board')
     .select('adminId')
-    .where('id', parseInt(boardIndex))
-  if (!(parseInt(activeBoard[0].adminId) === parseInt(req.user.id)) ){
+    .where('id', parseInt(boardIndex));
+  if (!(parseInt(activeBoard[0].adminId) === parseInt(req.user.id))) {
+    res.status(401).json({ message: ' Unauthorized ' });
+    return;
+  }
+  next();
+};
+
+const checkTasksActions = async (req, res, next) => {
+  const { boardId } = req.body;
+  const activeBoard = await knex
+    .from('Board')
+    .select('adminId')
+    .where('id', parseInt(boardId));
+  if (!(parseInt(activeBoard[0].adminId) === parseInt(req.user.id))) {
+    res.status(401).json({ message: ' Unauthorized ' });
+    return;
+  }
+  next();
+};
+
+const checkLabelOnTasksActions = async (req, res, next) => {
+  const { boardId } = req.body;
+  const activeBoard = await knex
+    .from('Board')
+    .select('adminId')
+    .where('id', parseInt(boardId));
+  if (!(parseInt(activeBoard[0].adminId) === parseInt(req.user.id))) {
     res.status(401).json({ message: ' Unauthorized ' });
     return;
   }
@@ -86,4 +112,6 @@ module.exports = {
   checkAdminPanelRename,
   checkBoardActions,
   checkUserOnTasksAction,
+  checkTasksActions,
+  checkLabelOnTasksActions,
 };

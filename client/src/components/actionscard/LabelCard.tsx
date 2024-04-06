@@ -13,7 +13,7 @@ import React, { useEffect, useState } from 'react';
 import LabelIcon from '@mui/icons-material/Label';
 //import {testtData} from '../../tests/testData'
 import { photo } from './../../tests/testData';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ColorSelectCard from './auxillary/ColorSelectCard';
 import { colors } from './auxillary/colors';
 import IconLabel from '../auxillary/IconLabel';
@@ -35,6 +35,7 @@ const LabelCard: React.FC = ({ taskId }) => {
    *
    */
   const dispatch = useDispatch();
+  const params = useParams()
   const { labelMutation } = useLabelMutation();
   const { taskOnLabelMutation } = useTaskOnLabelMutation();
   const { labelByTaskIdData } = useLabelByTaskIdData(taskId);
@@ -51,6 +52,8 @@ const LabelCard: React.FC = ({ taskId }) => {
     setColor(e.currentTarget.name);
   };
 
+  console.log('params',params.id)
+
   const handleAddLabel = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const data = { label, labelColor: color };
@@ -59,7 +62,7 @@ const LabelCard: React.FC = ({ taskId }) => {
     res
       .then((res) => {
         const result = res.result[0];
-        const taskonLabelDataToSend = { labelId: result.id, taskId: taskId };
+        const taskonLabelDataToSend = { labelId: result.id, taskId: taskId ,boardId:params.id};
 
         taskOnLabelMutation(taskonLabelDataToSend);
         dispatch(setColorCardVisible(false));
