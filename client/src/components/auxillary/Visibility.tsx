@@ -3,10 +3,20 @@ import React from 'react';
 import IconLabel from './IconLabel';
 import PublicIcon from '@mui/icons-material/Public';
 import LockIcon from '@mui/icons-material/Lock';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useBoardUpdateMutation } from '../../api/boardData';
+import { useGetAdmin } from './../../api/userData';
 
 const Visibility: React.FC = () => {
+  const { mutateAsync } = useBoardUpdateMutation();
+  const params = useParams()
+
+  const { adminUserData } = useGetAdmin(params.id);
+  const handleBoardPrivacy = (e , privacy) => {
+    const data = { id: params.id, adminId:adminUserData[0].id ,privacy:privacy };
+    const res = mutateAsync( data)
+  }
   return (
     <Box
       className='visibility-modal'
@@ -15,8 +25,8 @@ const Visibility: React.FC = () => {
         padding: '0.5rem',
         width: '234px',
         maxHeight: '199px',
-          borderRadius: '12px',
-        backgroundColor: 'rgba(255,255,255)'
+        borderRadius: '12px',
+        backgroundColor: 'rgba(255,255,255)',
       }}>
       <div style={{ marginBlockEnd: '1rem' }}>
         <Typography variant='h6' sx={{ fontSize: '13px', fontWeight: '600' }}>
@@ -29,8 +39,8 @@ const Visibility: React.FC = () => {
       <Stack direction='column' spacing={2}>
         <motion.div
           style={{ padding: '.5rem' }}
-          whileHover={{ backgroundColor: '#F2F2F2', borderRadius: '8px'  }}>
-          <Link to='/'>
+          whileHover={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
+          <Link to='' onClick={(e) => handleBoardPrivacy(e, 'PUBLIC')}>
             <IconLabel
               labelText={'Public'}
               icon={<PublicIcon sx={{ fontSize: '13px' }} />}
@@ -43,7 +53,10 @@ const Visibility: React.FC = () => {
         <motion.div
           style={{ padding: '.5rem' }}
           whileHover={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
-          <Link to='' style={{}}>
+          <Link
+            to=''
+            onClick={(e) => handleBoardPrivacy(e, 'PRIVATE')}
+            style={{}}>
             <IconLabel
               labelText={'Private'}
               icon={<LockIcon sx={{ fontSize: '13px' }} />}

@@ -22,7 +22,7 @@ const getBoardById = async (req, res) => {
 };
 
 const updateBoard = async (req, res) => {
-  const { name, adminId,description } = req.body;
+  const { name, adminId, description, privacy } = req.body;
   try {
     const result = await knex('Board')
       .where('id', '=', parseInt(req.params.id))
@@ -30,6 +30,7 @@ const updateBoard = async (req, res) => {
         name: name,
         adminId: parseInt(adminId),
         description: description,
+        privacy:privacy
       });
 
     res.status(200).json({ result });
@@ -40,12 +41,13 @@ const updateBoard = async (req, res) => {
 };
 
 const createBoard = async (req, res) => {
-  const { name, adminId, thumbnail } = req.body;
+  const { name, adminId, thumbnail ,privacy} = req.body;
   try {
     const result = await knex('Board').insert({
       name: name,
       adminId: parseInt(adminId) ,
       thumbnail: thumbnail,
+      privacy: privacy
 
     }).returning(["id"]);
 

@@ -34,6 +34,7 @@ model Board {
   admin   User   @relation(fields: [adminId], references: [id])
   adminId Int
   panels Panel[]
+  privacy Privacy @default(PUBLIC)
 }
 
 model Panel{
@@ -101,4 +102,10 @@ model Asset {
   createdAt  DateTime @default(now())
   attachment Task     @relation(fields: [assetId], references: [id])
   assetId    Int
+}
+
+
+enum Privacy {
+  PRIVATE
+  PUBLIC
 }
