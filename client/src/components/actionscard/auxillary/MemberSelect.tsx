@@ -3,9 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { NameLabel } from '../../auxillary/NameLabel';
 
-const MemberSelect = ({ firstName, lastName, imgUrl, onAddMember }) => {
+const MemberSelect = ({ firstName, lastName, imgUrl, onAddMember ,onClickMember}) => {
   return (
-    <Link to='' onClick={onAddMember}>
+    <Link to='' onClick={onClickMember}>
       <Stack direction='row' spacing={1} alignItems={'center'}>
         <Avatar
           src={imgUrl}

@@ -24,13 +24,15 @@ import { useUserOnTasksMutation } from '../../api/usersOnTaskData';
 import { useSelector } from 'react-redux';
 
 const MemberCard = () => {
-  const params = useParams()
+  const params = useParams();
   const { allUserData } = useAllUserData();
   const { addUserToTaskMutation } = useUserOnTasksMutation();
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
 
   console.log(allUserData);
   const [searchedMember, setSearchedMember] = useState('');
+    const [searchedMemberId, setSearchedMemberId] = useState('');
+
 
   console.log(searchedMember);
   const handleSearchChange = (e) => {
@@ -38,9 +40,15 @@ const MemberCard = () => {
   };
 
   const handleAddMember = (authorId) => {
-    const data = { authorId, taskId: activeTaskId, boardId: params.id }
-    addUserToTaskMutation(data)
-  }
+    const data = { authorId, taskId: activeTaskId, boardId: params.id };
+    addUserToTaskMutation(data);
+    setSearchedMember('')
+    setSearchedMemberId('')
+  };
+  const onClickMember = (e, fullName,id) => {
+    setSearchedMember(fullName);
+    setSearchedMemberId(id)
+  };
 
   useEffect(() => {}, [searchedMember]);
   return (
@@ -104,7 +112,8 @@ const MemberCard = () => {
                         .includes(searchedMember.toLowerCase()) ||
                       item.lastname
                         .toLowerCase()
-                        .includes(searchedMember.toLowerCase())
+                        .includes(searchedMember.toLowerCase()) ||
+                      item.firstname + ' ' + item.lastname === searchedMember
                   )
                   .map((userData) => (
                     <MemberSelect
@@ -112,7 +121,13 @@ const MemberCard = () => {
                       firstName={userData?.firstname}
                       lastName={userData?.lastname}
                       imgUrl={userData.imgUrl}
-                      onAddMember={()=>handleAddMember(userData?.id)}
+                      onClickMember={(e) =>
+                        onClickMember(
+                          e,
+                          userData?.firstname + ' ' + userData?.lastname,userData?.id
+                        )
+                      }
+                      //onAddMember={() => handleAddMember(userData?.id)}
                     />
                   ))}
               {/* <MemberSelect />
@@ -124,6 +139,7 @@ const MemberCard = () => {
               text='invite'
               icon={null}
               colours={{ color: 'white', bg: '#2F80ED' }}
+              onClick={()=>handleAddMember(searchedMemberId)}
             />
           </Stack>
         </FormControl>
