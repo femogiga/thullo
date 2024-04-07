@@ -14,7 +14,8 @@ const pageInformationSlice = createSlice({
         memberCardVisible: false,
         addMemberVisible: false,
         taskId: 0,
-        panelId:0
+        panelId: 0
+       
     },
     reducers: {
         setPageVisibility: (state, action) => {

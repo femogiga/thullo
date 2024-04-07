@@ -1,5 +1,9 @@
 const { knex } = require('../Knex');
 
+/*
+** This getUserPhoto shuld be get boardDatabyUserIdwith photos
+*
+*/
 const getUserPhoto = async (req, res) => {
   try {
     const result = await knex
@@ -7,6 +11,7 @@ const getUserPhoto = async (req, res) => {
         'Board.id',
         'Board.name',
         'Board.thumbnail',
+        'Board.privacy',
         knex.raw('ARRAY_AGG("User"."imgUrl") as userPhotos')
       )
       .from('Board')
@@ -35,6 +40,7 @@ const AllBoardPage = async (req, res) => {
         'Board.name',
         'Board.thumbnail',
         'Board.adminId',
+        'Board.privacy',
         knex.raw('ARRAY_AGG("User"."imgUrl") as userPhotos')
       )
       .from('Board')
