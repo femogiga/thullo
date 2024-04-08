@@ -21,6 +21,27 @@ const getChatById = async (req, res) => {
   }
 };
 
+const getChatsByTaskId = async (req, res) => {
+  try {
+    const result = await knex
+      .from('Chat')
+      .select(
+        'Chat.*',
+        'User.firstname',
+        'User.lastname',
+        'User.imgUrl'
+      )
+      .where('taskId', '=', parseInt(req.params.taskId))
+      .innerJoin('User', 'User.id', '=', 'Chat.authorId')
+    .orderBy('Chat.createdAt')
+    console.log(result);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
+
 const updateChat = async (req, res) => {
   const { content, authorId } = req.body;
   try {
@@ -66,6 +87,7 @@ const deleteChat = async (req, res) => {
 };
 
 module.exports = {
+  getChatsByTaskId,
   getAllChat,
   getChatById,
   updateChat,

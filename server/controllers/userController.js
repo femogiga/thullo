@@ -38,7 +38,7 @@ const getUserByBoardId = async (req, res) => {
       .distinct();
     //.select('id', 'firstname', 'lastname', 'email', 'imgUrl');
 
-    console.log(result);
+    // console.log(result);
     res.status(200).json(result);
   } catch (error) {
     console.error(error);

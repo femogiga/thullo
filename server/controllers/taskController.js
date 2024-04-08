@@ -140,9 +140,9 @@ const deleteTask = async (req, res) => {
 
 const updateTaskPosition = async (req, res) => {
   const { title, boardId, taskId } = req.body;
-  console.log('taskId======>', taskId);
-  console.log('title======>', title);
-  console.log('boardId======>', boardId);
+  // console.log('taskId======>', taskId);
+  // console.log('title======>', title);
+  // console.log('boardId======>', boardId);
 
   try {
     const panel = await knex
@@ -161,7 +161,7 @@ const updateTaskPosition = async (req, res) => {
       .where('id', '=', parseInt(taskId))
       .update({ panelId: newPanelId });
 
-    console.log('task=====>', task);
+    // console.log('task=====>', task);
 
     if (task === 0) {
       return res.status(404).json({ message: 'Task not found' });

@@ -154,7 +154,7 @@ const BoardPage = () => {
     //console.log(draggableId);
     //const boardId = id;
     const taskId = parseInt(draggableId);
-    console.log(destination.droppableId)
+    console.log(destination.droppableId);
     //
     // if (title && taskId && boardId) {
     if (!isNaN(taskId) || title) {
@@ -165,8 +165,8 @@ const BoardPage = () => {
         // taskId: taskId && taskId,
         taskId: taskId,
       };
-      console.log('dataToSend===>', dataToSend)
-     await  mutateAsync(dataToSend);
+      console.log('dataToSend===>', dataToSend);
+      await mutateAsync(dataToSend);
     }
   };
   return (

@@ -4,9 +4,10 @@ const {
   updateChat,
   createChat,
   deleteChat,
+  getChatsByTaskId,
 } = require('../controllers/chatController');
 const router = require('express').Router();
-
+router.get('/task/:taskId', getChatsByTaskId);
 router.get('/:id', getChatById);
 router.put('/:id', updateChat);
 router.get('/', getAllChat);

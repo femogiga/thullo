@@ -16,7 +16,7 @@ const getPhotos = async (req, res, next) => {
 
     const data = response.data; // Extract the data from the response
 
-    console.log('data ====>', data); // Log the data to see what you're getting
+    // console.log('data ====>', data); // Log the data to see what you're getting
 
     res.status(200).json(data); // Send the data as JSON response
   } catch (error) {

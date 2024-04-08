@@ -49,6 +49,7 @@ import { setCardInfoEditOpen } from '../../features/visibilitySlice';
 import { useEffect, useState } from 'react';
 import DescriptionText from '../boardInfo/DescriptionText';
 import { useGetAdmin, useGetBoardUsers } from '../../api/userData';
+import { useChatByTaskIdData } from '../../api/chatData';
 
 const CardInformation: React.FC = ({ taskId }) => {
   const [coverImage, setCoverImage] = useState('');
@@ -63,10 +64,13 @@ const CardInformation: React.FC = ({ taskId }) => {
   const { taskByIdData } = useTaskDataById(activeTaskId);
 
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
+  const { chatByTaskIdData } = useChatByTaskIdData(activeTaskId);
+  console.log(chatByTaskIdData);
+
   const { updateTaskMutation } = useUpdateTaskMutation();
   useEffect(() => {}, [coverImage]);
   const params = useParams();
-  console.log(params.id);
+  //console.log(params.id);
   // console.log(activePanelId);
   // const { panelByIdData } = usePanelDataById(
   //   taskByIdData && taskByIdData[0]?.panelId
@@ -312,8 +316,19 @@ const CardInformation: React.FC = ({ taskId }) => {
             <CommentInput src={''} />
           </Box>
           <div>
-            <CommentCard firstName={''} lastName={''} />
-            <CommentCard firstName={''} lastName={''} />
+            {chatByTaskIdData &&
+              chatByTaskIdData.map((chat) => (
+                <CommentCard
+                  firstName={chat.firstname}
+                  lastName={chat.lastname}
+                  imgUrl={chat.imgUrl}
+                  content={chat.content}
+                  createdAt={chat.createdAt}
+                  key={`chat-${chat.id}`}
+
+                />
+              ))}
+            {/* <CommentCard firstName={''} lastName={''} /> */}
           </div>
         </Grid>
 
@@ -367,7 +382,9 @@ const CardInformation: React.FC = ({ taskId }) => {
                   boardUsersData.map((boardUser) => (
                     <NameAvatar
                       key={`boardUser-${boardUser.id}`}
-                      fullName={boardUser?.firstname + ' ' + boardUser?.lastname}
+                      fullName={
+                        boardUser?.firstname + ' ' + boardUser?.lastname
+                      }
                       src={boardUser?.imgUrl}
                       text=''
                       variant='withoutLabel'

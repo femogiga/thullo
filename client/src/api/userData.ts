@@ -33,7 +33,7 @@ export const useUserDataById = (id) => {
 
 export const useGetAdmin = (boardId) => {
     const { boardByIdData } = useBoardDataId(boardId)
-    const adminId = boardByIdData[0]?.adminId
+    const adminId = boardByIdData && boardByIdData[0]?.adminId
     const {
         status,
         fetchStatus,
