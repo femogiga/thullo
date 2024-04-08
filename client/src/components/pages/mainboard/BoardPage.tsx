@@ -69,7 +69,7 @@ const BoardPage = () => {
   const handleCreatePanel = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const panelData = { boardId: id, title: panelTitle };
-    console.log(panelData);
+    //console.log(panelData);
     const res = createPanelMutation(panelData);
     res.then(() => dispatch(setAddPanelModalOpen(false)));
   };
@@ -129,9 +129,9 @@ const BoardPage = () => {
   useEffect(() => {}, [mutateAsync]);
 
   //const [data, setData] = useState(panelByBoardIdData);
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId } = result;
-    console.log(result);
+    //console.log(result);
     // Check if there is no destination or if the card was dropped in the same position
     if (
       !destination ||
@@ -140,7 +140,7 @@ const BoardPage = () => {
     ) {
       return;
     }
-    const destTextArray = destination?.droppableId?.split('-');
+    const destTextArray = destination && destination?.droppableId?.split('-');
     //const title = destTextArray[0];
     const titleText = destTextArray[0];
     setTitle(titleText);
@@ -154,10 +154,10 @@ const BoardPage = () => {
     //console.log(draggableId);
     //const boardId = id;
     const taskId = parseInt(draggableId);
-    console.log(destination.droppableId);
+    console.log(destination.droppableId)
     //
     // if (title && taskId && boardId) {
-    if (!isNaN(taskId) && title) {
+    if (!isNaN(taskId) || title) {
       setDragId(taskId);
       const dataToSend = {
         title: destination.droppableId,
@@ -165,8 +165,8 @@ const BoardPage = () => {
         // taskId: taskId && taskId,
         taskId: taskId,
       };
-      mutateAsync(dataToSend);
-      // }
+      console.log('dataToSend===>', dataToSend)
+     await  mutateAsync(dataToSend);
     }
   };
   return (
@@ -327,11 +327,11 @@ const BoardPage = () => {
           <motion.div
             layout
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1}}
+            animate={{ opacity: 1 }}
             transition={{ duration: 2 }}
             exit={{ opacity: 0 }}
             style={{
-               position: 'absolute',
+              position: 'absolute',
               left: '30%',
               top: '4rem',
               zIndex: '4',
