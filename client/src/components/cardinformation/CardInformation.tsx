@@ -325,7 +325,6 @@ const CardInformation: React.FC = ({ taskId }) => {
                   content={chat.content}
                   createdAt={chat.createdAt}
                   key={`chat-${chat.id}`}
-
                 />
               ))}
             {/* <CommentCard firstName={''} lastName={''} /> */}

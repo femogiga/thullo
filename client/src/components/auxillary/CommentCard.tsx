@@ -3,6 +3,7 @@ import MiniCard from '../minicard/MiniCard';
 import { NameLabel } from './NameLabel';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
+import { dateFormatter } from './../../utility/timeFormatter';
 
 export const CommentCard = ({
   firstName,
@@ -23,7 +24,7 @@ export const CommentCard = ({
           <Box>
             <NameLabel firstName={firstName} lastName={lastName} />
             <Typography sx={{ fontSize: '10px', color: '#BDBDBD' }}>
-              {createdAt || '24 August at 20:43'}
+              {dateFormatter(createdAt) || '24 August at 20:43'}
             </Typography>
           </Box>
         </Stack>

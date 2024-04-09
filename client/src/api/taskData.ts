@@ -64,7 +64,7 @@ export const useTaskCardMutation = () => {
             queryClient.invalidateQueries({ queryKey: ['tasksById'] })
 
 
-            window.location.reload();
+           // window.location.reload();
 
 
         }
