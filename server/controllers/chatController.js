@@ -25,15 +25,10 @@ const getChatsByTaskId = async (req, res) => {
   try {
     const result = await knex
       .from('Chat')
-      .select(
-        'Chat.*',
-        'User.firstname',
-        'User.lastname',
-        'User.imgUrl'
-      )
+      .select('Chat.*', 'User.firstname', 'User.lastname', 'User.imgUrl')
       .where('taskId', '=', parseInt(req.params.taskId))
       .innerJoin('User', 'User.id', '=', 'Chat.authorId')
-    .orderBy('Chat.createdAt')
+      .orderBy('Chat.createdAt');
     console.log(result);
     res.status(200).json(result);
   } catch (error) {
@@ -59,7 +54,7 @@ const updateChat = async (req, res) => {
 };
 
 const createChat = async (req, res) => {
-  const { name, adminId, taskId } = req.body;
+  const { content, authorId, taskId } = req.body;
   try {
     const result = await knex('Chat').insert({
       content: content,
@@ -69,6 +64,7 @@ const createChat = async (req, res) => {
 
     res.status(201).json({ result, message: 'successfully created' });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };

@@ -49,7 +49,7 @@ import { setCardInfoEditOpen } from '../../features/visibilitySlice';
 import { useEffect, useState } from 'react';
 import DescriptionText from '../boardInfo/DescriptionText';
 import { useGetAdmin, useGetBoardUsers } from '../../api/userData';
-import { useChatByTaskIdData } from '../../api/chatData';
+import { useChatByTaskIdData, useCreateChatMutation } from '../../api/chatData';
 
 const CardInformation: React.FC = ({ taskId }) => {
   const [coverImage, setCoverImage] = useState('');
@@ -81,7 +81,7 @@ const CardInformation: React.FC = ({ taskId }) => {
 
   const { adminUserData } = useGetAdmin(params.id);
   const { boardUsersData } = useGetBoardUsers(params.id);
-  console.log('boardUser', boardUsersData);
+  //console.log('boardUser', boardUsersData);
   //console.log(adminUserData);
   useEffect(() => {}, [params]);
   const colorCardVisible = useSelector(
@@ -180,6 +180,9 @@ const CardInformation: React.FC = ({ taskId }) => {
       return prevCoverImage;
     });
   };
+
+
+
 
   return (
     <article
@@ -313,7 +316,7 @@ const CardInformation: React.FC = ({ taskId }) => {
             <AttachmentCard src='' />
           </Box>
           <Box sx={{ marginBlockEnd: '2rem' }}>
-            <CommentInput src={''} />
+            <CommentInput src={''}  />
           </Box>
           <div>
             {chatByTaskIdData &&

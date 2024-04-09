@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import apiService from "../utility/apiService";
 
 
@@ -8,4 +8,23 @@ export const useChatByTaskIdData = (taskId) => {
         queryFn: () => apiService.get(`/chats/task/${taskId}`).then((res) => res.data),
     });
     return { isPending, error, chatByTaskIdData };
+};
+
+
+export const useCreateChatMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: createChatMutation } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.post('/chats', data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['chatByTaskIdData'] })
+        }
+
+
+    });
+
+    return { isSuccess, error, createChatMutation };
 };
