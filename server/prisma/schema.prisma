@@ -99,9 +99,10 @@ model Chat {
 model Asset {
   id Int @id @default(autoincrement())
   url        String?
+  title String
   createdAt  DateTime @default(now())
-  attachment Task     @relation(fields: [assetId], references: [id])
-  assetId    Int
+  attachment Task     @relation(fields: [taskId], references: [id])
+  taskId    Int
 }
 
 

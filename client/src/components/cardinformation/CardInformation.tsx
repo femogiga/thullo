@@ -50,6 +50,7 @@ import { useEffect, useState } from 'react';
 import DescriptionText from '../boardInfo/DescriptionText';
 import { useGetAdmin, useGetBoardUsers } from '../../api/userData';
 import { useChatByTaskIdData, useCreateChatMutation } from '../../api/chatData';
+import { useAssetsByTaskData } from '../../api/assetData';
 
 const CardInformation: React.FC = ({ taskId }) => {
   const [coverImage, setCoverImage] = useState('');
@@ -81,6 +82,8 @@ const CardInformation: React.FC = ({ taskId }) => {
 
   const { adminUserData } = useGetAdmin(params.id);
   const { boardUsersData } = useGetBoardUsers(params.id);
+  const { assetsByTaskData } = useAssetsByTaskData(activeTaskId);
+  console.log(assetsByTaskData);
   //console.log('boardUser', boardUsersData);
   //console.log(adminUserData);
   useEffect(() => {}, [params]);
@@ -312,7 +315,8 @@ const CardInformation: React.FC = ({ taskId }) => {
             <CrudButton text={'Add'} icon={<Add sx={{ fontSize: '10px' }} />} />
           </Stack>
           <Box sx={{ marginBlockEnd: '2rem' }}>
-            <AttachmentCard src='' />
+
+            {assetsByTaskData && assetsByTaskData.map(attachment => <AttachmentCard title={attachment?.title } src={attachment.url} key={attachment?.id} />)}
             <AttachmentCard src='' />
           </Box>
           <Box sx={{ marginBlockEnd: '2rem' }}>

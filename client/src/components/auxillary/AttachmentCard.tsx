@@ -5,7 +5,7 @@ import CrudButton from './CrudButton';
 interface AttachmentProps {
   src: string;
 }
-const AttachmentCard: React.FC<AttachmentProps> = ({ src }) => {
+const AttachmentCard: React.FC<AttachmentProps> = ({ src ,title}) => {
   src =
     'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600';
   return (
@@ -18,7 +18,7 @@ const AttachmentCard: React.FC<AttachmentProps> = ({ src }) => {
           <IconLabel icon={null} labelText='...Added July 5,2020' />
           <Typography
             sx={{ fontSize: '10px', fontWeight: '500', marginBlockEnd: '5px' }}>
-            Reasoning by Ragnanath Krishma
+            {title || 'Reasoning by Ragnanath Krishma'}
           </Typography>
           <Stack direction='row' spacing='9px' color='#828282'>
             <CrudButton colours='' icon='' text={'Download'} />
