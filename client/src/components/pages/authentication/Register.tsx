@@ -26,7 +26,7 @@ import { useRegisterMutation } from '../../../api/auth';
 interface IRegister {
   firstname: string;
   lastname: string;
-  email: 'string';
+  email: string;
   password: string;
   picture: File;
 }
@@ -56,15 +56,8 @@ const Register: React.FC = () => {
     setPhoto(newFile);
   };
 
-  const handleRegistration = () => {
-    // const data = {
-    //   firstname,
-    //   lastname,
-    //   email,
-    //   password,
-    //   imgUrl:
-    //     'https://images.pexels.com/photos/1006202/pexels-photo-1006202.jpeg?auto=compress&cs=tinysrgb&w=600',
-    // };
+  const handleRegistration = async () => {
+
     const formData = new FormData();
     formData.append('firstname', firstname);
     formData.append('lastname', lastname);
@@ -72,12 +65,12 @@ const Register: React.FC = () => {
     formData.append('password', password);
     formData.append('photo', photo);
 
-    const res = registerMutation(data);
+    await registerMutation(formData);
   };
   console.log('registrationData', registrationData);
   console.log('photo', photo);
   return (
-    <div>
+    <form encType='multipart/form-data' onSubmit={handleRegistration}>
       <Card
         sx={{ maxWidth: 600, marginInline: 'auto', marginBlockStart: '10vh' }}>
         <CardContent
@@ -191,7 +184,7 @@ const Register: React.FC = () => {
             name='photo'
             onChange={handleFileChange}
             value={photo}
-            placeholder='Insert a file'
+            placeholder=''
             size='small'
             label='Profile picture'
             //getSizeText={(value) => 'Very big'}
@@ -248,7 +241,7 @@ const Register: React.FC = () => {
           </Typography>
         </CardContent>
       </Card>
-    </div>
+    </form>
   );
 };
 

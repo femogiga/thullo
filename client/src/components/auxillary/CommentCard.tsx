@@ -12,7 +12,10 @@ import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import { dateFormatter } from './../../utility/timeFormatter';
 import { useState } from 'react';
-import { useUpdateChatMutation } from '../../api/chatData';
+import {
+  useDeleteChatMutation,
+  useUpdateChatMutation,
+} from '../../api/chatData';
 import DoneIcon from '@mui/icons-material/Done';
 export const CommentCard = ({
   chatId,
@@ -25,6 +28,7 @@ export const CommentCard = ({
 }) => {
   // (firstName = 'Christiano'), (lastName = 'Ronaldo');
   const { updateChatMutation } = useUpdateChatMutation();
+  const { deleteChatMutation } = useDeleteChatMutation();
   const [editInputVisible, setEditInputVisible] = useState(false);
   const [editContent, setEditContent] = useState(content);
   const handleChatEditButton = (e) => {
@@ -40,11 +44,14 @@ export const CommentCard = ({
 
   const handleChatEditSubmit = (e) => {
     e.preventDefault();
-    const data = { id: chatId, content: editContent ,authorId:authorId};
+    const data = { id: chatId, content: editContent, authorId: authorId };
     const res = updateChatMutation(data);
     setEditInputVisible(false);
   };
-  const handleChatDelete = () => {};
+  const handleChatDelete = async () => {
+    const deleteData = { id: chatId, authorId };
+    await deleteChatMutation(deleteData);
+  };
 
   return (
     <Box>
@@ -66,7 +73,9 @@ export const CommentCard = ({
             Edit
           </Link>
           <p> - </p>
-          <Link to='/'>Delete</Link>
+          <Link to='' onClick={handleChatDelete}>
+            Delete
+          </Link>
         </Stack>
       </Stack>
       {editInputVisible ? (

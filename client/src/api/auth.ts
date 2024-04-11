@@ -37,7 +37,7 @@ export const useRegisterMutation = () => {
   const navigate = useNavigate();
   const { isSuccess, error, mutate: registerMutation } = useMutation({
     mutationFn: async (data) => {
-      const response = await apiService.post('/auth/register', data);
+      const response = await apiService.authRegister('/auth/register', data);
 
       return response.data;
     },

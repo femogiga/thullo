@@ -47,3 +47,23 @@ export const useUpdateChatMutation = () => {
 
     return { isSuccess, error, updateChatMutation };
 };
+
+
+export const useDeleteChatMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: deleteChatMutation } = useMutation({
+        mutationFn: async (data) => {
+
+            const response = await apiService.remove(`/chats/${data.id}`);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['chatByTaskIdData'] })
+        }
+
+
+    });
+
+    return { isSuccess, error, deleteChatMutation };
+};
