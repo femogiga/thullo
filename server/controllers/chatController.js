@@ -38,7 +38,7 @@ const getChatsByTaskId = async (req, res) => {
 };
 
 const updateChat = async (req, res) => {
-  const { content, authorId } = req.body;
+  const { id,content, authorId } = req.body;
   try {
     const result = await knex('Chat')
       .where('id', '=', parseInt(req.params.id))
@@ -49,6 +49,7 @@ const updateChat = async (req, res) => {
 
     res.status(200).json({ result, message: 'successfully updated' });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };

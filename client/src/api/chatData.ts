@@ -28,3 +28,22 @@ export const useCreateChatMutation = () => {
 
     return { isSuccess, error, createChatMutation };
 };
+
+export const useUpdateChatMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: updateChatMutation } = useMutation({
+        mutationFn: async (data) => {
+
+            const response = await apiService.put(`/chats/${data.id}`, data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['chatByTaskIdData'] })
+        }
+
+
+    });
+
+    return { isSuccess, error, updateChatMutation };
+};

@@ -30,16 +30,18 @@ const CommentInput = ({ src }) => {
     setContent(e.target.value);
   };
 
-  const handleCreateChat = (e: React.SyntheticEvent) => {
+  const handleCreateChat = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const message = {
       content: content,
       authorId: currentUser.id,
       taskId: activeTaskId,
     };
-    const res = createChatMutation(message);
+    await createChatMutation(message);
     setContent('');
   };
+
+
   return (
     <Box
       className='comment-input'

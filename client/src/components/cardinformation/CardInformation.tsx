@@ -160,7 +160,7 @@ const CardInformation: React.FC = ({ taskId }) => {
 
   // const handleQuillSaveButton = (e) => {
   //   e.preventDefault();
-  //   console.log('working');
+    console.log('working',chatByTaskIdData);
   // };
 
   const handleCoverImageClick = (e: React.MouseEvent) => {
@@ -322,12 +322,15 @@ const CardInformation: React.FC = ({ taskId }) => {
             {chatByTaskIdData &&
               chatByTaskIdData.map((chat) => (
                 <CommentCard
+                  chatId={chat.id}
                   firstName={chat.firstname}
                   lastName={chat.lastname}
                   imgUrl={chat.imgUrl}
                   content={chat.content}
                   createdAt={chat.createdAt}
                   key={`chat-${chat.id}`}
+                  authorId={chat.authorId}
+
                 />
               ))}
             {/* <CommentCard firstName={''} lastName={''} /> */}
