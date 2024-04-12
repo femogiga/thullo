@@ -57,6 +57,9 @@ import {
 } from '../../api/assetData';
 import { MuiFileInput } from 'mui-file-input';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import IsLoading from '../auxillary/IsLoading';
+import isLoadingBar from '../auxillary/IsLoadingBar';
+import IsLoadingBar from '../auxillary/IsLoadingBar';
 
 const CardInformation: React.FC = ({ taskId }) => {
   const [coverImage, setCoverImage] = useState('');
@@ -69,6 +72,8 @@ const CardInformation: React.FC = ({ taskId }) => {
   );
   const [value, setValue] = useState('');
   const [file, setFile] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState('');
+  const[uploading,setUploading] = useState(false);
 
   const [attachmentTitle, setAttachmentTitle] = useState('');
   console.log(file);
@@ -90,7 +95,7 @@ const CardInformation: React.FC = ({ taskId }) => {
   //console.log('panelByIdDatatoday=====>', cardPanelByIdData);
 
   //console.log('taskId=====>', taskByIdData);
-
+useEffect(() => {}, [uploadMessage]);
   const { adminUserData } = useGetAdmin(params.id);
   const { boardUsersData } = useGetBoardUsers(params.id);
   const { assetsByTaskData } = useAssetsByTaskData(activeTaskId);
@@ -209,7 +214,23 @@ const CardInformation: React.FC = ({ taskId }) => {
     formData.append('title', attachmentTitle);
     formData.append('taskId', activeTaskId);
     console.log(formData);
-    await createAssetMutation(formData);
+    const res = await createAssetMutation(formData);
+    setUploading(true)
+    console.log('res', res);
+
+      if (res.uploaded ===true) {
+        setFile(null)
+        setAttachmentTitle('')
+         setUploadMessage(res.message);
+        setTimeout(() => {
+
+          setUploadMessage('');
+         setUploading(false);
+
+        },1000)
+    }
+    //else{setUploadMessage(res.message)}
+
   };
   console.log(file);
   return (
@@ -367,15 +388,17 @@ const CardInformation: React.FC = ({ taskId }) => {
                   },
                   startAdornment: <AttachFileIcon />,
                 }}
-                sx={{ width: '10rem', marginBlockEnd: '.2rem' }}
+                sx={{ width: '10rem', marginBlockEnd: '.6rem' }}
               />
               <TextField
                 label={'file title'}
                 value={attachmentTitle}
-                sx={{ width: '10rem', marginBlockEnd: '.2rem' }}
+                sx={{ width: '10rem', marginBlockEnd: '.6rem' }}
                 onChange={(e) => setAttachmentTitle(e.target.value)}
               />
               <CrudButton text={'Submit'} onClick={handleFileUpload} />
+              { <IsLoadingBar visible={uploading} />}
+              <Typography sx={{fontSize:'.7rem',color:'#BDBDBD'}}>{uploadMessage}</Typography>
             </form>
           </Stack>
           <Box sx={{ marginBlockEnd: '2rem' }}>

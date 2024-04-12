@@ -16,13 +16,13 @@ const uploader = async (req, res) => {
     upload.single('file')(req, res, async (err) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ error: 'File upload failed' });
+        return res.status(500).json({message:'file upload failed', error: 'File upload failed' });
       }
 
       if (!req.file) {
-        return res.status(500).json({ message: 'document file is required ' });
+        return res.status(500).json({message: 'document file is required ' });
       }
-      console.log(req.file);
+      //console.log(req.file);
 
       try {
         // const fileType = 'pdf';
@@ -47,15 +47,15 @@ const uploader = async (req, res) => {
           taskId: taskId,
         });
 
-        return res.status(200).json({ message: 'file  successfully created' });
+        return res.status(200).json({ uploaded: true,message: 'file  successfully created' });
       } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({message:'file upload failed', error: 'Internal server error' });
       }
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({message:'file upload failed', error: 'Internal server error' });
   }
 };
 
