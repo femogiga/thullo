@@ -6,6 +6,12 @@ export const dateFormatter = (dateString) => {
   return formattedDate;
 };
 
+export const dateFormatterAttachment = (dateString) => {
+  const date = new Date(dateString);
+  const formattedDate = moment(date).format('[added] MMMM D YYYY');
+  return formattedDate;
+};
+
 //const originalDateString = '2024-04-08T19:01:40.946Z';
 
 //const result = (dateFormatter(originalDateString))

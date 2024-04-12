@@ -315,12 +315,19 @@ const CardInformation: React.FC = ({ taskId }) => {
             <CrudButton text={'Add'} icon={<Add sx={{ fontSize: '10px' }} />} />
           </Stack>
           <Box sx={{ marginBlockEnd: '2rem' }}>
-
-            {assetsByTaskData && assetsByTaskData.map(attachment => <AttachmentCard title={attachment?.title } src={attachment.url} key={attachment?.id} />)}
+            {assetsByTaskData &&
+              assetsByTaskData.map((attachment) => (
+                <AttachmentCard
+                  title={attachment?.title}
+                  src={attachment.url}
+                  key={attachment?.id}
+                  createdAt={attachment?.createdAt}
+                />
+              ))}
             <AttachmentCard src='' />
           </Box>
           <Box sx={{ marginBlockEnd: '2rem' }}>
-            <CommentInput src={''}  />
+            <CommentInput src={''} />
           </Box>
           <div>
             {chatByTaskIdData &&
@@ -334,7 +341,6 @@ const CardInformation: React.FC = ({ taskId }) => {
                   createdAt={chat.createdAt}
                   key={`chat-${chat.id}`}
                   authorId={chat.authorId}
-
                 />
               ))}
             {/* <CommentCard firstName={''} lastName={''} /> */}

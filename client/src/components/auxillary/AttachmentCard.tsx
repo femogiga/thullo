@@ -1,13 +1,19 @@
 import { Box, Stack, Typography } from '@mui/material';
 import IconLabel from './IconLabel';
 import CrudButton from './CrudButton';
+import handleDownload from '../../utility/fileDownload';
+import { Link } from 'react-router-dom';
+import {
+  dateFormatter,
+  dateFormatterAttachment,
+} from './../../utility/timeFormatter';
 
 interface AttachmentProps {
   src: string;
 }
-const AttachmentCard: React.FC<AttachmentProps> = ({ src ,title}) => {
-  src =
-    'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600';
+const AttachmentCard: React.FC<AttachmentProps> = ({ src ,title,createdAt}) => {
+  // src =
+  //   'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600';
   return (
     <Box marginBlockEnd={'1rem'}>
       <Stack direction='row' spacing='1rem'>
@@ -15,13 +21,26 @@ const AttachmentCard: React.FC<AttachmentProps> = ({ src ,title}) => {
           <img src={src} alt='' style={{ borderRadius: '8px' }} />
         </div>
         <div style={{ marginBlockEnd: '5px' }}>
-          <IconLabel icon={null} labelText='...Added July 5,2020' />
+          <IconLabel
+            icon={null}
+            labelText={dateFormatterAttachment(createdAt )|| '...Added July 5,2020'}
+          />
           <Typography
             sx={{ fontSize: '10px', fontWeight: '500', marginBlockEnd: '5px' }}>
             {title || 'Reasoning by Ragnanath Krishma'}
           </Typography>
           <Stack direction='row' spacing='9px' color='#828282'>
-            <CrudButton colours='' icon='' text={'Download'} />
+            {/* <div className='downloadLink'>
+              <Link href={src} download={title}>
+                Download
+              </Link>
+            </div> */}
+            <CrudButton
+              onClick={(e) => handleDownload(e, src)}
+              colours=''
+              icon=''
+              text={'Download'}
+            />
             <CrudButton colours='' icon='' text={'Delete'} />
           </Stack>
         </div>
