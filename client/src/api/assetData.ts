@@ -35,3 +35,22 @@ export const useDeleteAssetMutation = () => {
 
     return { isSuccess, error, deleteAssetMutation };
 };
+
+
+export const useCreateAssetMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: createAssetMutation } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.authRegister('/assets/upload', data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['assetsByTaskId'] })
+        }
+
+
+    });
+
+    return { isSuccess, error, createAssetMutation };
+};

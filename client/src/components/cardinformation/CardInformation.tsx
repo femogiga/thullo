@@ -4,6 +4,7 @@ import {
   Grid,
   IconButton,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material';
 import BackHandIcon from '@mui/icons-material/BackHand';
@@ -50,7 +51,12 @@ import { useEffect, useState } from 'react';
 import DescriptionText from '../boardInfo/DescriptionText';
 import { useGetAdmin, useGetBoardUsers } from '../../api/userData';
 import { useChatByTaskIdData, useCreateChatMutation } from '../../api/chatData';
-import { useAssetsByTaskData } from '../../api/assetData';
+import {
+  useAssetsByTaskData,
+  useCreateAssetMutation,
+} from '../../api/assetData';
+import { MuiFileInput } from 'mui-file-input';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 const CardInformation: React.FC = ({ taskId }) => {
   const [coverImage, setCoverImage] = useState('');
@@ -62,6 +68,11 @@ const CardInformation: React.FC = ({ taskId }) => {
     (state) => state.visibility.cardInfoEditOpen
   );
   const [value, setValue] = useState('');
+  const [file, setFile] = useState(null);
+
+  const [attachmentTitle, setAttachmentTitle] = useState('');
+  console.log(file);
+
   const { taskByIdData } = useTaskDataById(activeTaskId);
 
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
@@ -83,6 +94,7 @@ const CardInformation: React.FC = ({ taskId }) => {
   const { adminUserData } = useGetAdmin(params.id);
   const { boardUsersData } = useGetBoardUsers(params.id);
   const { assetsByTaskData } = useAssetsByTaskData(activeTaskId);
+  const { createAssetMutation } = useCreateAssetMutation();
   console.log(assetsByTaskData);
   //console.log('boardUser', boardUsersData);
   //console.log(adminUserData);
@@ -183,7 +195,23 @@ const CardInformation: React.FC = ({ taskId }) => {
       return prevCoverImage;
     });
   };
+  //
+  const handleFileChange = (newFile) => {
+    setFile(newFile);
+  };
+  const dataTo = { activeTaskId, attachmentTitle, file };
+  console.log('data', dataTo);
 
+  const handleFileUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', attachmentTitle);
+    formData.append('taskId', activeTaskId);
+    console.log(formData);
+    await createAssetMutation(formData);
+  };
+  console.log(file);
   return (
     <article
       style={{
@@ -301,6 +329,7 @@ const CardInformation: React.FC = ({ taskId }) => {
             )}
           </Box>
           <Stack
+            position={'relative'}
             direction='row'
             spacing='1rem'
             marginBlock={'1rem'}
@@ -310,6 +339,44 @@ const CardInformation: React.FC = ({ taskId }) => {
               icon={<FeedIcon sx={{ fontSize: '10px' }} />}
             />
             <CrudButton text={'Add'} icon={<Add sx={{ fontSize: '10px' }} />} />
+            <form
+              encType='multipart/form-data'
+              onSubmit={handleFileUpload}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'absolute',
+                top: '.5rem',
+                right: '0',
+                zIndex: '3',
+                padding: '1rem',
+                border: '1px solid #BDBDBD',
+              }}>
+              <MuiFileInput
+                id={'photo'}
+                name='file'
+                onChange={handleFileChange}
+                value={file}
+                placeholder=''
+                size='small'
+                label='Attach file'
+                //getSizeText={(value) => 'Very big'}
+                InputProps={{
+                  inputProps: {
+                    accept: '.txt,.pdf, .jpeg',
+                  },
+                  startAdornment: <AttachFileIcon />,
+                }}
+                sx={{ width: '10rem', marginBlockEnd: '.2rem' }}
+              />
+              <TextField
+                label={'file title'}
+                value={attachmentTitle}
+                sx={{ width: '10rem', marginBlockEnd: '.2rem' }}
+                onChange={(e) => setAttachmentTitle(e.target.value)}
+              />
+              <CrudButton text={'Submit'} onClick={handleFileUpload} />
+            </form>
           </Stack>
           <Box sx={{ marginBlockEnd: '2rem' }}>
             {assetsByTaskData &&
