@@ -21,19 +21,25 @@ const uploader = async (req, res) => {
 
       if (!req.file) {
         return res.status(500).json({ message: 'document file is required ' });
-        }
-        console.log(req.file);
+      }
+      console.log(req.file);
 
       try {
-        const fileType = 'pdf';
+        // const fileType = 'pdf';
+        const fileType = req.file.mimetype;
+        //         console.log('fileType======>', fileType);
+        const fileTypeIndex = fileType.lastIndexOf('/');
+        const fileTypeString = fileType.substring(fileTypeIndex + 1);
+        //console.log('fileTypeString======>', fileTypeString);
+
         const base64String = req.file.buffer.toString('base64');
         const result = await cloudinary.uploader.upload(
-          `data:application/${fileType};base64,${base64String}`,
+          `data:application/${fileTypeString};base64,${base64String}`,
           { resource_type: 'auto' }
         );
         const fileUrl = result.secure_url;
-
         const { title, taskId } = req.body;
+        //const fileUrlString = fileUrl + '.' + fileTypeString
 
         const newAsset = await knex('Asset').insert({
           url: fileUrl,
@@ -65,4 +71,17 @@ const getAssetByTaskId = async (req, res, next) => {
   }
 };
 
-module.exports = { uploader, getAssetByTaskId };
+const deleteAssetById = async (req, res, next) => {
+  try {
+    const id = parseInt(req.query.id);
+    const result = await knex('Asset').where('id', id).delete();
+    res.status(200).json({ message: 'attachment deleted successfully' });
+
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+
+  }
+}
+
+
+module.exports = { uploader, getAssetByTaskId, deleteAssetById };

@@ -7,23 +7,42 @@ import {
   dateFormatter,
   dateFormatterAttachment,
 } from './../../utility/timeFormatter';
+import { useDeleteAssetMutation } from '../../api/assetData';
 
 interface AttachmentProps {
+  assetId: number;
   src: string;
+  title: string;
+  createdAt: string;
 }
-const AttachmentCard: React.FC<AttachmentProps> = ({ src ,title,createdAt}) => {
-  // src =
-  //   'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600';
+const AttachmentCard: React.FC<AttachmentProps> = ({
+  assetId,
+  src,
+  title,
+  createdAt,
+}) => {
+  const pics =
+    'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600';
+
+  const { deleteAssetMutation } = useDeleteAssetMutation();
+
+  const handleAssetDelete = async (e) => {
+    e.preventDefault();
+    const data = { id: assetId };
+    await deleteAssetMutation(data);
+  };
   return (
     <Box marginBlockEnd={'1rem'}>
       <Stack direction='row' spacing='1rem'>
         <div style={{ maxWidth: '5rem', borderRadius: '8px' }}>
-          <img src={src} alt='' style={{ borderRadius: '8px' }} />
+          <img src={pics} alt='' style={{ borderRadius: '8px' }} />
         </div>
         <div style={{ marginBlockEnd: '5px' }}>
           <IconLabel
             icon={null}
-            labelText={dateFormatterAttachment(createdAt )|| '...Added July 5,2020'}
+            labelText={
+              dateFormatterAttachment(createdAt) || '...Added July 5,2020'
+            }
           />
           <Typography
             sx={{ fontSize: '10px', fontWeight: '500', marginBlockEnd: '5px' }}>
@@ -41,7 +60,12 @@ const AttachmentCard: React.FC<AttachmentProps> = ({ src ,title,createdAt}) => {
               icon=''
               text={'Download'}
             />
-            <CrudButton colours='' icon='' text={'Delete'} />
+            <CrudButton
+              onClick={handleAssetDelete}
+              colours=''
+              icon=''
+              text={'Delete'}
+            />
           </Stack>
         </div>
       </Stack>

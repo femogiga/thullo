@@ -163,7 +163,7 @@ const CardInformation: React.FC = ({ taskId }) => {
 
   // const handleQuillSaveButton = (e) => {
   //   e.preventDefault();
-    console.log('working',chatByTaskIdData);
+  console.log('working', chatByTaskIdData);
   // };
 
   const handleCoverImageClick = (e: React.MouseEvent) => {
@@ -183,9 +183,6 @@ const CardInformation: React.FC = ({ taskId }) => {
       return prevCoverImage;
     });
   };
-
-
-
 
   return (
     <article
@@ -318,13 +315,14 @@ const CardInformation: React.FC = ({ taskId }) => {
             {assetsByTaskData &&
               assetsByTaskData.map((attachment) => (
                 <AttachmentCard
+                  assetId={attachment.id}
                   title={attachment?.title}
                   src={attachment.url}
                   key={attachment?.id}
                   createdAt={attachment?.createdAt}
                 />
               ))}
-            <AttachmentCard src='' />
+            {/* <AttachmentCard src='' /> */}
           </Box>
           <Box sx={{ marginBlockEnd: '2rem' }}>
             <CommentInput src={''} />
