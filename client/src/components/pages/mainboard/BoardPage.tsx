@@ -208,7 +208,10 @@ const BoardPage = () => {
                         ref={provided.innerRef}
                         style={{
                           backgroundColor: snapshot.isDraggingOver
-                            ? 'lightgrey'
+                            ? ''
+                            : '',
+                          border: snapshot.isDraggingOver
+                            ? '1px dashed blue'
                             : '',
                           height: 'auto',
                           width: 'auto',
