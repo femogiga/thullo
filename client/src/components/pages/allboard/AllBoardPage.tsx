@@ -1,11 +1,10 @@
 import React from 'react';
 import Header from '../../header/Header';
 import AllBoard from '../../allboard/AllBoard';
-import IsLoading from '../../auxillary/IsLoading';
 
 const AllBoardPage:React.FC = () => {
   return (
-    <div>
+    <div style={{minHeight:'100vh'}}>
       <Header />
       <AllBoard />
     {/* <IsLoading/> */}

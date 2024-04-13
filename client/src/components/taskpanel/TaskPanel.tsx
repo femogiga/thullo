@@ -40,7 +40,7 @@ const TaskPanel: React.FC<IPanel> = ({
   const [createFormVisibleState, setCreateFormVisibleState] = useState(false);
 
   const dispatch = useDispatch();
-  console.log('status=====>', panel);
+  //console.log('status=====>', panel);
   const handleCardClick = (e: MouseEvent, taskId: number, panelId: number) => {
     e.preventDefault();
     dispatch(setTaskId(taskId));
@@ -56,7 +56,7 @@ const TaskPanel: React.FC<IPanel> = ({
   const style = {
     // border: '1px solid black',
 
-    minHeight: '100vh',
+    minHeight: '40vh',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',

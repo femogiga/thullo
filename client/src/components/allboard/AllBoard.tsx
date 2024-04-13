@@ -20,7 +20,7 @@ import { useAllUserData } from '../../api/userData';
 
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [coverImage, setCoverImage] = useState('');
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
@@ -36,7 +36,6 @@ const AllBoard: React.FC = () => {
   } = useAllBoardPageData();
   const { allUserData } = useAllUserData();
   //console.log(allUserData)
-
 
   //console.log(allBoardPageData, allBoardPageData)
   const handleOpenAddBoardModal = (e: React.SyntheticEvent) => {
@@ -61,21 +60,21 @@ const AllBoard: React.FC = () => {
   //   const data = {name,adminId,thumbnail,description}
   //     const res = createBoardMutate(data)
   // }
-
-  const handleBoardCardClick = (e: React.SyntheticEvent,link) => {
-    navigate(link)
+// background
+  const handleBoardCardClick = (e: React.SyntheticEvent, link) => {
+    navigate(link);
     window.location.reload();
-   }
+  };
 
   const handleCoverImageClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setCoverImage(e.currentTarget.id);
   };
-  console.log(coverImage);
+  //console.log(coverImage);
   return (
-    <Box className='container' sx={{ position: 'relative' }}>
+    <Box className='container' sx={{ width: '100%', position: 'relative' }}>
       <Board direction={'column'}>
-        <Stack direction={'row'} justifyContent={'space-between'}>
+        {/* <Stack direction={'row'} justifyContent={'space-between'}>
           <Typography>All Boards</Typography>
 
           <CrudButton
@@ -84,13 +83,34 @@ const AllBoard: React.FC = () => {
             icon={<AddIcon sx={{ fontSize: 10 }} />}
             onClick={handleOpenAddBoardModal}
           />
-        </Stack>
+        </Stack> */}
         <Box
           sx={{
-            display: 'grid',
+            display: 'flex',
+            flexDirection: 'column',
             placeItems: 'center',
+            minHeight: '80vh',
+            padding: '2rem',
+            rowGap: '2rem',
+            maxWidth:'100vw'
+            //alignContent: 'space-between',
             // border: '1px solid black',
+            // minHeight:'70vh'
           }}>
+          <Stack
+            direction={'row'}
+            justifyContent={'space-between'}
+            // border='1px solid black'
+            width='100%'>
+            <Typography>All Boards</Typography>
+
+            <CrudButton
+              text={'Add'}
+              colours={{ color: 'white', bg: '#2F80ED' }}
+              icon={<AddIcon sx={{ fontSize: 10 }} />}
+              onClick={handleOpenAddBoardModal}
+            />
+          </Stack>
           <Stack
             direction={'row'}
             gap='1rem'
@@ -98,7 +118,7 @@ const AllBoard: React.FC = () => {
 
             sx={{
               flexWrap: 'wrap',
-              maxWidth: '70%',
+              maxWidth: '100%',
             }}>
             {allBoardPagepending ? (
               <IsLoading />
@@ -106,7 +126,11 @@ const AllBoard: React.FC = () => {
               allBoardPageData &&
               allBoardPageData.map((board) => (
                 // <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
-                <Link onClick= {(e)=>handleBoardCardClick(e,`/boards/${board.id}`)} key={`board-${board.id}`}>
+                <Link
+                  onClick={(e) =>
+                    handleBoardCardClick(e, `/boards/${board.id}`)
+                  }
+                  key={`board-${board.id}`}>
                   <BoardCard
                     key={board.id}
                     name={board.name}

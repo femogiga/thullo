@@ -169,8 +169,9 @@ const BoardPage = () => {
       await mutateAsync(dataToSend);
     }
   };
+
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div style={{ minHeight: '70vh' }}>
       <Header boardName={boardByIdData && boardByIdData[0]?.name} />
       <PresentMembers />
       <Board direction={'row'}>
@@ -208,7 +209,11 @@ const BoardPage = () => {
                         style={{
                           backgroundColor: snapshot.isDraggingOver
                             ? 'lightgrey'
-                            : 'white',
+                            : '',
+                          height: 'auto',
+                          width: 'auto',
+                          padding: '10px', // Add padding
+                          borderRadius: '8px', // Add border radius
                         }}>
                         <TaskPanel
                           key={`panel-${panel?.id}`}

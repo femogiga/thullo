@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-  padding-inline: 2rem;
+  padding-inline: 0rem;
   width: 86%;
   margin-inline: auto;
   position: relative;

@@ -10,7 +10,7 @@ const RoomSecrecy = () => {
   const params = useParams()
   //const { data } = useAllBoardPageDataById(params?.id)
   const { boardByIdData } = useBoardDataId(params?.id);
-  console.log('secret', boardByIdData);
+  //console.log('secret', boardByIdData);
   const { handleBoardVisibility } = useUIHooks();
   const paraStyle = {
     width: '7rem',
@@ -19,7 +19,8 @@ const RoomSecrecy = () => {
     alignItems: 'center',
     columnGap: '1rem',
     paddingBlock: '.4rem',
-    borderRadius: '7px',
+    borderRadius: '.438rem',
+    // border:'1px solid black'
 
   };
   return (

@@ -1,7 +1,7 @@
 import logo from '../../assets/Logo-small.svg';
 import { DotsNine, CaretDown } from '@phosphor-icons/react';
 import './header.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MiniCard from '../minicard/MiniCard';
 import TextField from '@mui/material/TextField';
 import HeaderModal from './HeaderModal';
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { setHeaderModalOpen } from '../../features/visibilitySlice';
 import { AnimatePresence, motion } from 'framer-motion';
 import { setIsAuthenticated, setUser } from '../../features/authSlice';
+import { Button } from '@mui/material';
 
 const Header = ({ boardName }) => {
   const headerStyle = {
@@ -19,8 +20,8 @@ const Header = ({ boardName }) => {
     height: '4rem',
     justifyContent: 'space-between',
     paddingInline: '1rem',
-    boxShadow: '0 0 2px 2px rgba(0, 0, 0,0.1)',
-    marginBlockEnd: '2rem',
+    boxShadow: '0 0 1px 1px rgba(0, 0, 0,0.1)',
+    marginBlockEnd: '.2rem',
   };
 
   const headerModalOpen = useSelector(
@@ -29,7 +30,7 @@ const Header = ({ boardName }) => {
 
   const loggedInUser = useSelector((state) => state.auth.user);
   console.log('User', loggedInUser);
-    const fullName = loggedInUser.firstname  + " " + loggedInUser.lastname
+  const fullName = loggedInUser.firstname + ' ' + loggedInUser.lastname;
   // const handleLogout = () => {
   //   dispatch(setIsAuthenticated(false))
   //       dispatch(setUser(null));
@@ -37,12 +38,18 @@ const Header = ({ boardName }) => {
   // }
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleHeaderLinkAccountClick = (
     e: React.MouseEvent<HTMLAnchorElement>
   ) => {
     e.preventDefault();
     dispatch(setHeaderModalOpen(!headerModalOpen));
+  };
+
+  const handleAllboardLinkClick = () => {
+    dispatch(setHeaderModalOpen(false));
+    //navigate('/allboard');
   };
   return (
     <header className='header' style={headerStyle}>
@@ -51,24 +58,30 @@ const Header = ({ boardName }) => {
           <img src={logo} />
           <p className='bold'>Thullo</p>
         </div>
-        <p className='bold'>{boardName || 'Devchallenges Board'}</p>
-        <div className='divider'></div>
-        <Link
-          to='/allboard'
-          className='allboard-button flex place-items col-gap-05'>
-          <span className='flex'>
-            <DotsNine />
-          </span>
+        {boardName && (
+          <>
+            <p className='bold'>{boardName || 'Devchallenges Board'}</p>
+            <div className='divider'></div>
 
-          <span>All board</span>
-        </Link>
+            <Link
+              to='/allboard'
+              onClick={handleAllboardLinkClick}
+              className='allboard-button flex place-items col-gap-05'>
+              <span className='flex'>
+                <DotsNine />
+              </span>
+
+              <span>All board</span>
+            </Link>
+          </>
+        )}
       </div>
 
       <div className='group-width flex flex-end align-item-center col-gap-2'>
         <div className='search flex col-gap-1'>
           {/* <input type='text' className='search-input' placeholder='Keyword..' /> */}
-          <TextField className='' size='small' />
-          <button>Search</button>
+          <TextField className='' size='small' sx={{ width: '20rem' }} />
+          <Button sx={{ color: '#2F80ED' , textTransform:'capitalize','&:hover':{backgroundColor:'blue'} }}>Search</Button>
         </div>
         <Link to='' onClick={handleHeaderLinkAccountClick}>
           <div className=' flex place-items col-gap-05 align-item-center'>
@@ -76,7 +89,7 @@ const Header = ({ boardName }) => {
               <MiniCard height={32} width={32} src={loggedInUser?.imgUrl} />
             </div>
 
-            <p>{ fullName || 'Xanthe Neal'}</p>
+            <p>{fullName || 'Xanthe Neal'}</p>
             <CaretDown size={18} />
           </div>
         </Link>
@@ -90,16 +103,16 @@ const Header = ({ boardName }) => {
           <AnimatePresence>
             <motion.div
               layout
-              initial={{ opacity: 0, translateY: 500 }}
+              initial={{ opacity: 0, translateY: 0 }}
               animate={{ opacity: 1, translateX: 0 }}
               transition={{ duration: 0.3 }}
-              exit={{ opacity: 0, translateY: 500 }}
+              exit={{ opacity: 0, translateY: 0 }}
               style={
                 {
                   // position: 'absolute',
-                  // right: '2rem',
-                  // top: '4rem',
-                  // zIndex: '4',
+                  // right: '4rem',
+                  // top: '0rem',
+                  // zIndex: '6',
                 }
               }>
               {headerModalOpen && <HeaderModal />}

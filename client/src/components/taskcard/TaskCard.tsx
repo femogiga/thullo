@@ -46,7 +46,7 @@ const TaskCard:React.FC = ({ title, description, imageUrl, labels, users, onClic
           sx={{
             maxWidth: 243,
             height: 290,
-            boxShadow: '0 2px 2px 0 rgba(0, 0, 0,.2)',
+            boxShadow: '0 0 5px rgba(0, 0, 0,.2)',
             borderRadius: '12px',
           }}>
           <CardContent>

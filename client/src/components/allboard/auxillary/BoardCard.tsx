@@ -19,8 +19,8 @@ const BoardCard = ({
   adminId,
 }) => {
   //  const { isPending, data:adminUser } = useAllBoardPageDataById(boardId)
-  console.log(admin);
-  console.log(admin); //
+  //console.log(admin);
+  //console.log(admin); //
 
   return (
     <div className='board-card'>
@@ -28,7 +28,7 @@ const BoardCard = ({
         sx={{
           maxWidth: 243,
           height: 243,
-          boxShadow: '0 4 12 0 rgba(0 0 0.05)',
+          boxShadow: '0 0 5px rgba(0,0 ,0,0.1)',
           borderRadius: '12px',
         }}
         draggable>
