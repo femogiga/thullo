@@ -27,9 +27,18 @@ const uploader = async (req, res) => {
       try {
         // const fileType = 'pdf';
         const fileType = req.file.mimetype;
-        //         console.log('fileType======>', fileType);
-        const fileTypeIndex = fileType.lastIndexOf('/');
-        const fileTypeString = fileType.substring(fileTypeIndex + 1);
+        console.log('fileType======>', fileType);
+         let fileTypeString;
+        switch (fileType) {
+          case 'application/pdf':
+            const fileTypeIndex = fileType.lastIndexOf('/');
+            fileTypeString = fileType.substring(fileTypeIndex + 1)
+            break;
+          default:
+            fileTypeString = 'txt';
+            break;
+         }
+
         //console.log('fileTypeString======>', fileTypeString);
 
         const base64String = req.file.buffer.toString('base64');

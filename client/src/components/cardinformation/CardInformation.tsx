@@ -73,7 +73,8 @@ const CardInformation: React.FC = ({ taskId }) => {
   const [value, setValue] = useState('');
   const [file, setFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState('');
-  const[uploading,setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadFormVisible, setUploadFormVisible] = useState(false);
 
   const [attachmentTitle, setAttachmentTitle] = useState('');
   console.log(file);
@@ -95,7 +96,7 @@ const CardInformation: React.FC = ({ taskId }) => {
   //console.log('panelByIdDatatoday=====>', cardPanelByIdData);
 
   //console.log('taskId=====>', taskByIdData);
-useEffect(() => {}, [uploadMessage]);
+  useEffect(() => {}, [uploadMessage]);
   const { adminUserData } = useGetAdmin(params.id);
   const { boardUsersData } = useGetBoardUsers(params.id);
   const { assetsByTaskData } = useAssetsByTaskData(activeTaskId);
@@ -214,24 +215,33 @@ useEffect(() => {}, [uploadMessage]);
     formData.append('title', attachmentTitle);
     formData.append('taskId', activeTaskId);
     console.log(formData);
+    setUploading(true);
+
     const res = await createAssetMutation(formData);
-    setUploading(true)
     console.log('res', res);
 
-      if (res.uploaded ===true) {
-        setFile(null)
-        setAttachmentTitle('')
-         setUploadMessage(res.message);
-        setTimeout(() => {
-
-          setUploadMessage('');
-         setUploading(false);
-
-        },1000)
+    if (res.uploaded === true) {
+      setFile(null);
+      setAttachmentTitle('');
+      setUploadMessage(res.message);
+      setTimeout(() => {
+        setUploadMessage('');
+        setUploading(false);
+        setUploadFormVisible(false);
+      }, 1000);
     }
     //else{setUploadMessage(res.message)}
-
   };
+  /*
+   * @state uploadFormVisible @param handleUploadFormVisibility visiiblity set the visibility of form
+   *when the add attachment button is clicked
+   * it set state from @state from false to true
+   */
+  const handleUploadFormVisibility = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setUploadFormVisible(!uploadFormVisible);
+  };
+
   console.log(file);
   return (
     <article
@@ -354,52 +364,62 @@ useEffect(() => {}, [uploadMessage]);
             direction='row'
             spacing='1rem'
             marginBlock={'1rem'}
-            alignItems='center'>
+            alignItems='center'
+          >
+
             <IconLabel
               labelText={'Attachments'}
               icon={<FeedIcon sx={{ fontSize: '10px' }} />}
             />
-            <CrudButton text={'Add'} icon={<Add sx={{ fontSize: '10px' }} />} />
-            <form
-              encType='multipart/form-data'
-              onSubmit={handleFileUpload}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'absolute',
-                top: '.5rem',
-                right: '0',
-                zIndex: '3',
-                padding: '1rem',
-                border: '1px solid #BDBDBD',
-              }}>
-              <MuiFileInput
-                id={'photo'}
-                name='file'
-                onChange={handleFileChange}
-                value={file}
-                placeholder=''
-                size='small'
-                label='Attach file'
-                //getSizeText={(value) => 'Very big'}
-                InputProps={{
-                  inputProps: {
-                    accept: '.txt,.pdf, .jpeg',
-                  },
-                  startAdornment: <AttachFileIcon />,
-                }}
-                sx={{ width: '10rem', marginBlockEnd: '.6rem' }}
-              />
-              <TextField
-                label={'file title'}
-                value={attachmentTitle}
-                sx={{ width: '10rem', marginBlockEnd: '.6rem' }}
-                onChange={(e) => setAttachmentTitle(e.target.value)}
-              />
-              <CrudButton text={'Submit'} onClick={handleFileUpload} />
-              { <IsLoadingBar visible={uploading} />}
-              <Typography sx={{fontSize:'.7rem',color:'#BDBDBD'}}>{uploadMessage}</Typography>
-            </form>
+            <CrudButton
+              onClick={handleUploadFormVisibility}
+              text={'Add'}
+              icon={<Add sx={{ fontSize: '10px' }} />}
+            />
+            {uploadFormVisible && (
+              <form
+                encType='multipart/form-data'
+                onSubmit={handleFileUpload}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'absolute',
+                  top: '.5rem',
+                  right: '0',
+                   zIndex: '3',
+                  padding: '1rem',
+                  border: '1px solid #BDBDBD',
+                }}>
+                <MuiFileInput
+                  id={'photo'}
+                  name='file'
+                  onChange={handleFileChange}
+                  value={file}
+                  placeholder=''
+                  size='small'
+                  label='Attach file'
+                  //getSizeText={(value) => 'Very big'}
+                  InputProps={{
+                    inputProps: {
+                      accept: '.txt,.pdf, .jpeg',
+                    },
+                    startAdornment: <AttachFileIcon />,
+                  }}
+                  sx={{ width: '10rem', marginBlockEnd: '.6rem' }}
+                />
+                <TextField
+                  label={'file title'}
+                  value={attachmentTitle}
+                  sx={{ width: '10rem', marginBlockEnd: '.6rem' }}
+                  onChange={(e) => setAttachmentTitle(e.target.value)}
+                />
+                <CrudButton text={'Submit'} onClick={handleFileUpload} />
+                {<IsLoadingBar visible={uploading} />}
+                <Typography sx={{ fontSize: '.7rem', color: '#BDBDBD' }}>
+                  {uploadMessage}
+                </Typography>
+              </form>
+            )}
           </Stack>
           <Box sx={{ marginBlockEnd: '2rem' }}>
             {assetsByTaskData &&

@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from '@mui/material';
 import FeedIcon from '@mui/icons-material/Feed';
 const IconLabel = ({ labelText, icon }) => {
   return (
-    <div>
+    <div style={{ minWidth : '4.4rem' }}>
       <Stack direction='row' spacing='1rem'>
         <Stack
           direction='row'

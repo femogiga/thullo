@@ -95,11 +95,11 @@ const TaskCard:React.FC = ({ title, description, imageUrl, labels, users, onClic
                 {users.map((user) => (
                   <MiniCard height={28} width={28} src={user?.imgUrl} />
                 ))}
-                <AddButton
+                {/* <AddButton
                   width={28}
                   height={28}
                   onClick={handleAddUserButton}
-                />
+                /> */}
               </Stack>
               <Stack direction='row' spacing={1} alignItems={'center'}>
                 <IconButton>

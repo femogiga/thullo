@@ -14,5 +14,5 @@ const IsLoadingBar = ({visible}) => {
     />
   );
 }
-
+//
 export default IsLoadingBar
