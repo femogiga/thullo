@@ -5,13 +5,23 @@ import ShowMenu from '../auxillary/ShowMenu';
 import { AvatarGroup } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetAdmin, useGetBoardUsers } from '../../api/userData';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useBoardsOnUsersByboardId } from '../../api/boardsOnUsers';
+import InviteCard from '../actionscard/InviteCard';
 
 const PresentMembers = () => {
   const params = useParams();
+  const [showInviteForm, setShowInviteForm] = useState<boolean>(false);
+
+  const handleInviteVisible = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setShowInviteForm(!showInviteForm);
+  };
+
   useEffect(() => {}, [params]);
-  const { boardUsersData } = useGetBoardUsers(params.id);
+  // const { boardUsersData } = useGetBoardUsers(params.id);
   const { adminUserData } = useGetAdmin(params.id);
+  const { boardsOnUsersData } = useBoardsOnUsersByboardId(params.id);
 
   return (
     <article
@@ -26,8 +36,8 @@ const PresentMembers = () => {
             src={adminUserData && adminUserData[0]?.imgUrl}
           />
 
-          {boardUsersData &&
-            boardUsersData.map((user) => (
+          {boardsOnUsersData &&
+            boardsOnUsersData.map((user) => (
               <MiniCard
                 height={32}
                 width={32}
@@ -42,7 +52,12 @@ const PresentMembers = () => {
         <Plus size={32} style={{ color: 'white' }} />
       </IconButton> */}
 
-        {/* <AddButton width={32} height={32} /> */}
+        <AddButton width={32} height={32} onClick={handleInviteVisible} />
+        {showInviteForm && (
+          <div>
+            <InviteCard />
+          </div>
+        )}
       </div>
       <ShowMenu />
     </article>

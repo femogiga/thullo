@@ -17,6 +17,7 @@ const allBoardRoute = require('./routes/allBoardPageRoute');
 const mainBoardRoute = require('./routes/mainBoardRoute');
 const unsplashRoute = require('./routes/unsplashRoute');
 const assetRoute = require('./routes/assetRoute');
+const boardsOnUsersRoute = require('./routes/boardsOnUsersRoute');
 const app = express();
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -34,7 +35,8 @@ app.use('/tasksonlabels', authMiddleware, taskOnLabelRoute);
 app.use('/allboard', authMiddleware, allBoardRoute);
 app.use('/mainboard', authMiddleware, mainBoardRoute);
 app.use('/pexel', authMiddleware, unsplashRoute);
-app.use('/assets',assetRoute)
+app.use('/assets', assetRoute)
+app.use('/boardsonusers', boardsOnUsersRoute);
 
 const port = process.env.PORT || 9000;
 

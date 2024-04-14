@@ -10,15 +10,41 @@ import {
   FormControl,
   Button,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { NameLabel } from './../auxillary/NameLabel';
 import MemberSelect from './auxillary/MemberSelect';
 import CrudButton from '../auxillary/CrudButton';
 import SearchIcon from '@mui/icons-material/Search';
+import { useBoardsOnUsersByboardId } from './../../api/boardsOnUsers';
 
 const InviteCard = () => {
+  const params = useParams();
+  const { boardsOnUsersData } = useBoardsOnUsersByboardId(params.id);
+  //const newboardsOnUsersData = boardsOnUsersData.slice(0, 3)
+
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchedMember, setSearchedMember] = useState('');
+  const [searchedMemberId, setSearchedMemberId] = useState('');
+
+  const onClickMember = (e, firstname, lastname) => {
+    e.preventDefault();
+    setSearchTerm(firstname + ' ' + lastname);
+    setSearchedMemberId(id);
+  };
+
+  // useEffect(() => {}, [searchTerm]);
+
+  const handleAddMember = (authorId) => {
+    /**
+     * TODO  ADD  THE MUTATION FUNCTION
+     */
+    //const data = { authorId, taskId: activeTaskId, boardId: params.id };
+    //addUserToTaskMutation(data);
+    setSearchedMember('');
+    setSearchedMemberId('');
+  };
   return (
     <Card
       className='member-card'
@@ -47,7 +73,13 @@ const InviteCard = () => {
           </Typography>
 
           <Box sx={{ marginBlockEnd: '1.1rem', position: 'relative' }}>
-            <TextField className='user-input' rows={1} placeholder='User...' />
+            <TextField
+              value={searchTerm}
+              className='user-input'
+              rows={1}
+              placeholder='User...'
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <IconButton
               sx={{
                 borderRadius: '8px',
@@ -65,9 +97,37 @@ const InviteCard = () => {
             elevation={2}
             sx={{ padding: '1rem', marginBlockEnd: '1rem' }}>
             <Stack direction={'column'} spacing={1.4}>
-              <MemberSelect />
-              <MemberSelect />
-              <MemberSelect />
+              {boardsOnUsersData &&
+                boardsOnUsersData
+                  .filter(
+                    (item) =>
+                      item.firstname
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) ||
+                      item.lastname
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) ||
+                      item.firstname
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) &&
+                      item.lastname
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+                  )
+                  .map((member) => (
+                    <MemberSelect
+                      key={`member-${member?.id} `}
+                      firstName={member.firstname}
+                      lastName={member?.lastname}
+                      imgUrl={member?.imgUrl}
+                      onClickMember={(e) =>
+                        onClickMember(e, member?.firstname, member?.lastname)
+                      }
+                    />
+                  ))
+                  .slice(0, 3)}
+              {/* <MemberSelect />
+              <MemberSelect /> */}
             </Stack>
           </Paper>
           <Stack direction={'row'} justifyContent={'center'}>

@@ -24,6 +24,7 @@ model User {
   Board Board[]
   Chat Chat[]
   tasks UsersOnTasks[]
+  board BoardsOnUsers[]
 }
 
 model Board {
@@ -35,6 +36,16 @@ model Board {
   adminId Int
   panels Panel[]
   privacy Privacy @default(PUBLIC)
+  users BoardsOnUsers[]
+}
+
+model BoardsOnUsers{
+  board Board @relation(fields: [boardId], references: [id])
+  boardId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  role Role @default(USER)
+  @@id([boardId,userId])
 }
 
 model Panel{
@@ -109,4 +120,10 @@ model Asset {
 enum Privacy {
   PRIVATE
   PUBLIC
+}
+
+enum Role {
+  ADMIN
+  MODERATOR
+  USER
 }
