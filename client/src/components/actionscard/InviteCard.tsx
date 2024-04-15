@@ -17,33 +17,49 @@ import { NameLabel } from './../auxillary/NameLabel';
 import MemberSelect from './auxillary/MemberSelect';
 import CrudButton from '../auxillary/CrudButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { useBoardsOnUsersByboardId } from './../../api/boardsOnUsers';
+import {
+  useBoardsOnUsersByboardId,
+  useBoardsOnUsersMutation,
+} from './../../api/boardsOnUsers';
+import { useAllUserData } from '../../api/userData';
 
-const InviteCard = () => {
+const InviteCard = ({ setShowInviteForm }) => {
   const params = useParams();
   const { boardsOnUsersData } = useBoardsOnUsersByboardId(params.id);
+  const { boardsOnUserMutation } = useBoardsOnUsersMutation();
+  const { allUserData } = useAllUserData();
   //const newboardsOnUsersData = boardsOnUsersData.slice(0, 3)
 
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchedMember, setSearchedMember] = useState('');
-  const [searchedMemberId, setSearchedMemberId] = useState('');
+  const [searchedMemberId, setSearchedMemberId] = useState<string>('');
 
-  const onClickMember = (e, firstname, lastname) => {
+  const [searchedMember, setSearchedMember] = useState('');
+
+  const onClickMember = (e, firstname, lastname, id) => {
     e.preventDefault();
     setSearchTerm(firstname + ' ' + lastname);
     setSearchedMemberId(id);
   };
 
-  // useEffect(() => {}, [searchTerm]);
+  console.log(searchedMemberId);
+  //
+  useEffect(() => {}, [searchedMemberId]);
 
-  const handleAddMember = (authorId) => {
-    /**
-     * TODO  ADD  THE MUTATION FUNCTION
-     */
-    //const data = { authorId, taskId: activeTaskId, boardId: params.id };
-    //addUserToTaskMutation(data);
-    setSearchedMember('');
+  // const handleAddMember = (authorId) => {
+  //   /**
+  //    * TODO  ADD  THE MUTATION FUNCTION
+  //    */
+  //   //const data = { authorId, taskId: activeTaskId, boardId: params.id };
+  //   //addUserToTaskMutation(data);
+  //   setSearchedMember('');
+  //   setSearchedMemberId('');
+  // };
+  const handleInviteMember = async () => {
+    const data = { boardId: params.id, userId: searchedMemberId };
+    await boardsOnUserMutation(data);
+    setSearchTerm('');
     setSearchedMemberId('');
+    setShowInviteForm(false);
   };
   return (
     <Card
@@ -61,7 +77,7 @@ const InviteCard = () => {
       <CardContent>
         <FormControl>
           <Typography sx={{ fontSize: '12px', fontWeight: '600' }}>
-            Invite toBoard
+            Invite to board
           </Typography>
           <Typography
             sx={{
@@ -97,8 +113,8 @@ const InviteCard = () => {
             elevation={2}
             sx={{ padding: '1rem', marginBlockEnd: '1rem' }}>
             <Stack direction={'column'} spacing={1.4}>
-              {boardsOnUsersData &&
-                boardsOnUsersData
+              {allUserData &&
+                allUserData
                   .filter(
                     (item) =>
                       item.firstname
@@ -107,10 +123,7 @@ const InviteCard = () => {
                       item.lastname
                         .toLowerCase()
                         .includes(searchTerm.toLowerCase()) ||
-                      item.firstname
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase()) &&
-                      item.lastname
+                      (item.firstname + ' ' + item.lastname)
                         .toLowerCase()
                         .includes(searchTerm.toLowerCase())
                   )
@@ -121,7 +134,12 @@ const InviteCard = () => {
                       lastName={member?.lastname}
                       imgUrl={member?.imgUrl}
                       onClickMember={(e) =>
-                        onClickMember(e, member?.firstname, member?.lastname)
+                        onClickMember(
+                          e,
+                          member?.firstname,
+                          member?.lastname,
+                          member?.id
+                        )
                       }
                     />
                   ))
@@ -135,6 +153,7 @@ const InviteCard = () => {
               text='invite'
               icon={null}
               colours={{ color: 'white', bg: '#2F80ED' }}
+              onClick={handleInviteMember}
             />
           </Stack>
         </FormControl>

@@ -30,6 +30,7 @@ const addUserToBoard = async (req, res, next) => {
     });
     res.status(200).json({ message:'user added to board' });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };

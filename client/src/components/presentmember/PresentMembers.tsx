@@ -55,7 +55,7 @@ const PresentMembers = () => {
         <AddButton width={32} height={32} onClick={handleInviteVisible} />
         {showInviteForm && (
           <div>
-            <InviteCard />
+            <InviteCard setShowInviteForm={setShowInviteForm} />
           </div>
         )}
       </div>
