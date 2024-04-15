@@ -22,11 +22,14 @@ import { setMemberCardVisible } from '../../features/PageInformationSlice';
 import { useAllUserData, useGetAdmin } from '../../api/userData';
 import { useUserOnTasksMutation } from '../../api/usersOnTaskData';
 import { useSelector } from 'react-redux';
+import { useBoardsOnUsersByboardId } from '../../api/boardsOnUsers';
 
 const MemberCard = () => {
   const params = useParams();
   const { allUserData } = useAllUserData();
   const { addUserToTaskMutation } = useUserOnTasksMutation();
+    const { boardsOnUsersData } = useBoardsOnUsersByboardId(params.id);
+
   const activeTaskId = useSelector((state) => state.pageInformation.taskId);
 
   console.log(allUserData);
@@ -103,8 +106,8 @@ const MemberCard = () => {
             elevation={2}
             sx={{ padding: '1rem', marginBlockEnd: '1rem' }}>
             <Stack direction={'column'} spacing={1.4}>
-              {allUserData &&
-                allUserData
+              {boardsOnUsersData &&
+                boardsOnUsersData
                   .filter(
                     (item) =>
                       item.firstname
@@ -124,12 +127,13 @@ const MemberCard = () => {
                       onClickMember={(e) =>
                         onClickMember(
                           e,
-                          userData?.firstname + ' ' + userData?.lastname,userData?.id
+                          userData?.firstname + ' ' + userData?.lastname,
+                          userData?.id
                         )
                       }
                       //onAddMember={() => handleAddMember(userData?.id)}
                     />
-                  ))}
+                  )).slice(0,3)}
               {/* <MemberSelect />
               <MemberSelect /> */}
             </Stack>
@@ -139,7 +143,7 @@ const MemberCard = () => {
               text='invite'
               icon={null}
               colours={{ color: 'white', bg: '#2F80ED' }}
-              onClick={()=>handleAddMember(searchedMemberId)}
+              onClick={() => handleAddMember(searchedMemberId)}
             />
           </Stack>
         </FormControl>

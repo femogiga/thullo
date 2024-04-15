@@ -60,8 +60,11 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import IsLoading from '../auxillary/IsLoading';
 import isLoadingBar from '../auxillary/IsLoadingBar';
 import IsLoadingBar from '../auxillary/IsLoadingBar';
+import { useBoardsOnUsersByboardId } from '../../api/boardsOnUsers';
 
 const CardInformation: React.FC = ({ taskId }) => {
+    const params = useParams();
+
   const [coverImage, setCoverImage] = useState('');
 
   const dispatch = useDispatch();
@@ -87,7 +90,6 @@ const CardInformation: React.FC = ({ taskId }) => {
 
   const { updateTaskMutation } = useUpdateTaskMutation();
   useEffect(() => {}, [coverImage]);
-  const params = useParams();
   //console.log(params.id);
   // console.log(activePanelId);
   // const { panelByIdData } = usePanelDataById(
