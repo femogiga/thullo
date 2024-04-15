@@ -34,6 +34,10 @@ import {
 } from '../../api/userData';
 import { genFullname } from '../../utility/fullName';
 import { QuillInput } from '../auxillary/QuillInput';
+import {
+  useBoardsOnUsersByboardId,
+  useDeleteBoardsOnUsersMutation,
+} from '../../api/boardsOnUsers';
 
 const BoardInformation = () => {
   const queryClient = useQueryClient();
@@ -42,6 +46,9 @@ const BoardInformation = () => {
 
   const { id } = useParams();
   const params = useParams();
+
+  const { boardsOnUsersData } = useBoardsOnUsersByboardId(params.id);
+  const { deleteBoardsOnUserMutation } = useDeleteBoardsOnUsersMutation();
 
   const { boardByIdData } = useBoardDataId(id);
   console.log('boardIDdata', boardByIdData);
@@ -128,6 +135,12 @@ const BoardInformation = () => {
     const data = { authorId, boardId };
     deleteMutate(data);
     queryClient.invalidateQueries({ queryKey: ['boardUsers'] });
+  };
+
+  const handleDelete = (e, authorId) => {
+    e.preventDefault();
+    const data = { boardId: params.id, userId: authorId };
+    deleteBoardsOnUserMutation(data);
   };
   const handleCancel = (e) => {
     e.preventDefault();
@@ -321,13 +334,14 @@ const BoardInformation = () => {
         text='Admin'
         variant='withLabel'
       />
-      {boardUsersData &&
-        boardUsersData.map((user) => (
+      {boardsOnUsersData &&
+        boardsOnUsersData.map((user) => (
           <NameAvatar
             id={`avatar-${user?.id}`}
             userOnTaskId={user?.id}
             src={user?.imgUrl}
-            onClick={(e) => handleDeleteUser(e, user?.id)}
+            //onClick={(e) => handleDeleteUser(e, user?.id)}
+            onClick={(e) => handleDelete(e, user?.id)}
             text='Delete'
             variant='withLabel'
             fullName={genFullname(user?.firstname, user?.lastname)}

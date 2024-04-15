@@ -28,11 +28,24 @@ const addUserToBoard = async (req, res, next) => {
       boardId: boardId,
       userId: userId,
     });
-    res.status(200).json({ message:'user added to board' });
+    res.status(200).json({ message: 'user added to board' });
   } catch (error) {
     console.error(error);
     res.status(500).json(error);
   }
 };
 
-module.exports = { getUserOnBoard, addUserToBoard };
+const deleteUserfromBoard = async (req, res, next) => {
+  try {
+    const { boardId, userId } = req.query;
+    await knex('BoardsOnUsers')
+      .delete()
+      .where('boardId', parseInt(boardId))
+      .andWhere('userId', parseInt(userId));
+      res.status(200).json({ message: 'user deleted from board' });
+  } catch (error) {
+     console.error(error);
+     res.status(500).json(error);
+  }
+};
+module.exports = { getUserOnBoard, addUserToBoard, deleteUserfromBoard };

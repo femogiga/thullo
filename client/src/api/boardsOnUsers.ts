@@ -16,7 +16,7 @@ export const useBoardsOnUsersByboardId = ((data) => {
 
 export const useBoardsOnUsersMutation = () => {
     const queryClient = useQueryClient();
-    const { isSuccess, error, mutateAsync:boardsOnUserMutation } = useMutation({
+    const { isSuccess, error, mutateAsync: boardsOnUserMutation } = useMutation({
         mutationFn: async (data) => {
             const response = await apiService.post('/boardsonusers', data);
             return response.data;
@@ -29,4 +29,21 @@ export const useBoardsOnUsersMutation = () => {
 
     });
     return { isSuccess, error, boardsOnUserMutation };
+};
+
+export const useDeleteBoardsOnUsersMutation = () => {
+    const queryClient = useQueryClient();
+    const { isSuccess, error, mutateAsync: deleteBoardsOnUserMutation } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.remove(`/boardsonusers?userId=${data.userId}&boardId=${data.boardId}`);
+            return response.data;
+        },
+        onSettled: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['boardsOnUsersByboardId'] })
+
+        }
+
+
+    });
+    return { isSuccess, error, deleteBoardsOnUserMutation };
 };
