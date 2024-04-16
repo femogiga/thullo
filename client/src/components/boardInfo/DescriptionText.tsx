@@ -11,7 +11,7 @@ const DescriptionText: React.FC<IdescriptionProp> = ({ description }) => {
   return (
     <Box
       dangerouslySetInnerHTML={{ __html: description }}
-      sx={{ marginBlockEnd: '1rem' }}>
+      sx={{ marginBlockEnd: '1rem' ,minHeight:'10rem'}}>
       {/* <p>Simple board to start on a board</p>
       <p className='flow-1'>
         <span style={{ fontWeight: '600' }}>* Backlog </span>:Lorem ipsum dolor
