@@ -4,7 +4,7 @@ import BoardCard from './auxillary/BoardCard';
 import CrudButton from '../auxillary/CrudButton';
 import AddIcon from '@mui/icons-material/Add';
 import AddBoardModal from './auxillary/AddBoardModal';
-import { useAllBoardData, useCreateBoardMutation } from '../../api/boardData';
+import { useAllBoardData, useAllBoardDataWithUser, useCreateBoardMutation } from '../../api/boardData';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAllBoardPageData } from '../../api/allBoardPageData';
 import IsLoading from './../auxillary/IsLoading';
@@ -34,6 +34,9 @@ const AllBoard: React.FC = () => {
     error: allBoardError,
     data: allBoardPageData,
   } = useAllBoardPageData();
+
+  const { allBoardDataWithUser } = useAllBoardDataWithUser();
+  console.log(allBoardDataWithUser)
   const { allUserData } = useAllUserData();
   //console.log(allUserData)
 
@@ -92,7 +95,7 @@ const AllBoard: React.FC = () => {
             minHeight: '80vh',
             padding: '2rem',
             rowGap: '2rem',
-            maxWidth:'100vw'
+            maxWidth: '100vw',
             //alignContent: 'space-between',
             // border: '1px solid black',
             // minHeight:'70vh'
@@ -124,7 +127,7 @@ const AllBoard: React.FC = () => {
               <IsLoading />
             ) : (
               allBoardPageData &&
-              allBoardPageData.map((board) => (
+              allBoardDataWithUser.map((board) => (
                 // <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
                 <Link
                   onClick={(e) =>
@@ -134,7 +137,7 @@ const AllBoard: React.FC = () => {
                   <BoardCard
                     key={board.id}
                     name={board.name}
-                    boardId={board.id}
+                    boardId={board?.id}
                     thumbnail={board.thumbnail}
                     userPhotos={board.userphotos}
                     adminId={board?.adminId}

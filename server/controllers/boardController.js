@@ -1,4 +1,4 @@
-const { knex } =require('../Knex');
+const { knex } = require('../Knex');
 
 const getAllBoard = async (req, res) => {
   try {
@@ -8,6 +8,32 @@ const getAllBoard = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+const getAllboardDataWithUser = async (req, res) => {
+  try {
+    const result = await knex
+      .from('Board')
+      .leftJoin('BoardsOnUsers', 'BoardsOnUsers.boardId', '=', 'Board.id')
+      .leftJoin('User', 'User.id', '=', 'BoardsOnUsers.userId') // Adjust the schema name here
+      .select(
+        'Board.*',
+
+        knex.raw(
+          'JSONB_AGG(JSON_BUILD_OBJECT(\'id\', "User".id, \'imgUrl\', "User"."imgUrl")) as userphotos'
+        )
+      )
+      .groupBy('Board.id', 'Board.name');
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
+
+
+
+
 
 const getBoardById = async (req, res) => {
   try {
@@ -30,7 +56,7 @@ const updateBoard = async (req, res) => {
         name: name,
         adminId: parseInt(adminId),
         description: description,
-        privacy:privacy
+        privacy: privacy,
       });
 
     res.status(200).json({ result });
@@ -41,15 +67,16 @@ const updateBoard = async (req, res) => {
 };
 
 const createBoard = async (req, res) => {
-  const { name, adminId, thumbnail ,privacy} = req.body;
+  const { name, adminId, thumbnail, privacy } = req.body;
   try {
-    const result = await knex('Board').insert({
-      name: name,
-      adminId: parseInt(adminId) ,
-      thumbnail: thumbnail,
-      privacy: privacy
-
-    }).returning(["id"]);
+    const result = await knex('Board')
+      .insert({
+        name: name,
+        adminId: parseInt(adminId),
+        thumbnail: thumbnail,
+        privacy: privacy,
+      })
+      .returning(['id']);
 
     res.status(201).json({ result, message: 'successfully created' });
   } catch (error) {
@@ -77,4 +104,5 @@ module.exports = {
   updateBoard,
   createBoard,
   deleteBoard,
+  getAllboardDataWithUser,
 };

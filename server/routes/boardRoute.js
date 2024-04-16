@@ -6,11 +6,13 @@ const {
   createBoard,
   updateBoard,
   deleteBoard,
+  getAllboardDataWithUser,
 } = require('../controllers/boardController');
 const router = require('express').Router();
 
 router.get('/:id', getBoardById);
-router.put('/:id',checkBoardActions, updateBoard);
+router.put('/:id', checkBoardActions, updateBoard);
+router.get('/', getAllboardDataWithUser);
 router.get('/', getAllBoard);
 router.post('/', createBoard);
 router.delete('/:id', deleteBoard);

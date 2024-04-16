@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { useAllBoardPageDataById } from '../../../api/allBoardPageData';
 import { useGetAdmin } from '../../../api/userData';
+import { useBoardsOnUsersByboardId } from './../../../api/boardsOnUsers';
 
 const BoardCard = ({
   admin,
@@ -21,6 +22,8 @@ const BoardCard = ({
   //  const { isPending, data:adminUser } = useAllBoardPageDataById(boardId)
   //console.log(admin);
   //console.log(admin); //
+  const { boardsOnUsersData } = useBoardsOnUsersByboardId(2)
+  console.log(boardsOnUsersData);
 
   return (
     <div className='board-card'>
@@ -78,7 +81,7 @@ const BoardCard = ({
                 src={admin?.imgUrl}
               />
               {userPhotos &&
-                userPhotos.map((photo, index) => (
+                userPhotos.map((user, index) => (
                   <Avatar
                     key={`userphoto_${index}`}
                     sx={{
@@ -88,7 +91,7 @@ const BoardCard = ({
                       height: 28,
                     }}
                     alt='User photos'
-                    src={photo}
+                    src={user.imgUrl}
                   />
                 ))}
             </AvatarGroup>

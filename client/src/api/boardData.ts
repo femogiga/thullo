@@ -16,6 +16,14 @@ export const useAllBoardData = () => {
 };
 
 
+export const useAllBoardDataWithUser = () => {
+    const { isPending, error, data:allBoardDataWithUser } = useQuery({
+        queryKey: ['allBoardWithData'],
+        queryFn: () => apiService.get('/boards').then((res) => res.data),
+    });
+    return { isPending, error,  allBoardDataWithUser };
+};
+
 export const useBoardDataId = (id) => {
     const { isPending, error, data: boardByIdData } = useQuery({
         queryKey: ['boardDataById'],
