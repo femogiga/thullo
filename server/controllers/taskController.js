@@ -40,13 +40,18 @@ const getAllTasksWithUsersAndLabels = async (req, res) => {
       .select(
         'Task.*',
         knex.raw('JSON_AGG(DISTINCT "Label".*) as labels'),
-        knex.raw('JSON_AGG(DISTINCT "User".*) as users')
+        knex.raw('JSON_AGG(DISTINCT "User".*) as users'),
+        knex.raw('COUNT(DISTINCT "Asset".id) as "assetCount"'),
+        knex.raw('COUNT(DISTINCT "Chat".id) as "chatCount"')
       )
       .from('Task')
       .leftJoin('TasksOnLabels', 'Task.id', '=', 'TasksOnLabels.taskId')
       .leftJoin('Label', 'Label.id', '=', 'TasksOnLabels.labelId')
       .leftJoin('UsersOnTasks', 'Task.id', '=', 'UsersOnTasks.taskId')
       .leftJoin('User', 'User.id', '=', 'UsersOnTasks.authorId')
+      .leftJoin('Asset', 'Asset.taskId', '=', 'Task.id')
+      .leftJoin('Chat', 'Chat.taskId', '=', 'Task.id')
+
       .groupBy('Task.id');
 
     console.log(result);
@@ -91,7 +96,7 @@ const createTask = async (req, res) => {
 
     res.status(201).json({ result, message: 'successfully created' });
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.status(500).json(error);
   }
 };
@@ -173,7 +178,6 @@ const updateTaskPosition = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 module.exports = {
   getAllTask,

@@ -19,21 +19,31 @@ import LabelCard from './../actionscard/LabelCard';
 import { chipColor } from './../../utility/chipColor';
 import { Link } from 'react-router-dom';
 
-interface ITaskCard{
-  title: string,
-  description: string,
-  imageUrl: string,
-  labels: string[],
-  users: string[]
-  onClick:()=>void
-
+interface ITaskCard {
+  title: string;
+  description: string;
+  imageUrl: string;
+  assetCount: number;
+  chatCount: number;
+  labels: string[];
+  users: string[];
+  onClick: () => void;
 }
-const TaskCard:React.FC = ({ title, description, imageUrl, labels, users, onClick }) => {
+const TaskCard: React.FC<ITaskCard> = ({
+  title,
+  description,
+  imageUrl,
+  labels,
+  users,
+  onClick,
+  assetCount,
+  chatCount,
+}) => {
   // const { handleAddUserButton, show, setShow } = useUserHook;
   const [show, setShow] = useState(false);
   useEffect(() => {}, [show]);
 
-  const handleAddUserButton = (e:React.SyntheticEvent) => {
+  const handleAddUserButton = (e: React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
     //dispatch()
@@ -104,13 +114,13 @@ const TaskCard:React.FC = ({ title, description, imageUrl, labels, users, onClic
               <Stack direction='row' spacing={1} alignItems={'center'}>
                 <IconButton>
                   <CommentIcon sx={{ width: '12px', marginRight: '.5rem' }} />
-                  <Typography sx={{ fontSize: '10px' }}>{2}</Typography>
+                  <Typography sx={{ fontSize: '10px' }}>{chatCount}</Typography>
                 </IconButton>
                 <IconButton>
                   <AttachFileIcon
                     sx={{ width: '12px', marginRight: '.5rem' }}
                   />
-                  <Typography sx={{ fontSize: '10px' }}>{2}</Typography>
+                  <Typography sx={{ fontSize: '10px' }}>{assetCount}</Typography>
                 </IconButton>
               </Stack>
             </Stack>

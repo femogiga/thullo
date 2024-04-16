@@ -4,7 +4,11 @@ import BoardCard from './auxillary/BoardCard';
 import CrudButton from '../auxillary/CrudButton';
 import AddIcon from '@mui/icons-material/Add';
 import AddBoardModal from './auxillary/AddBoardModal';
-import { useAllBoardData, useAllBoardDataWithUser, useCreateBoardMutation } from '../../api/boardData';
+import {
+  useAllBoardData,
+  useAllBoardDataWithUser,
+  useCreateBoardMutation,
+} from '../../api/boardData';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAllBoardPageData } from '../../api/allBoardPageData';
 import IsLoading from './../auxillary/IsLoading';
@@ -29,14 +33,11 @@ const AllBoard: React.FC = () => {
     (state) => state.visibility.addBoardCoverOpen
   );
   const { isPending, error, data } = useAllBoardData();
-  const {
-    isPending: allBoardPagepending,
-    error: allBoardError,
-    data: allBoardPageData,
-  } = useAllBoardPageData();
+  const { error: allBoardError, data: allBoardPageData } =
+    useAllBoardPageData();
 
-  const { allBoardDataWithUser } = useAllBoardDataWithUser();
-  console.log(allBoardDataWithUser)
+  const { allBoardPagePending, allBoardDataWithUser } =
+    useAllBoardDataWithUser();
   const { allUserData } = useAllUserData();
   //console.log(allUserData)
 
@@ -63,7 +64,7 @@ const AllBoard: React.FC = () => {
   //   const data = {name,adminId,thumbnail,description}
   //     const res = createBoardMutate(data)
   // }
-// background
+  // background
   const handleBoardCardClick = (e: React.SyntheticEvent, link) => {
     navigate(link);
     window.location.reload();
@@ -123,10 +124,10 @@ const AllBoard: React.FC = () => {
               flexWrap: 'wrap',
               maxWidth: '100%',
             }}>
-            {allBoardPagepending ? (
+            {allBoardPagePending ? (
               <IsLoading />
             ) : (
-              allBoardPageData &&
+              allBoardDataWithUser &&
               allBoardDataWithUser.map((board) => (
                 // <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
                 <Link

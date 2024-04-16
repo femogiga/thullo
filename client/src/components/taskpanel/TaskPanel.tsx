@@ -99,6 +99,8 @@ const TaskPanel: React.FC<IPanel> = ({
                     imageUrl={task.imageUrl}
                     labels={task?.labels}
                     users={task.users}
+                    assetCount={task.assetCount}
+                    chatCount={task.chatCount}
                     onClick={(e) => handleCardClick(e, task?.id, panelId)}
                   />
                 </div>
