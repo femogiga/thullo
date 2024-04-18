@@ -156,7 +156,7 @@ img {
   z-index: -2;
   transform: skewY(1deg) rotateZ(-30deg);
   overflow: hidden;
-  animation: bgImageAnim 4s 200ms linear ;
+  animation: bgImageAnim 4s 200ms linear;
 }
 
 .login::before {
@@ -169,9 +169,44 @@ img {
   z-index: -1;
   overflow: hidden;
   transform: skew(1deg) rotate(30deg);
-    animation: bgImageAnim 4s 200ms linear;
+  animation: bgImageAnim 4s 200ms linear;
 }
 
 .login::before:hover {
   width: 30%
+}
+
+
+.buttonlink {
+  padding-inline: .6rem;
+  padding-block: .2rem;
+  min-width: 3rem;
+  border-radius: 6px;
+  opacity: 0;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .2);
+}
+
+.hypen {
+  opacity: 0
+}
+
+
+.edit {
+  /* border: 1px solid #ADD8E6; */
+  color: #2F80ED;
+  background-color: rgba(87, 160, 211, .1);
+}
+
+
+
+
+.delete {
+  /* border: 1px solid rgba(235, 87, 87, .5); */
+  background-color: rgba(235, 87, 87, .1);
+  color: red;
+}
+
+.commentcard:hover .buttonlink,
+.commentcard:hover .hypen {
+  opacity: 1;
 }

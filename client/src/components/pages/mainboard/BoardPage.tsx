@@ -137,9 +137,9 @@ const BoardPage = () => {
     //const title = destTextArray[0];
     const titleText = destTextArray[0];
     setTitle(titleText);
-    console.log(title);
+    //console.log(title);
     //console.log('destArray===>', destArray);
-    console.log('boardId===>', id);
+    //console.log('boardId===>', id);
 
     const taskId = parseInt(draggableId);
     //console.log(destination.droppableId);
@@ -153,7 +153,7 @@ const BoardPage = () => {
         // taskId: taskId && taskId,
         taskId: taskId,
       };
-      console.log('dataToSend===>', dataToSend);
+      //console.log('dataToSend===>', dataToSend);
       await mutateAsync(dataToSend);
     }
   };
@@ -218,6 +218,7 @@ const BoardPage = () => {
                             handleDeleteRenameVisibility(panelIndex)
                           }
                           isPanelVisible={isPanelVisible}
+                          pointer={adminState}
                         />
 
 
@@ -249,7 +250,7 @@ const BoardPage = () => {
           </motion.div>
         </AnimatePresence>
         <div>
-          <AddListButton />
+          { adminState === 'auto' ? <AddListButton />:null}
           {addPanelModalOpen && (
             <AddPanelModal
               onSave={handleCreatePanel}

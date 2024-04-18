@@ -454,6 +454,7 @@ const CardInformation: React.FC = ({ pointer }) => {
                   createdAt={chat.createdAt}
                   key={`chat-${chat.id}`}
                   authorId={chat.authorId}
+                  pointer={pointer}
                 />
               ))}
             {/* <CommentCard firstName={''} lastName={''} /> */}

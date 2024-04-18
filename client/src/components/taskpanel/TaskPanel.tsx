@@ -24,7 +24,8 @@ interface IPanel {
   panel;
   index: number;
   visibleState: boolean;
-  isPanelVisible:boolean;
+  isPanelVisible: boolean;
+  pointer :string
 }
 
 const TaskPanel: React.FC<IPanel> = ({
@@ -36,6 +37,7 @@ const TaskPanel: React.FC<IPanel> = ({
   index,
   visibleState,
   isPanelVisible,
+  pointer
 }) => {
   const [createFormVisibleState, setCreateFormVisibleState] = useState(false);
 
@@ -75,6 +77,7 @@ const TaskPanel: React.FC<IPanel> = ({
         listName={title}
         icon={null}
         onClick={onClick}
+        pointer={pointer}
         //visibleState={visibleState}
       />
 
@@ -114,7 +117,7 @@ const TaskPanel: React.FC<IPanel> = ({
           showForm={handleCreateTaskFormVisibility}
         />
       )}
-      <AddCardButton buttonText={''} onClick={handleCreateTaskFormVisibility} />
+      {pointer ==='auto' ? <AddCardButton buttonText={''} onClick={handleCreateTaskFormVisibility} />:null}
       {isPanelVisible && (
         <div
           style={{

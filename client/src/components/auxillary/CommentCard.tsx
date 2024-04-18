@@ -7,16 +7,18 @@ import {
   Typography,
 } from '@mui/material';
 import MiniCard from '../minicard/MiniCard';
+import '../../index.css';
 import { NameLabel } from './NameLabel';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import { dateFormatter } from './../../utility/timeFormatter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useDeleteChatMutation,
   useUpdateChatMutation,
 } from '../../api/chatData';
 import DoneIcon from '@mui/icons-material/Done';
+import { useSelector } from 'react-redux';
 export const CommentCard = ({
   chatId,
   firstName,
@@ -25,8 +27,19 @@ export const CommentCard = ({
   createdAt,
   imgUrl,
   authorId,
+  pointer,
 }) => {
   // (firstName = 'Christiano'), (lastName = 'Ronaldo');
+  const activeUser = useSelector((state) => state.auth.user);
+  const [deleteEditState, setDeleteEditState] = useState(false);
+
+  useEffect(() => {
+    if (activeUser.id === authorId) {
+      setDeleteEditState(true);
+    } else {
+      setDeleteEditState(false);
+    }
+  }, []);
   const { updateChatMutation } = useUpdateChatMutation();
   const { deleteChatMutation } = useDeleteChatMutation();
   const [editInputVisible, setEditInputVisible] = useState(false);
@@ -54,7 +67,7 @@ export const CommentCard = ({
   };
 
   return (
-    <Box>
+    <Box className='commentcard'>
       <Stack
         direction={'row'}
         justifyContent={'space-between'}
@@ -68,15 +81,27 @@ export const CommentCard = ({
             </Typography>
           </Box>
         </Stack>
-        <Stack direction='row' alignItems={'center'} spacing={1}>
-          <Link to='' onClick={handleChatEditButton}>
-            Edit
-          </Link>
-          <p> - </p>
-          <Link to='' onClick={handleChatDelete}>
-            Delete
-          </Link>
-        </Stack>
+        {deleteEditState && (
+          <Stack
+            direction='row'
+            alignItems={'center'}
+            spacing={1}
+            className='deleteEdit'>
+            <Link
+              to=''
+              onClick={handleChatEditButton}
+              className='buttonlink edit'>
+              Edit
+            </Link>
+            <p className='hypen'> - </p>
+            <Link
+              to=''
+              onClick={handleChatDelete}
+              className='buttonlink delete'>
+              Delete
+            </Link>
+          </Stack>
+        )}
       </Stack>
       {editInputVisible ? (
         <form style={{ position: 'relative' }}>
