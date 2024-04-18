@@ -27,7 +27,6 @@ import AddPanelModal from '../../auxillary/AddPanelModal';
 import { useCreatePanelMutation } from '../../../api/panelData';
 import { useDispatch } from 'react-redux';
 import { setAddPanelModalOpen } from '../../../features/visibilitySlice';
-import DeleteRename from '../../auxillary/DeleteRename';
 
 const BoardPage = () => {
   const { taskCard } = useTaskCardData();
@@ -35,6 +34,7 @@ const BoardPage = () => {
   const [title, setTitle] = useState('');
   const [panelTitle, setPanelTitle] = useState('');
   const [dragId, setDragId] = useState(null);
+  const [adminState, setAdminState] = useState('none');
   //const { id } = useParams();
   const params = useParams();
   const dispatch = useDispatch();
@@ -51,6 +51,7 @@ const BoardPage = () => {
   //     [panel]: !prevState[panel],
   //   }));
   // };
+
   const [visibleStates, setVisibleStates] = useState({});
 
   // Function to toggle visibility of a panel based on its index
@@ -90,30 +91,13 @@ const BoardPage = () => {
   // const { id } = useParams();
   // const { boardByIdData } = useBoardDataId(parseInt(id));
   const { boardByIdData, panelByBoardIdData } = useMainPageData();
-  console.log(panelByBoardIdData && panelByBoardIdData);
+  //console.log(panelByBoardIdData && panelByBoardIdData);
   const { isSuccess, error, mutateAsync } = useTaskCardMutation();
 
   const handlePanelTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPanelTitle(e.target.value);
   };
-  // const onDragEnd = (result) => {
-  //   const { destination, source, draggableId } = result
-  //   if (!destination) {
-  //     return
-  //   }
-  //   if (destination.dropabbleId=== source.dropabbleId && destination.index === source.index) {
-  //     return;
-  //   }
 
-  //   const column = panelByBoardIdData[source.droppableId]
-  //   const newTaskIds = Array.from(column.id)
-  //   console.log('draggableId', draggableId);
-  // };
-  // const [data, setPanelByBoardIdData] = useState([panelByBoardIdData]);
-  //useEffect(() => {}, [data]);
-
-  // const onDragEnd = (result) => {
-  //   const { destination, source, draggableId } = result;
 
   //   if (
   //     !destination ||
@@ -125,9 +109,18 @@ const BoardPage = () => {
 
   //   const column = panelByBoardIdData.find(col => draggableId.contains(col.title))
   // };
-
+  console.log('today', boardByIdData);
+  const userData = useSelector((state) => state.auth.user);
+  console.log('users', userData);
   useEffect(() => {}, [mutateAsync]);
-
+  useEffect(() => {
+    if (boardByIdData && boardByIdData[0]?.adminId === userData.id) {
+      setAdminState('auto');
+    } else {
+      setAdminState('none');
+    }
+  }, [adminState, boardByIdData]);
+  console.log('admin state', adminState);
   //const [data, setData] = useState(panelByBoardIdData);
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -147,14 +140,9 @@ const BoardPage = () => {
     console.log(title);
     //console.log('destArray===>', destArray);
     console.log('boardId===>', id);
-    //const destinationId =
-    // const idArray = draggableId.split('-');
-    //console.log('idArray', idArray);
-    // const id = idArray[1];
-    //console.log(draggableId);
-    //const boardId = id;
+
     const taskId = parseInt(draggableId);
-    console.log(destination.droppableId);
+    //console.log(destination.droppableId);
     //
     // if (title && taskId && boardId) {
     if (!isNaN(taskId) || title) {
@@ -173,7 +161,7 @@ const BoardPage = () => {
   return (
     <div style={{ minHeight: '70vh' }}>
       <Header boardName={boardByIdData && boardByIdData[0]?.name} />
-      <PresentMembers />
+      <PresentMembers pointer={adminState } />
       <Board direction={'row'}>
         <AnimatePresence>
           <motion.div
@@ -188,7 +176,7 @@ const BoardPage = () => {
               top: '4rem',
               zIndex: '4',
             }}>
-            {pageInfoVisibility && <BoardInformation />}
+            {pageInfoVisibility && <BoardInformation pointer={adminState}  />}
           </motion.div>
         </AnimatePresence>
         <DragDropContext onDragEnd={onDragEnd}>
@@ -207,9 +195,7 @@ const BoardPage = () => {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                         style={{
-                          backgroundColor: snapshot.isDraggingOver
-                            ? ''
-                            : '',
+                          backgroundColor: snapshot.isDraggingOver ? '' : '',
                           border: snapshot.isDraggingOver
                             ? '1px dashed blue'
                             : '',
@@ -233,11 +219,7 @@ const BoardPage = () => {
                           }
                           isPanelVisible={isPanelVisible}
                         />
-                        {/* {isPanelVisible && (
-                          <div style={{ position: 'absolute', top: '14rem' ,left:'5rem'}}>
-                            <DeleteRename />
-                          </div>
-                        )} */}
+
 
                         {provided.placeholder}
                       </div>
@@ -248,88 +230,7 @@ const BoardPage = () => {
             })}
         </DragDropContext>
 
-        {/* {panelByBoardIdData &&
-          panelByBoardIdData.map((panel) => {
-            return (
-              <TaskPanel key={`panel-${panel.id}`} panelId={panel?.id}>
-                <PanelName
-                  id={panel.id}
-                  listName={panel.title}
-                  icon={'🛷'}
-                  onClick={() => handleDeleteRenameVisibility('backlog')}
-                />
-                <TaskCard />
-                <AddCardButton />
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    zIndex: '5',
-                    top: '2rem',
-                    right: '-7rem',
-                  }}>
-                  {visibleState.backlog && <DeleteRename />}
-                </Box>
-              </TaskPanel>
-            );
-          })} */}
-        {/* <TaskPanel>
-          <PanelName
-            listName={'In Progress'}
-            icon={'📚'}
-            onClick={() => handleDeleteRenameVisibility('inProgress')}
-          />
-          <TaskCard />
-          <TaskCard />
-          <AddCardButton />
-          <Box
-            sx={{
-              position: 'absolute',
-              zIndex: '5',
-              top: '2rem',
-              right: '-7rem',
-            }}>
-            {visibleState.inProgress && <DeleteRename />}
-          </Box>
-        </TaskPanel>
-        <TaskPanel>
-          <PanelName
-            listName={'In Review'}
-            icon={'⚙️'}
-            onClick={() => handleDeleteRenameVisibility('inReview')}
-          />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <AddCardButton />
-          <Box
-            sx={{
-              position: 'absolute',
-              zIndex: '5',
-              top: '2rem',
-              right: '-7rem',
-            }}>
-            {visibleState.inReview && <DeleteRename />}
-          </Box>
-        </TaskPanel>
-        <TaskPanel>
-          <PanelName
-            listName={'Completed'}
-            icon={'👌'}
-            onClick={() => handleDeleteRenameVisibility('completed')}
-          />
-          <TaskCard />
-          <TaskCard />
-          <AddCardButton />
-          <Box
-            sx={{
-              position: 'absolute',
-              zIndex: '5',
-              top: '2rem',
-              right: '-7rem',
-            }}>
-            {visibleState.completed && <DeleteRename />}
-          </Box>
-        </TaskPanel> */}
+
 
         <AnimatePresence>
           <motion.div
@@ -344,7 +245,7 @@ const BoardPage = () => {
               top: '4rem',
               zIndex: '4',
             }}>
-            {cardInfoVisible && <CardInformation />}
+            {cardInfoVisible && <CardInformation pointer={adminState} />}
           </motion.div>
         </AnimatePresence>
         <div>
@@ -371,7 +272,7 @@ const BoardPage = () => {
           exit={{ opacity: 0, scale: 0 }}>
           {visibleModalState && (
             <Box sx={{ position: 'absolute', top: '9rem', zIndex: 7 }}>
-              <Visibility />
+              <Visibility pointer={adminState} />
             </Box>
           )}
         </motion.div>

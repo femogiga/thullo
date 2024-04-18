@@ -9,6 +9,7 @@ const NameAvatar = ({
   fullName,
   userOnTaskId,
   onClick,
+  pointer,
 }) => {
   const borderStyle =
     text === 'Admin'
@@ -42,6 +43,7 @@ const NameAvatar = ({
               borderColor: borderStyle.color,
               color: borderStyle.color || '#828282',
               marginBlockEnd: '1rem',
+              pointerEvents: pointer,
             }}>
             {text === 'Admin' ? (
               <MoreHorizIcon sx={{ fontSize: '10px', color: '#BDBDBD' }} />

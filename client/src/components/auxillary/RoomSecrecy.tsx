@@ -6,7 +6,7 @@ import useUIHooks from '../pages/allboard/hooks/useUIHooks';
 import { useAllBoardPageDataById } from '../../api/allBoardPageData';
 import { Typography } from '@mui/material';
 import { useBoardDataId } from '../../api/boardData';
-const RoomSecrecy = () => {
+const RoomSecrecy = ({pointer}) => {
   const params = useParams()
   //const { data } = useAllBoardPageDataById(params?.id)
   const { boardByIdData } = useBoardDataId(params?.id);
@@ -20,6 +20,7 @@ const RoomSecrecy = () => {
     columnGap: '1rem',
     paddingBlock: '.4rem',
     borderRadius: '.438rem',
+    pointerEvents:pointer
     // border:'1px solid black'
 
   };

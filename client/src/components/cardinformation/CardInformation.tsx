@@ -62,7 +62,7 @@ import isLoadingBar from '../auxillary/IsLoadingBar';
 import IsLoadingBar from '../auxillary/IsLoadingBar';
 import { useBoardsOnUsersByboardId } from '../../api/boardsOnUsers';
 
-const CardInformation: React.FC = ({ taskId }) => {
+const CardInformation: React.FC = ({ pointer }) => {
     const params = useParams();
 
   const [coverImage, setCoverImage] = useState('');
@@ -183,7 +183,7 @@ const CardInformation: React.FC = ({ taskId }) => {
 
   // const handleQuillSaveButton = (e) => {
   //   e.preventDefault();
-  console.log('working', chatByTaskIdData);
+ // console.log('working', chatByTaskIdData);
   // };
 
   const handleCoverImageClick = (e: React.MouseEvent) => {
@@ -208,7 +208,7 @@ const CardInformation: React.FC = ({ taskId }) => {
     setFile(newFile);
   };
   const dataTo = { activeTaskId, attachmentTitle, file };
-  console.log('data', dataTo);
+  //console.log('data', dataTo);
 
   const handleFileUpload = async (e) => {
     e.preventDefault();
@@ -216,11 +216,11 @@ const CardInformation: React.FC = ({ taskId }) => {
     formData.append('file', file);
     formData.append('title', attachmentTitle);
     formData.append('taskId', activeTaskId);
-    console.log(formData);
+    //console.log(formData);
     setUploading(true);
 
     const res = await createAssetMutation(formData);
-    console.log('res', res);
+    //console.log('res', res);
 
     if (res.uploaded === true) {
       setFile(null);
@@ -324,6 +324,7 @@ const CardInformation: React.FC = ({ taskId }) => {
             <CrudButton
               onClick={handleEditButton}
               text={'Edit'}
+              pointer={pointer}
               icon={<EditIcon sx={{ fontSize: '10px' }} />}
             />
           </Stack>
@@ -366,9 +367,7 @@ const CardInformation: React.FC = ({ taskId }) => {
             direction='row'
             spacing='1rem'
             marginBlock={'1rem'}
-            alignItems='center'
-          >
-
+            alignItems='center'>
             <IconLabel
               labelText={'Attachments'}
               icon={<FeedIcon sx={{ fontSize: '10px' }} />}
@@ -388,7 +387,7 @@ const CardInformation: React.FC = ({ taskId }) => {
                   position: 'absolute',
                   top: '.5rem',
                   right: '0',
-                   zIndex: '3',
+                  zIndex: '3',
                   padding: '1rem',
                   border: '1px solid #BDBDBD',
                 }}>
@@ -415,7 +414,11 @@ const CardInformation: React.FC = ({ taskId }) => {
                   sx={{ width: '10rem', marginBlockEnd: '.6rem' }}
                   onChange={(e) => setAttachmentTitle(e.target.value)}
                 />
-                <CrudButton text={'Submit'} onClick={handleFileUpload} />
+                <CrudButton
+                  text={'Submit'}
+                  onClick={handleFileUpload}
+                  pointer='auto'
+                />
                 {<IsLoadingBar visible={uploading} />}
                 <Typography sx={{ fontSize: '.7rem', color: '#BDBDBD' }}>
                   {uploadMessage}
@@ -473,11 +476,13 @@ const CardInformation: React.FC = ({ taskId }) => {
             startIcon={<LabelIcon />}
             buttonText={'Labels'}
             onClick={handleColorCard}
+            pointer={pointer}
           />
           <ActionButton
             startIcon={<ImageIcon />}
             buttonText={'Cover'}
             onClick={handleCoverCard}
+            pointer={pointer}
           />
           {addMemberVisible && (
             <Stack>

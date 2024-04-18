@@ -21,6 +21,7 @@ import {
 import { CoverCard } from '../actionscard/CoverCard';
 import { useState } from 'react';
 import { useAllUserData } from '../../api/userData';
+import { setActiveBoardId } from '../../features/PageInformationSlice';
 
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const AllBoard: React.FC = () => {
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
   );
+
   const addBoardCoverOpen = useSelector(
     (state) => state.visibility.addBoardCoverOpen
   );
@@ -69,6 +71,8 @@ const AllBoard: React.FC = () => {
     navigate(link);
     window.location.reload();
   };
+
+
 
   const handleCoverImageClick = (e: React.SyntheticEvent) => {
     e.preventDefault();

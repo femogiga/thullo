@@ -39,7 +39,7 @@ import {
   useDeleteBoardsOnUsersMutation,
 } from '../../api/boardsOnUsers';
 
-const BoardInformation = () => {
+const BoardInformation = ({pointer}) => {
   const queryClient = useQueryClient();
   const { handleShowMenuClose } = usePageInformation();
   const { deleteMutate } = useDeleteBoardUserMutation();
@@ -59,7 +59,7 @@ const BoardInformation = () => {
   const { adminUserData } = useGetAdmin(id);
   const adminUser = adminUserData && adminUserData[0];
   const fullName = adminUser?.firstname + ' ' + adminUser?.lastname;
-  console.table(allUsersData);
+  //console.table(allUsersData);
   //
   console.log('userByIdData', adminUser);
   //
@@ -217,6 +217,7 @@ const BoardInformation = () => {
             gap: '.3rem',
             border: '1px solid #BDBDBD',
             color: '#828282',
+            pointerEvents: pointer,
           }}>
           <EditIcon sx={{ fontSize: '10px' }} />
           <Typography sx={{ fontSize: '10px' }}>Edit</Typography>
@@ -345,6 +346,7 @@ const BoardInformation = () => {
             text='Delete'
             variant='withLabel'
             fullName={genFullname(user?.firstname, user?.lastname)}
+            pointer = {pointer}
           />
         ))}
     </article>

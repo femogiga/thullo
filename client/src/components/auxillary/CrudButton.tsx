@@ -7,6 +7,7 @@ interface CrudButtonProps {
   text: string;
   icon: React.FC | null;
   colours: { bg: string; color: string };
+  pointer: string;
   onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 
@@ -14,6 +15,7 @@ const CrudButton: React.FC<CrudButtonProps> = ({
   text,
   icon,
   colours,
+  pointer,
   onClick,
 }) => {
   // colours = {
@@ -24,6 +26,7 @@ const CrudButton: React.FC<CrudButtonProps> = ({
     <div>
       <Stack direction='row' spacing='1rem'>
         <Button
+
           onClick={onClick}
           sx={{
             textTransform: 'capitalize',
@@ -34,6 +37,7 @@ const CrudButton: React.FC<CrudButtonProps> = ({
             justifyContent: 'center',
             alignItems: 'center',
             gap: '.3rem',
+            pointerEvents:pointer,
             border: '1px solid #BDBDBD',
             color: colours?.color || '#828282',
             backgroundColor: colours?.bg || '',

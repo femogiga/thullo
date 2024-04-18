@@ -7,16 +7,24 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useBoardUpdateMutation } from '../../api/boardData';
 import { useGetAdmin } from './../../api/userData';
+import { useDispatch } from 'react-redux';
+import { setVisibleModalVisibility } from '../../features/visibilitySlice';
 
-const Visibility: React.FC = () => {
+const Visibility: React.FC = ({ pointer }) => {
   const { mutateAsync } = useBoardUpdateMutation();
-  const params = useParams()
-
+  //console.log('pointer==>', pointer);
+  const params = useParams();
+  const dispatch = useDispatch();
   const { adminUserData } = useGetAdmin(params.id);
-  const handleBoardPrivacy = (e , privacy) => {
-    const data = { id: params.id, adminId:adminUserData[0].id ,privacy:privacy };
-    const res = mutateAsync( data)
-  }
+  const handleBoardPrivacy = (e, privacy) => {
+    const data = {
+      id: params.id,
+      adminId: adminUserData[0].id,
+      privacy: privacy,
+    };
+    const res = mutateAsync(data);
+    dispatch(setVisibleModalVisibility(false));
+  };
   return (
     <Box
       className='visibility-modal'
@@ -27,6 +35,7 @@ const Visibility: React.FC = () => {
         maxHeight: '199px',
         borderRadius: '12px',
         backgroundColor: 'rgba(255,255,255)',
+        pointerEvents: `${pointer}`,
       }}>
       <div style={{ marginBlockEnd: '1rem' }}>
         <Typography variant='h6' sx={{ fontSize: '13px', fontWeight: '600' }}>
@@ -42,7 +51,7 @@ const Visibility: React.FC = () => {
           whileHover={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
           <Link to='' onClick={(e) => handleBoardPrivacy(e, 'PUBLIC')}>
             <IconLabel
-              labelText={'Public'}
+              labelText={' Public'}
               icon={<PublicIcon sx={{ fontSize: '13px' }} />}
             />
             <Typography sx={{ fontSize: '10px' }}>

@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
-const AddButton = ({ width, height,onClick }) => {
+const AddButton = ({ width, height,onClick,pointer }) => {
   /**
    ** Button with Add icon
    *
@@ -14,6 +14,7 @@ const AddButton = ({ width, height,onClick }) => {
         backgroundColor: '#2F80ED',
         width: width,
         height: height,
+        pointerEvents: pointer,
         '&:hover': { backgroundColor: 'blue' },
       }}>
       <AddIcon sx={{ fontSize: 16, color: 'white' }} />
