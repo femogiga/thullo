@@ -98,7 +98,6 @@ const BoardPage = () => {
     setPanelTitle(e.target.value);
   };
 
-
   //   if (
   //     !destination ||
   //     (destination.droppableId === source.droppableId &&
@@ -161,7 +160,7 @@ const BoardPage = () => {
   return (
     <div style={{ minHeight: '70vh' }}>
       <Header boardName={boardByIdData && boardByIdData[0]?.name} />
-      <PresentMembers pointer={adminState } />
+      <PresentMembers pointer={adminState} />
       <Board direction={'row'}>
         <AnimatePresence>
           <motion.div
@@ -176,7 +175,7 @@ const BoardPage = () => {
               top: '4rem',
               zIndex: '4',
             }}>
-            {pageInfoVisibility && <BoardInformation pointer={adminState}  />}
+            {pageInfoVisibility && <BoardInformation pointer={adminState} />}
           </motion.div>
         </AnimatePresence>
         <DragDropContext onDragEnd={onDragEnd}>
@@ -221,7 +220,6 @@ const BoardPage = () => {
                           pointer={adminState}
                         />
 
-
                         {provided.placeholder}
                       </div>
                     )}
@@ -230,8 +228,6 @@ const BoardPage = () => {
               );
             })}
         </DragDropContext>
-
-
 
         <AnimatePresence>
           <motion.div
@@ -250,7 +246,7 @@ const BoardPage = () => {
           </motion.div>
         </AnimatePresence>
         <div>
-          { adminState === 'auto' ? <AddListButton />:null}
+          {adminState === 'auto' ? <AddListButton /> : null}
           {addPanelModalOpen && (
             <AddPanelModal
               onSave={handleCreatePanel}

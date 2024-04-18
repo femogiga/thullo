@@ -30,7 +30,7 @@ const AllBoard: React.FC = () => {
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
   );
-
+  const activeUser = useSelector((state) => state.auth.user);
   const addBoardCoverOpen = useSelector(
     (state) => state.visibility.addBoardCoverOpen
   );
@@ -71,8 +71,6 @@ const AllBoard: React.FC = () => {
     navigate(link);
     window.location.reload();
   };
-
-
 
   const handleCoverImageClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -150,6 +148,7 @@ const AllBoard: React.FC = () => {
                       allUserData &&
                       allUserData.find((user) => user?.id === board?.adminId)
                     }
+                   
                   />
                 </Link>
               ))
