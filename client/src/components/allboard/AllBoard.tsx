@@ -27,6 +27,7 @@ const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [coverImage, setCoverImage] = useState('');
+
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
   );
@@ -133,12 +134,15 @@ const AllBoard: React.FC = () => {
               allBoardDataWithUser &&
               allBoardDataWithUser.map((board) => (
                 // <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
-                <Link
-                  onClick={(e) =>
-                    handleBoardCardClick(e, `/boards/${board.id}`)
-                  }
+                <div
+                  // onClick={(e) =>
+                  //   handleBoardCardClick(e, `/boards/${board.id}`)
+                  // }
                   key={`board-${board.id}`}>
                   <BoardCard
+                    onClick={(e) =>
+                      handleBoardCardClick(e, `/boards/${board.id}`)
+                    }
                     key={board.id}
                     name={board.name}
                     boardId={board?.id}
@@ -150,14 +154,11 @@ const AllBoard: React.FC = () => {
                       allUserData &&
                       allUserData.find((user) => user?.id === board?.adminId)
                     }
-                    userAuth={
-
-                      board?.userphotos?.find(
-                        (user) => user?.id === activeUser?.id  
-                      )
-                    }
+                    userAuth={board?.userphotos?.find(
+                      (user) => user?.id === activeUser?.id
+                    )}
                   />
-                </Link>
+                </div>
               ))
             )}
             {/* <BoardCard />

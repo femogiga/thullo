@@ -13,6 +13,7 @@ import { useBoardsOnUsersByboardId } from './../../../api/boardsOnUsers';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useBoardDataId } from '../../../api/boardData';
+import { Link } from 'react-router-dom';
 
 const BoardCard = ({
   admin,
@@ -23,6 +24,9 @@ const BoardCard = ({
   adminId,
   privacy,
   userAuth,
+  onClick
+
+
 }) => {
   //  const { isPending, data:adminUser } = useAllBoardPageDataById(boardId)
   //console.log(admin);
@@ -62,100 +66,101 @@ const BoardCard = ({
     //   setLocked('unlocked');
     // }
 
-    if (userPresent && userPresent.length <= 0 && privacy === 'PRIVATE') {
-      setLocked('locked');
-    } else if (
-      privacy === 'PRIVATE' &&
-      userPresent &&
-      userPresent.length > 0
-      //userPresent.length > 0 &&
-      //userPresent[0]?.id !== activeUser?.id
-    ) {
-      setLocked('unlocked');
-    } else {
-      setLocked('unlocked');
+    {
+      if (
+        (userAuth && Object.keys(userAuth).length > 0) ||
+        adminId === activeUser?.id
+      )
+        setLocked('unlocked');
+      else {
+        setLocked('locked');
+      }
     }
-  }, [locked, privacy, userPresent, activeUser?.id, admin]);
+  }, [locked, privacy, userPresent, activeUser?.id, admin,userAuth,adminId]);
 
   return (
     <div className='board-card'>
-      <Card
-        sx={{
-          maxWidth: 243,
-          height: 243,
-          boxShadow: '0 0 5px rgba(0,0 ,0,0.1)',
-          borderRadius: '12px',
-        }}
-        draggable>
-        <CardContent>
-          <CardMedia
-            sx={{
-              width: 219,
-              height: 130,
-              marginBlockEnd: '1rem',
-              borderRadius: '12px',
-            }}
-            image={
-              thumbnail ||
-              'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=600'
-            }
-            title='board thumbnail'
-          />
-          <p>
+      <Link onClick={onClick} style={{ pointerEvents: locked==='locked'? 'none':'auto' }}>
+        <Card
+          sx={{
+            maxWidth: 243,
+            height: 243,
+            boxShadow: '0 0 5px rgba(0,0 ,0,0.1)',
+            borderRadius: '12px',
+            pointer: 'none',
+          }}
+          draggable>
+          <CardContent>
+            <CardMedia
+              sx={{
+                width: 219,
+                height: 130,
+                marginBlockEnd: '1rem',
+                borderRadius: '12px',
+              }}
+              image={
+                thumbnail ||
+                'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=600'
+              }
+              title='board thumbnail'
+            />
+            {/* <p>
             {(userAuth && Object.keys(userAuth).length > 0) ||
             adminId === activeUser?.id
               ? 'unlocked'
               : 'locked'}
-          </p>
-          <Typography
-            sx={{
-              fontWeight: '500',
-              fontSize: '16px',
-              marginBlockEnd: '.6rem',
-            }}>
-            {name || 'Devchallenges'}
-          </Typography>
-          <Box sx={{ display: 'flex' }}>
-            <AvatarGroup
-              variant='rounded'
-              total={userPhotos?.length}
-              max={5}
+          </p> */}
+            <p>{locked}</p>
+            <Typography
               sx={{
-                '& .MuiAvatar-root': {
-                  width: 28,
-                  height: 28,
-                  fontSize: 15,
-                },
+                fontWeight: '500',
+                fontSize: '16px',
+                marginBlockEnd: '.6rem',
               }}>
-              <Avatar
-                key={`adminphoto_${admin?.id}`}
+              {name || 'Devchallenges'}
+            </Typography>
+            <Box sx={{ display: 'flex' }}>
+              <AvatarGroup
+                variant='rounded'
+                total={userPhotos?.length}
+                max={5}
                 sx={{
-                  marginInlineEnd: '.5rem',
-                  borderRadius: '8px',
-                  width: 28,
-                  height: 28,
-                }}
-                alt='Remy Sharp'
-                src={admin?.imgUrl}
-              />
-              {userPhotos &&
-                userPhotos.map((user, index) => (
-                  <Avatar
-                    key={`userphoto_${index}`}
-                    sx={{
-                      marginInlineEnd: '.5rem',
-                      borderRadius: '8px',
-                      width: 28,
-                      height: 28,
-                    }}
-                    alt='User photos'
-                    src={user.imgUrl}
-                  />
-                ))}
-            </AvatarGroup>
-          </Box>
-        </CardContent>
-      </Card>
+                  '& .MuiAvatar-root': {
+                    width: 28,
+                    height: 28,
+                    fontSize: 15,
+                  },
+                }}>
+                <Avatar
+                  key={`adminphoto_${admin?.id}`}
+                  sx={{
+                    marginInlineEnd: '.5rem',
+                    borderRadius: '8px',
+                    width: 28,
+                    height: 28,
+                  }}
+                  alt='Remy Sharp'
+                  src={admin?.imgUrl}
+                />
+                {userPhotos &&
+                  userPhotos.map((user, index) => (
+                    <Avatar
+                      key={`userphoto_${index}`}
+                      sx={{
+                        marginInlineEnd: '.5rem',
+                        borderRadius: '8px',
+                        width: 28,
+                        height: 28,
+                      }}
+                      alt='User photos'
+                      src={user.imgUrl}
+                    />
+                  ))}
+              </AvatarGroup>
+            </Box>
+          </CardContent>
+        </Card>
+      </Link>
     </div>
   );
 };
