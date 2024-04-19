@@ -54,7 +54,7 @@ const getAllTasksWithUsersAndLabels = async (req, res) => {
 
       .groupBy('Task.id');
 
-    console.log(result);
+    //console.log(result);
     res.status(200).json(result);
   } catch (error) {
     console.error(error);

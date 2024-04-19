@@ -13,16 +13,20 @@ const getAllboardDataWithUser = async (req, res) => {
   try {
     const result = await knex
       .from('Board')
+      //.where('BoardsOnUsers.userId', '=', req.user.id)
+      //.orWhere('Board.adminId', '=', req.user.id)
       .leftJoin('BoardsOnUsers', 'BoardsOnUsers.boardId', '=', 'Board.id')
-      .leftJoin('User', 'User.id', '=', 'BoardsOnUsers.userId') // Adjust the schema name here
+      .leftJoin('User', 'User.id', '=', 'BoardsOnUsers.userId')
       .select(
         'Board.*',
-
         knex.raw(
           'JSONB_AGG(JSON_BUILD_OBJECT(\'id\', "User".id, \'imgUrl\', "User"."imgUrl")) as userphotos'
         )
       )
-      .groupBy('Board.id', 'Board.name');
+      //.where('BoardsOnUsers.userId', '=', req.user.id)
+      //.orWhere('Board.adminId', '=', req.user.id)
+      .groupBy('Board.id', 'Board.name')
+
 
     res.status(200).json(result);
   } catch (error) {
@@ -30,10 +34,6 @@ const getAllboardDataWithUser = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
-
-
-
 
 const getBoardById = async (req, res) => {
   try {

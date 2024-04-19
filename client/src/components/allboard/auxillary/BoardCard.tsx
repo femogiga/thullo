@@ -10,6 +10,9 @@ import {
 import { useAllBoardPageDataById } from '../../../api/allBoardPageData';
 import { useGetAdmin } from '../../../api/userData';
 import { useBoardsOnUsersByboardId } from './../../../api/boardsOnUsers';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useBoardDataId } from '../../../api/boardData';
 
 const BoardCard = ({
   admin,
@@ -18,12 +21,61 @@ const BoardCard = ({
   boardId,
   userPhotos,
   adminId,
+  privacy,
+  userAuth,
 }) => {
   //  const { isPending, data:adminUser } = useAllBoardPageDataById(boardId)
   //console.log(admin);
   //console.log(admin); //
-  const { boardsOnUsersData } = useBoardsOnUsersByboardId(2)
+  const activeUser = useSelector((state) => state.auth.user);
+  const { isAdminPending, adminUserData } = useGetAdmin(boardId);
+  console.log('adminUserData', adminUserData);
+  const [locked, setLocked] = useState('locked');
+  const { boardsOnUsersData } = useBoardsOnUsersByboardId(boardId);
+  //const { boardByIdData } = useBoardDataId(boardId);
   console.log(boardsOnUsersData);
+  const userPresent = userPhotos?.filter(
+    async (user) => user?.id === activeUser?.id || user?.id === admin?.id
+  );
+  console.log('userpresent', userPresent);
+  console.log('userPhotos', userPhotos);
+  //console.log(adminUserData)
+  console.log(adminId);
+
+  console.log(userAuth);
+  useEffect(() => {
+    //  if (
+    //   parseInt(admin.id) !== parseInt(activeUser?.id) &&
+    //   privacy === 'PRIVATE'
+    // ) {
+    //   setLocked('locked');
+    // }
+    // else if (
+    //   privacy === 'PRIVATE' &&
+    //   (userPresent && Object.keys(userPresent).length > 0)
+    //   //userPresent.length > 0 &&
+    //    //userPresent[0]?.id !== activeUser?.id
+    // ) {
+    //   setLocked('unlocked');
+    // }
+    //  else {
+    //   setLocked('unlocked');
+    // }
+
+    if (userPresent && userPresent.length <= 0 && privacy === 'PRIVATE') {
+      setLocked('locked');
+    } else if (
+      privacy === 'PRIVATE' &&
+      userPresent &&
+      userPresent.length > 0
+      //userPresent.length > 0 &&
+      //userPresent[0]?.id !== activeUser?.id
+    ) {
+      setLocked('unlocked');
+    } else {
+      setLocked('unlocked');
+    }
+  }, [locked, privacy, userPresent, activeUser?.id, admin]);
 
   return (
     <div className='board-card'>
@@ -49,6 +101,12 @@ const BoardCard = ({
             }
             title='board thumbnail'
           />
+          <p>
+            {(userAuth && Object.keys(userAuth).length > 0) ||
+            adminId === activeUser?.id
+              ? 'unlocked'
+              : 'locked'}
+          </p>
           <Typography
             sx={{
               fontWeight: '500',
@@ -61,7 +119,7 @@ const BoardCard = ({
             <AvatarGroup
               variant='rounded'
               total={userPhotos?.length}
-              max={4}
+              max={5}
               sx={{
                 '& .MuiAvatar-root': {
                   width: 28,

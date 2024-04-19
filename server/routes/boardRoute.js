@@ -1,3 +1,4 @@
+const privacyMiddleware = require('../authentication/privacyMiddleware');
 const{checkBoardActions} = require('../authentication/roleMiddleware')
 
 const {

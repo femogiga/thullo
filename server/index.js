@@ -36,7 +36,7 @@ app.use('/allboard', authMiddleware, allBoardRoute);
 app.use('/mainboard', authMiddleware, mainBoardRoute);
 app.use('/pexel', authMiddleware, unsplashRoute);
 app.use('/assets', assetRoute)
-app.use('/boardsonusers', boardsOnUsersRoute);
+app.use('/boardsonusers',authMiddleware, boardsOnUsersRoute);
 
 const port = process.env.PORT || 9000;
 

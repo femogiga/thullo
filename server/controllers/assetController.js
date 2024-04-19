@@ -27,7 +27,7 @@ const uploader = async (req, res) => {
       try {
         // const fileType = 'pdf';
         const fileType = req.file.mimetype;
-        console.log('fileType======>', fileType);
+       // console.log('fileType======>', fileType);
          let fileTypeString;
         switch (fileType) {
           case 'application/pdf':

@@ -32,7 +32,7 @@ export const useUserDataById = (id) => {
 
 
 export const useGetAdmin = (boardId) => {
-    const { boardByIdData } = useBoardDataId(boardId)
+    const { isPending:isAdminPending, boardByIdData } = useBoardDataId(boardId)
     const adminId = boardByIdData && boardByIdData[0]?.adminId
     const {
         status,
@@ -47,7 +47,7 @@ export const useGetAdmin = (boardId) => {
         // The query will not execute until the userId exists
         enabled: !!adminId,
     })
-    return { status, fetchStatus, adminUserData }
+    return { status, isAdminPending, fetchStatus, adminUserData }
 }
 
 

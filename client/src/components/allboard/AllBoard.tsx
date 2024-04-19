@@ -67,7 +67,8 @@ const AllBoard: React.FC = () => {
   //     const res = createBoardMutate(data)
   // }
   // background
-  const handleBoardCardClick = (e: React.SyntheticEvent, link) => {
+  const handleBoardCardClick =  (e: React.SyntheticEvent, link) => {
+
     navigate(link);
     window.location.reload();
   };
@@ -144,11 +145,17 @@ const AllBoard: React.FC = () => {
                     thumbnail={board.thumbnail}
                     userPhotos={board.userphotos}
                     adminId={board?.adminId}
+                    privacy={board?.privacy}
                     admin={
                       allUserData &&
                       allUserData.find((user) => user?.id === board?.adminId)
                     }
-                   
+                    userAuth={
+
+                      board?.userphotos?.find(
+                        (user) => user?.id === activeUser?.id  
+                      )
+                    }
                   />
                 </Link>
               ))
