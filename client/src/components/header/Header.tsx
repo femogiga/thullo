@@ -1,7 +1,7 @@
 import logo from '../../assets/Logo-small.svg';
 import { DotsNine, CaretDown } from '@phosphor-icons/react';
 import './header.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MiniCard from '../minicard/MiniCard';
 import TextField from '@mui/material/TextField';
 import HeaderModal from './HeaderModal';
@@ -12,6 +12,8 @@ import { setHeaderModalOpen } from '../../features/visibilitySlice';
 import { AnimatePresence, motion } from 'framer-motion';
 import { setIsAuthenticated, setUser } from '../../features/authSlice';
 import { Button } from '@mui/material';
+import { setSearchTerm } from '../../features/PageInformationSlice';
+import { useEffect, useState } from 'react';
 
 const Header = ({ boardName }) => {
   const headerStyle = {
@@ -23,19 +25,45 @@ const Header = ({ boardName }) => {
     boxShadow: '0 0 1px 1px rgba(0, 0, 0,0.1)',
     marginBlockEnd: '.2rem',
   };
+      const location = useLocation();
+
+
+  const searchTerm = useSelector((state) => state.pageInformation.searchTerm);
+  console.log(searchTerm);
 
   const headerModalOpen = useSelector(
     (state) => state.visibility.headerModalOpen
   );
 
+  const [searchWord, setSearchWord] = useState<string>('');
+
+  const handleSearch = async () => {
+
+    dispatch(setSearchTerm(searchWord));
+
+    if (window.location.href.includes('allboard')) {
+      return;
+    }
+    navigate('/allboard',{state:{searchTerm:searchTerm}});
+  };
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (searchWord === '') {
+      setSearchWord('');
+    }
+    setSearchWord(e.target.value);
+  };
+  //console.log(searchWord)
+  console.log('searchTerm', searchTerm);
   const loggedInUser = useSelector((state) => state.auth.user);
-  console.log('User', loggedInUser);
+  // console.log('User', loggedInUser);
   const fullName = loggedInUser.firstname + ' ' + loggedInUser.lastname;
   // const handleLogout = () => {
   //   dispatch(setIsAuthenticated(false))
   //       dispatch(setUser(null));
 
   // }
+
+  useEffect(() => {}, [searchWord]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,6 +79,7 @@ const Header = ({ boardName }) => {
     dispatch(setHeaderModalOpen(false));
     //navigate('/allboard');
   };
+
   return (
     <header className='header' style={headerStyle}>
       <div className='group-width flex space-between align-item-center col-gap-1'>
@@ -64,6 +93,7 @@ const Header = ({ boardName }) => {
             <div className='divider'></div>
 
             <Link
+              style={{ padding: '.5rem', backgroundColor: '#E0E0E0B3' }}
               to='/allboard'
               onClick={handleAllboardLinkClick}
               className='allboard-button flex place-items col-gap-05'>
@@ -80,8 +110,22 @@ const Header = ({ boardName }) => {
       <div className='group-width flex flex-end align-item-center col-gap-2'>
         <div className='search flex col-gap-1'>
           {/* <input type='text' className='search-input' placeholder='Keyword..' /> */}
-          <TextField className='' size='small' sx={{ width: '20rem' }} />
-          <Button sx={{ color: '#2F80ED' , textTransform:'capitalize','&:hover':{backgroundColor:'blue'} }}>Search</Button>
+          <TextField
+            className=''
+            size='small'
+            sx={{ width: '20rem' }}
+            value={searchWord}
+            onChange={handleSearchInputChange}
+          />
+          <Button
+            onClick={handleSearch}
+            sx={{
+              color: '#2F80ED',
+              textTransform: 'capitalize',
+              '&:hover': { backgroundColor: 'blue' },
+            }}>
+            Search
+          </Button>
         </div>
         <Link to='' onClick={handleHeaderLinkAccountClick}>
           <div className=' flex place-items col-gap-05 align-item-center'>

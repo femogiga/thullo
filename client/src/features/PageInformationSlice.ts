@@ -16,7 +16,8 @@ const pageInformationSlice = createSlice({
         taskId: 0,
         panelId: 0,
         activeBoardId: 1,
-        adminState:true
+        adminState: true,
+        searchTerm:''
 
     },
     reducers: {
@@ -53,9 +54,13 @@ const pageInformationSlice = createSlice({
         setAdminState: (state, action) => {
             state.adminState = action.payload
 
-         }
+        },
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload
+
+        }
     }
 })
 
-export const { setPageVisibility, setCardInfoVisible, setDarken, setColorCardVisible, setCoverCardVisible, setMemberCardVisible, setAddMemberVisible, setTaskId, setPanelId, setActiveBoardId, setAdminState } = pageInformationSlice.actions
+export const { setPageVisibility, setCardInfoVisible, setDarken, setColorCardVisible, setCoverCardVisible, setMemberCardVisible, setAddMemberVisible, setTaskId, setPanelId, setActiveBoardId, setAdminState, setSearchTerm } = pageInformationSlice.actions
 export default pageInformationSlice.reducer

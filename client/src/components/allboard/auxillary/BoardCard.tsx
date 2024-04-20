@@ -6,14 +6,15 @@ import {
   Typography,
   AvatarGroup,
   Box,
+  Stack,
 } from '@mui/material';
-import { useAllBoardPageDataById } from '../../../api/allBoardPageData';
 import { useGetAdmin } from '../../../api/userData';
 import { useBoardsOnUsersByboardId } from './../../../api/boardsOnUsers';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useBoardDataId } from '../../../api/boardData';
 import { Link } from 'react-router-dom';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 const BoardCard = ({
   admin,
@@ -24,9 +25,7 @@ const BoardCard = ({
   adminId,
   privacy,
   userAuth,
-  onClick
-
-
+  onClick,
 }) => {
   //  const { isPending, data:adminUser } = useAllBoardPageDataById(boardId)
   //console.log(admin);
@@ -76,11 +75,13 @@ const BoardCard = ({
         setLocked('locked');
       }
     }
-  }, [locked, privacy, userPresent, activeUser?.id, admin,userAuth,adminId]);
+  }, [locked, privacy, userPresent, activeUser?.id, admin, userAuth, adminId]);
 
   return (
     <div className='board-card'>
-      <Link onClick={onClick} style={{ pointerEvents: locked==='locked'? 'none':'auto' }}>
+      <Link
+        onClick={onClick}
+        style={{ pointerEvents: locked === 'locked' ? 'none' : 'auto' }}>
         <Card
           sx={{
             maxWidth: 243,
@@ -110,15 +111,22 @@ const BoardCard = ({
               ? 'unlocked'
               : 'locked'}
           </p> */}
-            <p>{locked}</p>
-            <Typography
-              sx={{
-                fontWeight: '500',
-                fontSize: '16px',
-                marginBlockEnd: '.6rem',
-              }}>
-              {name || 'Devchallenges'}
-            </Typography>
+            {/* <p>{locked}</p> */}
+            <Stack direction={'row'} justifyContent={'space-between'}>
+              <Typography
+                sx={{
+                  fontWeight: '500',
+                  fontSize: '16px',
+                  marginBlockEnd: '.6rem',
+                }}>
+                {name || 'Devchallenges'}
+              </Typography>
+              {locked === 'locked' ? (
+                <LockOutlinedIcon sx={{ color: '#2F80ED' }} />
+              ) : (
+                <LockOpenIcon sx={{ color: '#6FCF97' }} />
+              )}
+            </Stack>
             <Box sx={{ display: 'flex' }}>
               <AvatarGroup
                 variant='rounded'

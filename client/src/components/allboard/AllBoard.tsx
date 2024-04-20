@@ -9,7 +9,7 @@ import {
   useAllBoardDataWithUser,
   useCreateBoardMutation,
 } from '../../api/boardData';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAllBoardPageData } from '../../api/allBoardPageData';
 import IsLoading from './../auxillary/IsLoading';
 import { useSelector } from 'react-redux';
@@ -26,8 +26,13 @@ import { setActiveBoardId } from '../../features/PageInformationSlice';
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const searchTerm = useSelector((state) => state.pageInformation.searchTerm);
   const [coverImage, setCoverImage] = useState('');
+  // const [searchWord, setSearchWord] = useState<string>('');
 
+  // const handleSearch = () => {
+  //   setSearchWord(searchTerm);
+  // };
   const createBoardModalVisible = useSelector(
     (state) => state.visibility.createBoardOpen
   );
@@ -42,9 +47,7 @@ const AllBoard: React.FC = () => {
   const { allBoardPagePending, allBoardDataWithUser } =
     useAllBoardDataWithUser();
   const { allUserData } = useAllUserData();
-  //console.log(allUserData)
 
-  //console.log(allBoardPageData, allBoardPageData)
   const handleOpenAddBoardModal = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCreateBoardOpen(!createBoardModalVisible));
@@ -55,6 +58,7 @@ const AllBoard: React.FC = () => {
     dispatch(setCreateBoardOpen(false));
     dispatch(setAddBoardCoverOpen(false));
   };
+
 
   const handleCoverButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -68,8 +72,7 @@ const AllBoard: React.FC = () => {
   //     const res = createBoardMutate(data)
   // }
   // background
-  const handleBoardCardClick =  (e: React.SyntheticEvent, link) => {
-
+  const handleBoardCardClick = (e: React.SyntheticEvent, link) => {
     navigate(link);
     window.location.reload();
   };
@@ -82,16 +85,7 @@ const AllBoard: React.FC = () => {
   return (
     <Box className='container' sx={{ width: '100%', position: 'relative' }}>
       <Board direction={'column'}>
-        {/* <Stack direction={'row'} justifyContent={'space-between'}>
-          <Typography>All Boards</Typography>
 
-          <CrudButton
-            text={'Add'}
-            colours={{ color: 'white', bg: '#2F80ED' }}
-            icon={<AddIcon sx={{ fontSize: 10 }} />}
-            onClick={handleOpenAddBoardModal}
-          />
-        </Stack> */}
         <Box
           sx={{
             display: 'flex',
@@ -101,14 +95,11 @@ const AllBoard: React.FC = () => {
             padding: '2rem',
             rowGap: '2rem',
             maxWidth: '100vw',
-            //alignContent: 'space-between',
-            // border: '1px solid black',
-            // minHeight:'70vh'
+
           }}>
           <Stack
             direction={'row'}
             justifyContent={'space-between'}
-            // border='1px solid black'
             width='100%'>
             <Typography>All Boards</Typography>
 
@@ -122,7 +113,6 @@ const AllBoard: React.FC = () => {
           <Stack
             direction={'row'}
             gap='1rem'
-            // justifyContent={'space-around'}
 
             sx={{
               flexWrap: 'wrap',
@@ -132,34 +122,38 @@ const AllBoard: React.FC = () => {
               <IsLoading />
             ) : (
               allBoardDataWithUser &&
-              allBoardDataWithUser.map((board) => (
-                // <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
-                <div
-                  // onClick={(e) =>
-                  //   handleBoardCardClick(e, `/boards/${board.id}`)
-                  // }
-                  key={`board-${board.id}`}>
-                  <BoardCard
-                    onClick={(e) =>
-                      handleBoardCardClick(e, `/boards/${board.id}`)
-                    }
-                    key={board.id}
-                    name={board.name}
-                    boardId={board?.id}
-                    thumbnail={board.thumbnail}
-                    userPhotos={board.userphotos}
-                    adminId={board?.adminId}
-                    privacy={board?.privacy}
-                    admin={
-                      allUserData &&
-                      allUserData.find((user) => user?.id === board?.adminId)
-                    }
-                    userAuth={board?.userphotos?.find(
-                      (user) => user?.id === activeUser?.id
-                    )}
-                  />
-                </div>
-              ))
+              allBoardDataWithUser
+                .filter((search) =>
+                  search?.name.toLowerCase().includes(searchTerm.toLowerCase() )
+                )
+                .map((board) => (
+                  // <Link to={`/boards/${board.id}`} key={`board-${board.id}`}>
+                  <div
+                    // onClick={(e) =>
+                    //   handleBoardCardClick(e, `/boards/${board.id}`)
+                    // }
+                    key={`board-${board.id}`}>
+                    <BoardCard
+                      onClick={(e) =>
+                        handleBoardCardClick(e, `/boards/${board.id}`)
+                      }
+                      key={board.id}
+                      name={board.name}
+                      boardId={board?.id}
+                      thumbnail={board.thumbnail}
+                      userPhotos={board.userphotos}
+                      adminId={board?.adminId}
+                      privacy={board?.privacy}
+                      admin={
+                        allUserData &&
+                        allUserData.find((user) => user?.id === board?.adminId)
+                      }
+                      userAuth={board?.userphotos?.find(
+                        (user) => user?.id === activeUser?.id
+                      )}
+                    />
+                  </div>
+                ))
             )}
             {/* <BoardCard />
           <BoardCard />
