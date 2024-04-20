@@ -1,6 +1,6 @@
 import { Circles } from 'react-loader-spinner';
 
-const IsLoading = () => {
+const IsLoading:React.FC = () => {
   return (
     <Circles
       height='80'

@@ -8,7 +8,19 @@ import { useSelector } from 'react-redux';
 import quillEmoji from 'quill-emoji';
 import 'quill-emoji/dist/quill-emoji.css';
 
-export const QuillInput = ({ value, onChange, onSave, onCancel }) => {
+interface IQuillInput {
+  value: string;
+  onChange: () => void;
+  onSave: () => void;
+  onCancel: () => void;
+}
+
+export const QuillInput: React.FC<IQuillInput> = ({
+  value,
+  onChange,
+  onSave,
+  onCancel,
+}) => {
   // const [value, setValue] = useState('');
   const editOpen = useSelector((state) => state.visibility.editOpen);
   const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
@@ -47,7 +59,6 @@ export const QuillInput = ({ value, onChange, onSave, onCancel }) => {
 
       [{ color: [] }, { background: [] }],
       ['clean'],
-
     ],
 
     'emoji-toolbar': true,

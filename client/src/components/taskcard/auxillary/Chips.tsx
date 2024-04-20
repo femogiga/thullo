@@ -1,7 +1,16 @@
 import { Chip } from '@mui/material';
-import { chipColor } from './../../../utility/chipColor';
+import { InferableComponentEnhancerWithProps } from 'react-redux';
 
-const Chips = ({ label, labelColor,chip }) => {
+interface Ichip{
+  bgColor: string;
+  color:string
+}
+interface IChips{
+  label: string;
+  labelColor: string;
+  chip:Ichip
+}
+const Chips:React.FC<IChips> = ({ label, labelColor,chip }) => {
   //let chip = chipColor(labelColor)
   //console.log('chip',chip)
   return (

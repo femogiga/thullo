@@ -10,7 +10,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CrudButton from './CrudButton';
 
-const AddPanelModal = ({ onChange, onSave }) => {
+
+interface IAddPanelModal{
+  onChange: () => void;
+  onSave:()=>void
+}
+const AddPanelModal:React.FC<IAddPanelModal> = ({ onChange, onSave }) => {
   return (
     <Stack
       direction={'column'}

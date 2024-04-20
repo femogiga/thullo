@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 import { usePageInformation } from '../boardInfo/hook';
-const ShowMenu = () => {
+const ShowMenu:React.FC = () => {
   // const boardInformation = useSelector(
   //   (state) => state.boardInformation.visible
   // );

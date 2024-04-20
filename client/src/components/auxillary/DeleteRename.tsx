@@ -16,18 +16,22 @@ import {
   setDeletePanelButtonsVisible,
   setRenameInputVisible,
 } from '../../features/visibilitySlice';
-import { SmartButton } from '@mui/icons-material';
 import {
   useDeletePanelMutation,
   useUpdatePanelMutation,
 } from '../../api/panelData';
 import CrudButton from './CrudButton';
 
-const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
+interface IDeleteRename {
+  panelId: number;
+  isPanelVisible: boolean;
+}
+
+const DeleteRename: React.FC<IDeleteRename> = ({ panelId, isPanelVisible }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log('id: ' + id);
-  console.log(panelId);
+  //console.log('id: ' + id);
+  //console.log(panelId);
   const renameInputVisible = useSelector(
     (state) => state.visibility.renameInputVisible
   );
@@ -52,7 +56,7 @@ const DeleteRename: React.FC = ({ panelId, isPanelVisible }) => {
 
   const handleTitleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const handleTitleUpdate = (e) => {

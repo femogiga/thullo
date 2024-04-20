@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { ProgressBar } from 'react-loader-spinner';
 
-const IsLoadingBar = ({visible}) => {
+interface IIsLoadingBar {
+  visible: boolean;
+}
+const IsLoadingBar: React.FC<IIsLoadingBar> = ({ visible }) => {
   return (
     <ProgressBar
       visible={visible}
@@ -13,6 +16,6 @@ const IsLoadingBar = ({visible}) => {
       wrapperClass=''
     />
   );
-}
+};
 //
-export default IsLoadingBar
+export default IsLoadingBar;

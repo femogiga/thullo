@@ -6,16 +6,19 @@ import MiniCard from '../minicard/MiniCard';
 import TextField from '@mui/material/TextField';
 import HeaderModal from './HeaderModal';
 import { useSelector } from 'react-redux';
-import Visibility from './../auxillary/Visibility';
 import { useDispatch } from 'react-redux';
 import { setHeaderModalOpen } from '../../features/visibilitySlice';
 import { AnimatePresence, motion } from 'framer-motion';
-import { setIsAuthenticated, setUser } from '../../features/authSlice';
 import { Button } from '@mui/material';
 import { setSearchTerm } from '../../features/PageInformationSlice';
 import { useEffect, useState } from 'react';
 
-const Header = ({ boardName }) => {
+
+interface IHeader{
+  boardName: string;
+}
+
+const Header: React.FC<IHeader> = ({ boardName }) => {
   const headerStyle = {
     width: '100%',
     display: 'flex',
@@ -25,11 +28,10 @@ const Header = ({ boardName }) => {
     boxShadow: '0 0 1px 1px rgba(0, 0, 0,0.1)',
     marginBlockEnd: '.2rem',
   };
-      const location = useLocation();
 
 
   const searchTerm = useSelector((state) => state.pageInformation.searchTerm);
-  console.log(searchTerm);
+  //console.log(searchTerm);
 
   const headerModalOpen = useSelector(
     (state) => state.visibility.headerModalOpen
@@ -53,7 +55,7 @@ const Header = ({ boardName }) => {
     setSearchWord(e.target.value);
   };
   //console.log(searchWord)
-  console.log('searchTerm', searchTerm);
+  //console.log('searchTerm', searchTerm);
   const loggedInUser = useSelector((state) => state.auth.user);
   // console.log('User', loggedInUser);
   const fullName = loggedInUser.firstname + ' ' + loggedInUser.lastname;
@@ -93,7 +95,7 @@ const Header = ({ boardName }) => {
             <div className='divider'></div>
 
             <Link
-              style={{ padding: '.5rem', backgroundColor: '#E0E0E0B3' }}
+              style={{ padding: '.5rem', backgroundColor: '#E0E0E06E' }}
               to='/allboard'
               onClick={handleAllboardLinkClick}
               className='allboard-button flex place-items col-gap-05'>

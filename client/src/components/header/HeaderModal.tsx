@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { setIsAuthenticated, setUser } from '../../features/authSlice';
 import { persistor } from '../../store';
 
-const HeaderModal = () => {
+const HeaderModal:React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginLogoutVisible, setLoginLogoutVisible] = useState({

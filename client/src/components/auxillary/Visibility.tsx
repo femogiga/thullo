@@ -10,7 +10,10 @@ import { useGetAdmin } from './../../api/userData';
 import { useDispatch } from 'react-redux';
 import { setVisibleModalVisibility } from '../../features/visibilitySlice';
 
-const Visibility: React.FC = ({ pointer }) => {
+interface IVisibility {
+  pointer: string;
+}
+const Visibility: React.FC<IVisibility> = ({ pointer }) => {
   const { mutateAsync } = useBoardUpdateMutation();
   //console.log('pointer==>', pointer);
   const params = useParams();

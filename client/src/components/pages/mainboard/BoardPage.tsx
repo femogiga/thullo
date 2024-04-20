@@ -2,33 +2,24 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../header/Header';
 import PresentMembers from '../../presentmember/PresentMembers';
 import Board from '../../board/Board';
-import { AnimatePresence, motion, cubicBezier } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import BoardInformation from '../../boardInfo/BoardInformation';
 import TaskPanel from '../../taskpanel/TaskPanel';
-import PanelName from '../../taskpanel/PanelName';
-import AddCardButton from '../../auxillary/AddCardButton';
-import TaskCard from '../../taskcard/TaskCard';
 import Visibility from '../../auxillary/Visibility';
 import { Box } from '@mui/material';
 import { useMainPageData } from './hooks/useMainPageData';
-import {
-  useAllTaskData,
-  useTaskCardData,
-  useTaskCardMutation,
-} from '../../../api/taskData';
-import { useCardData } from '../../../api/mainBoardPageData';
+import { useTaskCardData, useTaskCardMutation } from '../../../api/taskData';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 import CardInformation from '../../cardinformation/CardInformation';
-import { setCardInfoVisible } from '../../../features/PageInformationSlice';
 import AddListButton from '../../auxillary/AddListButton';
 import AddPanelModal from '../../auxillary/AddPanelModal';
 import { useCreatePanelMutation } from '../../../api/panelData';
 import { useDispatch } from 'react-redux';
 import { setAddPanelModalOpen } from '../../../features/visibilitySlice';
 
-const BoardPage = () => {
+const BoardPage:React.FC = () => {
   const { taskCard } = useTaskCardData();
   const { createPanelMutation } = useCreatePanelMutation();
   const [title, setTitle] = useState('');
@@ -39,18 +30,7 @@ const BoardPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const id = params.id;
-  //const [visibleState, setVisibleState] = useState({
-  //   backlog: false,
-  //   inProgress: false,
-  //   inReview: false,
-  //   completed: false,
-  // });
-  // const handleDeleteRenameVisibility = (panel) => {
-  //   setVisibleState((prevState) => ({
-  //     ...prevState,
-  //     [panel]: !prevState[panel],
-  //   }));
-  // };
+  
 
   const [visibleStates, setVisibleStates] = useState({});
 

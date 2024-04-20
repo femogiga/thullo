@@ -1,11 +1,13 @@
 import { Box, Button, TextField } from '@mui/material';
 import MiniCard from './../minicard/MiniCard';
-import CrudButton from '../auxillary/CrudButton';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useCreateChatMutation } from '../../api/chatData';
 
-const CommentInput = ({ src }) => {
+interface ICommentInput {
+  src: string;
+}
+const CommentInput: React.FC<ICommentInput> = ({ src }) => {
   const [content, setContent] = useState('');
   const [inputAvatarVisible, setInputAvatarVisible] = useState(true);
   const handleInputAvatar = (e) => {
@@ -40,7 +42,6 @@ const CommentInput = ({ src }) => {
     await createChatMutation(message);
     setContent('');
   };
-
 
   return (
     <Box

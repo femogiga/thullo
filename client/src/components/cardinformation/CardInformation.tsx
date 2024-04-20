@@ -57,13 +57,13 @@ import {
 } from '../../api/assetData';
 import { MuiFileInput } from 'mui-file-input';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import IsLoading from '../auxillary/IsLoading';
-import isLoadingBar from '../auxillary/IsLoadingBar';
 import IsLoadingBar from '../auxillary/IsLoadingBar';
-import { useBoardsOnUsersByboardId } from '../../api/boardsOnUsers';
 
-const CardInformation: React.FC = ({ pointer }) => {
-    const params = useParams();
+interface ICardInformation {
+  pointer: 'auto' |  'none' | '';
+}
+const CardInformation: React.FC<ICardInformation> = ({ pointer }) => {
+  const params = useParams();
 
   const [coverImage, setCoverImage] = useState('');
 
@@ -86,7 +86,7 @@ const CardInformation: React.FC = ({ pointer }) => {
 
   const { cardPanelByIdData } = useCardPanelDataByIdCard(activePanelId);
   const { chatByTaskIdData } = useChatByTaskIdData(activeTaskId);
-  console.log(chatByTaskIdData);
+  //console.log(chatByTaskIdData);
 
   const { updateTaskMutation } = useUpdateTaskMutation();
   useEffect(() => {}, [coverImage]);
@@ -103,7 +103,7 @@ const CardInformation: React.FC = ({ pointer }) => {
   const { boardUsersData } = useGetBoardUsers(params.id);
   const { assetsByTaskData } = useAssetsByTaskData(activeTaskId);
   const { createAssetMutation } = useCreateAssetMutation();
-  console.log(assetsByTaskData);
+  //console.log(assetsByTaskData);
   //console.log('boardUser', boardUsersData);
   //console.log(adminUserData);
   useEffect(() => {}, [params]);
@@ -129,7 +129,7 @@ const CardInformation: React.FC = ({ pointer }) => {
       panelId: activePanelId,
       boardId: params.id,
     };
-    console.log('taskdata', data);
+    //console.log('taskdata', data);
     updateTaskMutation(data);
     dispatch(setCardInfoEditOpen(false));
   };
@@ -183,7 +183,7 @@ const CardInformation: React.FC = ({ pointer }) => {
 
   // const handleQuillSaveButton = (e) => {
   //   e.preventDefault();
- // console.log('working', chatByTaskIdData);
+  // console.log('working', chatByTaskIdData);
   // };
 
   const handleCoverImageClick = (e: React.MouseEvent) => {
@@ -207,7 +207,7 @@ const CardInformation: React.FC = ({ pointer }) => {
   const handleFileChange = (newFile) => {
     setFile(newFile);
   };
-  const dataTo = { activeTaskId, attachmentTitle, file };
+  //const dataTo = { activeTaskId, attachmentTitle, file };
   //console.log('data', dataTo);
 
   const handleFileUpload = async (e) => {
@@ -256,10 +256,6 @@ const CardInformation: React.FC = ({ pointer }) => {
         zIndex: '6',
         top: '7rem',
         backgroundColor: 'rgba(255,255,255,1)',
-        //backdropFilter: 'blur(505px)',
-        // border: '1px solid black',
-        // translate: '50%',
-        // zIndex: '4',
       }}>
       <div>
         <img
@@ -323,6 +319,7 @@ const CardInformation: React.FC = ({ pointer }) => {
             />
             <CrudButton
               onClick={handleEditButton}
+              colours={null}
               text={'Edit'}
               pointer={pointer}
               icon={<EditIcon sx={{ fontSize: '10px' }} />}
@@ -373,6 +370,8 @@ const CardInformation: React.FC = ({ pointer }) => {
               icon={<FeedIcon sx={{ fontSize: '10px' }} />}
             />
             <CrudButton
+              colours={null}
+              pointer={'auto'}
               onClick={handleUploadFormVisibility}
               text={'Add'}
               icon={<Add sx={{ fontSize: '10px' }} />}
@@ -415,6 +414,8 @@ const CardInformation: React.FC = ({ pointer }) => {
                   onChange={(e) => setAttachmentTitle(e.target.value)}
                 />
                 <CrudButton
+                  icon={null}
+                  colours={null}
                   text={'Submit'}
                   onClick={handleFileUpload}
                   pointer='auto'
@@ -469,6 +470,7 @@ const CardInformation: React.FC = ({ pointer }) => {
             />
           </div>
           <ActionButton
+            pointer=''
             startIcon={<GroupIcon />}
             buttonText={'Members'}
             onClick={handleAddMemberVisible}

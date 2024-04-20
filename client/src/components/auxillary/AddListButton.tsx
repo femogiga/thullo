@@ -1,6 +1,5 @@
 import { Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteRename from './DeleteRename';
 import { useDispatch } from 'react-redux';
 import { setAddPanelModalOpen } from '../../features/visibilitySlice';
 import { useSelector } from 'react-redux';

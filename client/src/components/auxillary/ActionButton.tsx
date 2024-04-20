@@ -1,7 +1,14 @@
 import { Button, Stack } from '@mui/material';
 import React from 'react';
 
-const ActionButton = ({ startIcon, buttonText, onClick, pointer }) => {
+interface IActionButton {
+  startIcon: React.ReactNode;
+  buttonText: string;
+  onClick: (e:React.MouseEvent) => void;
+  pointer:'auto' | 'none' |''
+}
+
+const ActionButton:React.FC<IActionButton> = ({ startIcon, buttonText, onClick, pointer }) => {
   /**
    ** Button with a start icon
    *

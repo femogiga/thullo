@@ -19,7 +19,19 @@ import {
 } from '../../api/chatData';
 import DoneIcon from '@mui/icons-material/Done';
 import { useSelector } from 'react-redux';
-export const CommentCard = ({
+
+interface ICommentCard {
+  chatId:number
+  firstName:string
+  lastName:string;
+  content:string;
+  createdAt:string;
+  imgUrl:string;
+  authorId:number
+  pointer:string;
+}
+
+export const CommentCard: React.FC<ICommentCard> = ({
   chatId,
   firstName,
   lastName,

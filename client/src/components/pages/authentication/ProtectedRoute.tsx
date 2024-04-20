@@ -2,7 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
+
+interface IProtectedRoute{
+  children:React.ReactNode
+}
+const ProtectedRoute:React.FC<IProtectedRoute> = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const location = useLocation();

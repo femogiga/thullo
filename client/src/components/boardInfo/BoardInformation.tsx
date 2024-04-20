@@ -21,9 +21,7 @@ import { useDispatch } from 'react-redux';
 import { useBoardDataId, useBoardUpdateMutation } from '../../api/boardData';
 import { useParams } from 'react-router-dom';
 import DescriptionText from './DescriptionText';
-import AddButton from '../auxillary/AddButton';
-import ActionButton from '../auxillary/ActionButton';
-import CrudButton from '../auxillary/CrudButton';
+
 import { useQueryClient } from '@tanstack/react-query';
 import {
   useAllUserData,
@@ -39,7 +37,11 @@ import {
   useDeleteBoardsOnUsersMutation,
 } from '../../api/boardsOnUsers';
 
-const BoardInformation = ({pointer}) => {
+
+interface IBoardInformation{
+  pointer:string
+}
+const BoardInformation: React.FC<IBoardInformation> = ({ pointer }) => {
   const queryClient = useQueryClient();
   const { handleShowMenuClose } = usePageInformation();
   const { deleteMutate } = useDeleteBoardUserMutation();
@@ -51,11 +53,11 @@ const BoardInformation = ({pointer}) => {
   const { deleteBoardsOnUserMutation } = useDeleteBoardsOnUsersMutation();
 
   const { boardByIdData } = useBoardDataId(id);
-  console.log('boardIDdata', boardByIdData);
+  //console.log('boardIDdata', boardByIdData);
   const { boardUsersData } = useGetBoardUsers(id);
-  console.log(boardUsersData);
-  const { allUsersData } = useAllUserData();
-  const { userByIdData } = useUserDataById(3);
+ // console.log(boardUsersData);
+  //const { allUsersData } = useAllUserData();
+  //const { userByIdData } = useUserDataById(3);
   const { adminUserData } = useGetAdmin(id);
   const adminUser = adminUserData && adminUserData[0];
   const fullName = adminUser?.firstname + ' ' + adminUser?.lastname;
@@ -75,7 +77,7 @@ const BoardInformation = ({pointer}) => {
     (state) => state.visibility.descriptionTextVisible
   );
   useEffect(() => {}, [value, description]);
-  const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
+  //const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
   // Quill.register(
   //   {
   //     'formats/emoji': EmojiBlot,
@@ -153,8 +155,8 @@ const BoardInformation = ({pointer}) => {
     dispatch(setEditOpen(true));
     dispatch(setDescriptionTextVisible(false));
   };
-  console.log(value);
-  console.log('descriptionTextVisible', descriptionTextVisible);
+  //console.log(value);
+  //console.log('descriptionTextVisible', descriptionTextVisible);
   return (
     <article
       className='boardInformation'
@@ -346,7 +348,7 @@ const BoardInformation = ({pointer}) => {
             text='Delete'
             variant='withLabel'
             fullName={genFullname(user?.firstname, user?.lastname)}
-            pointer = {pointer}
+            pointer={pointer}
           />
         ))}
     </article>

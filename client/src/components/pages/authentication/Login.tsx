@@ -12,15 +12,10 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
-  Input,
   InputAdornment,
   TextField,
   Typography,
-  capitalize,
 } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Link } from 'react-router-dom';
 import { useLoginMutation } from '../../../api/auth';
 import { useSelector } from 'react-redux';
@@ -32,9 +27,9 @@ const Login: React.FC = () => {
     setEmail(e.target.value);
     console.log('email', email);
   };
-  const auth = useSelector((state) => state.auth.isAuthenticated)
-    const user = useSelector((state) => state.auth.user);
-console.log('user',user)
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
+  console.log('user', user);
   console.log('auth', auth);
   const handlePasswordInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -42,7 +37,7 @@ console.log('user',user)
   };
 
   const handleLogin = () => {
-    const data = { email:email, password:password };
+    const data = { email: email, password: password };
     const res = loginMutation(data);
   };
   return (

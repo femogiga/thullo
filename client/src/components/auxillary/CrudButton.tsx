@@ -1,13 +1,10 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import FeedIcon from '@mui/icons-material/Feed';
-import EditIcon from '@mui/icons-material/Edit';
-import { JSXElementConstructor } from 'react';
+import {  Button, Stack, Typography } from '@mui/material';
 
 interface CrudButtonProps {
   text: string;
-  icon: React.FC | null;
-  colours: { bg: string; color: string };
-  pointer: string;
+  icon: React.ReactNode;
+  colours: { bg: string; color: string } | null;
+  pointer: 'auto' | 'none';
   onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 

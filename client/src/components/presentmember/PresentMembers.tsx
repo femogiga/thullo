@@ -9,7 +9,11 @@ import { useEffect, useState } from 'react';
 import { useBoardsOnUsersByboardId } from '../../api/boardsOnUsers';
 import InviteCard from '../actionscard/InviteCard';
 
-const PresentMembers = ({pointer}) => {
+
+interface IPresentMembers{
+  pointer:string
+}
+const PresentMembers: React.FC<IPresentMembers> = ({ pointer }) => {
   const params = useParams();
   const [showInviteForm, setShowInviteForm] = useState<boolean>(false);
 
@@ -28,7 +32,7 @@ const PresentMembers = ({pointer}) => {
       className='flex space-between align-item-center flow-2'
       style={{ paddingBlock: '0.9rem' }}>
       <div className='flex align-item-center col-gap-1'>
-        <RoomSecrecy pointer={ pointer} />
+        <RoomSecrecy pointer={pointer} />
         <AvatarGroup max={4}>
           <MiniCard
             height={32}
@@ -52,7 +56,12 @@ const PresentMembers = ({pointer}) => {
         <Plus size={32} style={{ color: 'white' }} />
       </IconButton> */}
 
-        <AddButton width={32} height={32} onClick={handleInviteVisible} pointer={pointer} />
+        <AddButton
+          width={32}
+          height={32}
+          onClick={handleInviteVisible}
+          pointer={pointer}
+        />
         {showInviteForm && (
           <div>
             <InviteCard setShowInviteForm={setShowInviteForm} />

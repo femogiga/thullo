@@ -2,7 +2,19 @@ import { Button, Stack, Typography } from '@mui/material';
 import MiniCard from '../minicard/MiniCard';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-const NameAvatar = ({
+interface INameAvatar{
+  src:string;
+  text:string;
+  variant:string
+  fullName:string;
+  userOnTaskId:number
+  onClick:() => void;
+  pointer:string;
+};
+
+
+
+const NameAvatar: React.FC<INameAvatar> = ({
   src,
   text,
   variant,

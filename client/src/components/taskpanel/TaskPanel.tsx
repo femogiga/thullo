@@ -21,7 +21,7 @@ interface IPanel {
   task;
   title: string;
   onClick: (e: MouseEvent) => void;
-  panel;
+  panel: any;
   index: number;
   visibleState: boolean;
   isPanelVisible: boolean;
