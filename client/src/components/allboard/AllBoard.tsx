@@ -21,7 +21,6 @@ import {
 import { CoverCard } from '../actionscard/CoverCard';
 import { useState } from 'react';
 import { useAllUserData } from '../../api/userData';
-import { setActiveBoardId } from '../../features/PageInformationSlice';
 
 const AllBoard: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,9 +39,9 @@ const AllBoard: React.FC = () => {
   const addBoardCoverOpen = useSelector(
     (state) => state.visibility.addBoardCoverOpen
   );
-  const { isPending, error, data } = useAllBoardData();
-  const { error: allBoardError, data: allBoardPageData } =
-    useAllBoardPageData();
+  //const { isPending, error, data } = useAllBoardData();
+ // const { error: allBoardError, data: allBoardPageData } =
+   // useAllBoardPageData();
 
   const { allBoardPagePending, allBoardDataWithUser } =
     useAllBoardDataWithUser();
@@ -155,13 +154,7 @@ const AllBoard: React.FC = () => {
                   </div>
                 ))
             )}
-            {/* <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard />
-          <BoardCard /> */}
+           
           </Stack>
         </Box>
         {createBoardModalVisible && (

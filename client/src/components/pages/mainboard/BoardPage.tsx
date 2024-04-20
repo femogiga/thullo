@@ -232,14 +232,14 @@ const BoardPage = () => {
         <AnimatePresence>
           <motion.div
             layout
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
+            initial={{ opacity: 0, bottom: 0.1 }}
+            animate={{ opacity: 1, top: 4 }}
+            transition={{ duration: 0.5 }}
             exit={{ opacity: 0 }}
             style={{
               position: 'absolute',
               left: '30%',
-              top: '4rem',
+              // top: '4rem',
               zIndex: '4',
             }}>
             {cardInfoVisible && <CardInformation pointer={adminState} />}
