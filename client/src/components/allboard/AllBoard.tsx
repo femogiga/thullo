@@ -52,6 +52,8 @@ const AllBoard: React.FC = () => {
     dispatch(setCreateBoardOpen(!createBoardModalVisible));
   };
 
+
+  console.log('allBoardDataWithUser', allBoardDataWithUser);
   const handleAddBoardModalClose = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setCreateBoardOpen(false));
@@ -140,7 +142,7 @@ const AllBoard: React.FC = () => {
                       name={board.name}
                       boardId={board?.id}
                       thumbnail={board.thumbnail}
-                      userPhotos={board.userphotos}
+                      userPhotos={board?.userphotos}
                       adminId={board?.adminId}
                       privacy={board?.privacy}
                       admin={
@@ -154,7 +156,7 @@ const AllBoard: React.FC = () => {
                   </div>
                 ))
             )}
-           
+
           </Stack>
         </Box>
         {createBoardModalVisible && (

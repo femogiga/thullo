@@ -148,7 +148,7 @@ const BoardCard = ({
                 <Box sx={{ display: 'flex' }}>
                   <AvatarGroup
                     variant='rounded'
-                    total={userPhotos?.length}
+                    total={userPhotos?.length + 1}
                     max={5}
                     sx={{
                       '& .MuiAvatar-root': {
@@ -165,13 +165,13 @@ const BoardCard = ({
                         width: 28,
                         height: 28,
                       }}
-                      alt='Remy Sharp'
+                      alt='person photo'
                       src={admin?.imgUrl}
                     />
                     {userPhotos &&
                       userPhotos.map((user, index) => (
                         <Avatar
-                          key={`userphoto_${index}`}
+                          key={`userphoto_${user?.id}`}
                           sx={{
                             marginInlineEnd: '.5rem',
                             borderRadius: '8px',
@@ -179,7 +179,7 @@ const BoardCard = ({
                             height: 28,
                           }}
                           alt='User photos'
-                          src={user.imgUrl}
+                          src={user?.imgUrl}
                         />
                       ))}
                   </AvatarGroup>
