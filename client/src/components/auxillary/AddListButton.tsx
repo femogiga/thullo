@@ -3,6 +3,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useDispatch } from 'react-redux';
 import { setAddPanelModalOpen } from '../../features/visibilitySlice';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+
 const AddListButton: React.FC = () => {
   /**
    ** this button is for  adding List only
@@ -13,7 +15,7 @@ const AddListButton: React.FC = () => {
 
   const dispatch = useDispatch()
  const addPanelModalOpen = useSelector(
-      (state) => state.visibility.addPanelModalOpen
+      (state:RootState) => state.visibility.addPanelModalOpen
     );
   const handleCreatePanelModalVisibility = () => {
     dispatch(setAddPanelModalOpen(!addPanelModalOpen));

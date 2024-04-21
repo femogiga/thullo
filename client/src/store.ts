@@ -19,6 +19,9 @@ const persistConfig = {
     storage,
 };
 
+
+
+
 const rootReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
@@ -33,6 +36,7 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }),
-    
+
 })
 export let persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>

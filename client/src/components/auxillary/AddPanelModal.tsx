@@ -1,21 +1,12 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Typography,
-  TextField,
-} from '@mui/material';
+import { Box, Stack, Typography, TextField } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import CrudButton from './CrudButton';
 
-
-interface IAddPanelModal{
+interface IAddPanelModal {
   onChange: () => void;
-  onSave:()=>void
+  onSave: () => void;
 }
-const AddPanelModal:React.FC<IAddPanelModal> = ({ onChange, onSave }) => {
+const AddPanelModal: React.FC<IAddPanelModal> = ({ onChange, onSave }) => {
   return (
     <Stack
       direction={'column'}
@@ -34,6 +25,7 @@ const AddPanelModal:React.FC<IAddPanelModal> = ({ onChange, onSave }) => {
       {/* <Divider /> */}
 
       <CrudButton
+        pointer={''}
         text={'Save'}
         icon={null}
         colours={{ bg: '#219653', color: 'white' }}

@@ -4,11 +4,7 @@ import CrudButton from './CrudButton';
 import handleDownload from '../../utility/fileDownload';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
-import { Link } from 'react-router-dom';
-import {
-  dateFormatter,
-  dateFormatterAttachment,
-} from './../../utility/timeFormatter';
+import { dateFormatterAttachment } from './../../utility/timeFormatter';
 import { useDeleteAssetMutation } from '../../api/assetData';
 import { useState } from 'react';
 
@@ -73,15 +69,17 @@ const AttachmentCard: React.FC<AttachmentProps> = ({
             </div> */}
             <CrudButton
               onClick={(e) => handleDownload(e, src)}
-              colours=''
+              colours={null}
               icon=''
               text={'Download'}
+              pointer={''}
             />
             <CrudButton
               onClick={handleShowButtonOnDelete}
-              colours=''
+              colours={null}
               icon=''
               text={'Delete'}
+              pointer={''}
             />
             {showButton && (
               <Stack direction='row'>

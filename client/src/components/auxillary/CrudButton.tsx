@@ -4,7 +4,7 @@ interface CrudButtonProps {
   text: string;
   icon: React.ReactNode;
   colours: { bg: string; color: string } | null;
-  pointer: 'auto' | 'none';
+  pointer: 'auto' | 'none' |'';
   onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 

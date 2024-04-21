@@ -1,16 +1,7 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Typography,
-  TextField,
-  FormControl,
-} from '@mui/material';
+import { Divider, Stack, Typography, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import Visibility from './Visibility';
 import { useDispatch } from 'react-redux';
 import {
   setDeletePanelButtonsVisible,
@@ -21,6 +12,7 @@ import {
   useUpdatePanelMutation,
 } from '../../api/panelData';
 import CrudButton from './CrudButton';
+import { RootState } from '../../store';
 
 interface IDeleteRename {
   panelId: number;
@@ -33,10 +25,10 @@ const DeleteRename: React.FC<IDeleteRename> = ({ panelId, isPanelVisible }) => {
   //console.log('id: ' + id);
   //console.log(panelId);
   const renameInputVisible = useSelector(
-    (state) => state.visibility.renameInputVisible
+    (state: RootState) => state.visibility.renameInputVisible
   );
   const deletePanelButtonsVisible = useSelector(
-    (state) => state.visibility.deletePanelButtonsVisible
+    (state: RootState) => state.visibility.deletePanelButtonsVisible
   );
   const { updatePanelMutation } = useUpdatePanelMutation();
   const { deletePanelMutation } = useDeletePanelMutation();
@@ -70,7 +62,7 @@ const DeleteRename: React.FC<IDeleteRename> = ({ panelId, isPanelVisible }) => {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    const { operation, buttons } = deletePanelButtonsVisible;
+    const { buttons } = deletePanelButtonsVisible;
     dispatch(setRenameInputVisible(false));
 
     dispatch(
@@ -87,8 +79,6 @@ const DeleteRename: React.FC<IDeleteRename> = ({ panelId, isPanelVisible }) => {
   };
 
   const handleNoClick = (e: React.FormEvent<HTMLButtonElement>) => {
-    const { operation, buttons } = deletePanelButtonsVisible;
-
     e.preventDefault();
 
     dispatch(
@@ -128,7 +118,7 @@ const DeleteRename: React.FC<IDeleteRename> = ({ panelId, isPanelVisible }) => {
       </form>
       <Divider />
       {deletePanelButtonsVisible.operation && (
-        <Link onClick={handleListPanelDeleteClick}>
+        <Link to='' onClick={handleListPanelDeleteClick}>
           <Typography sx={{ fontSize: '10px', color: '#828282' }}>
             Delete this list
           </Typography>
@@ -151,12 +141,14 @@ const DeleteRename: React.FC<IDeleteRename> = ({ panelId, isPanelVisible }) => {
               colours={{ bg: '#EB5757', color: 'white' }}
               onClick={handleYesClick}
               icon={null}
+              pointer={''}
             />
             <CrudButton
               text='No'
               colours={{ bg: '#4F4F4F', color: 'white' }}
               onClick={handleNoClick}
               icon={null}
+              pointer={''}
             />
           </Stack>
         </div>

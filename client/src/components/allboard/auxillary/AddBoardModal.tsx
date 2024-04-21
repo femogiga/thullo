@@ -24,26 +24,44 @@ import {
 } from '../../../features/visibilitySlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const AddBoardModal: React.FC = ({ onCancel, onCover, coverImage }) => {
   // const dataToCreateBoard = { coverImage };
+  const [privacy, setPrivacy] = useState<string>('private');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [boardname, setBoardname] = useState('');
   const { createBoardMutate } = useCreateBoardMutation();
-  const adminId = useSelector((state) => state.auth.user.id)
-  console.log('adminId', adminId);
+  const adminId = useSelector((state: RootState) => state.auth.user.id);
+
+  //console.log('adminId', adminId);
 
   const handleCreateBoard = () => {
-    const data = { name: boardname, adminId:adminId, thumbnail: coverImage };
+    const data = {
+      name: boardname,
+      adminId: adminId,
+      thumbnail: coverImage,
+      privacy: privacy.toUpperCase(),
+    };
     const res = createBoardMutate(data);
     //console.log(data);
     dispatch(setAddBoardCoverOpen(false));
     dispatch(setCreateBoardOpen(false));
     //console.log(res);
-    res.then((data) => data.result[0])
+    res
+      .then((data) => data.result[0])
       .then((data) => navigate(`/boards/${data.id}`));
     //navigate('/boards')
+  };
+
+  const handlePrivacy = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (privacy === 'private') {
+      setPrivacy('public');
+    } else {
+      setPrivacy('private');
+    }
   };
   //console.log(boardname);
   return (
@@ -103,6 +121,7 @@ const AddBoardModal: React.FC = ({ onCancel, onCover, coverImage }) => {
           Cover
         </Button>
         <Button
+          onClick={handlePrivacy}
           sx={{
             textTransform: 'capitalize',
             backgroundColor: '#F2F2F2',
@@ -113,7 +132,7 @@ const AddBoardModal: React.FC = ({ onCancel, onCover, coverImage }) => {
             alignItems: 'center',
           }}
           startIcon={<LockIcon sx={{ fontSize: 11 }} />}>
-          Private
+          {privacy}
         </Button>
       </Stack>
       <Stack
