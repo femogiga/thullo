@@ -134,7 +134,7 @@ img {
   height: 28px;
 }
 
-@keyframes bgImageAnim {
+/* @keyframes bgImageAnim {
   from {
     transform: translateY(100vh);
   }
@@ -142,10 +142,10 @@ img {
   to {
     transform: translateY(0);
   }
-}
+} */
 
 /* src/styles/index.css */
-.login::after {
+/* .login::after {
   content: "";
   background: url('./assets/cardsbeat.png') repeat;
   position: absolute;
@@ -174,7 +174,7 @@ img {
 
 .login::before:hover {
   width: 30%
-}
+} */
 
 
 .buttonlink {

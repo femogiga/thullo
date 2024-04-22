@@ -18,40 +18,76 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useLoginMutation } from '../../../api/auth';
-import { useSelector } from 'react-redux';
+import TaskCardStyle from '../../../api/TaskCardStyle';
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const { loginMutation } = useLoginMutation();
   const handleEmailInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    console.log('email', email);
+    //console.log('email', email);
   };
-  const auth = useSelector((state) => state.auth.isAuthenticated);
-  const user = useSelector((state) => state.auth.user);
-  console.log('user', user);
-  console.log('auth', auth);
+  //const auth = useSelector((state:RootState) => state.auth.isAuthenticated);
+  //const user = useSelector((state: RootState) => state.auth.user);
+  //console.log('user', user);
+  //console.log('auth', auth);
   const handlePasswordInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    console.log('password', password);
+    //console.log('password', password);
   };
 
   const handleLogin = () => {
     const data = { email: email, password: password };
-    const res = loginMutation(data);
+     loginMutation(data);
   };
   return (
     <form
       className='login'
       style={{
-        height: '100vh',
+        minHeight: '90vh',
         width: '100vw',
+        perspective: '1000px',
         // backgroundImage: `url(${bgImage} 0 0 repeat)`,
         // transform: 'rotate(30deg)'
         position: 'relative',
+        // backgroundColor: 'grey',
       }}>
       {/* <Header boardName={null} /> */}
 
+      <div
+        style={{
+          position: 'absolute',
+          right: '15rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(40deg)',
+          opacity: 0.7,
+        }}>
+        <TaskCardStyle
+          headingText={'Wedding Party'}
+          imgUrl={
+            'https://images.pexels.com/photos/1047442/pexels-photo-1047442.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          left: '14rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(40deg)',
+          opacity: .7,
+
+        }}>
+        <TaskCardStyle
+          headingText={'Farm clearance'}
+          imgUrl={
+            'https://images.pexels.com/photos/162639/digger-machine-machinery-construction-162639.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
+
+      {/* <TaskCardStyle /> */}
+      {/* <TaskCardStyle /> */}
       <Card
         sx={{
           maxWidth: 500,
@@ -144,6 +180,72 @@ const Login: React.FC = () => {
           </Typography>
         </CardContent>
       </Card>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '4rem',
+          right: '12rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
+          opacity: 0.7,
+        }}>
+        <TaskCardStyle
+          headingText={'Logistics'}
+          imgUrl={
+            'https://images.pexels.com/photos/104826/aircraft-holiday-sun-tourism-104826.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '8rem',
+          right: '40rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
+          opacity: 0.7,
+        }}>
+        <TaskCardStyle
+          headingText={'Road Contruction'}
+          imgUrl={
+            'https://images.pexels.com/photos/315938/pexels-photo-315938.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '4rem',
+          left: '30rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
+          opacity: 0.7,
+        }}>
+        <TaskCardStyle
+          headingText={'PC build project'}
+          imgUrl={
+            'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '8rem',
+          left: '6rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
+          opacity: 0.7,
+        }}>
+        <TaskCardStyle
+          headingText={'Shift planning'}
+          imgUrl={
+            'https://images.pexels.com/photos/2312369/pexels-photo-2312369.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
     </form>
   );
 };
