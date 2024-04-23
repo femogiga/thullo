@@ -1,10 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
-import Header from '../../header/Header';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import logo from '../../../assets/Logo-small.svg';
-import { MuiFileInput } from 'mui-file-input';
-import bgImage from '../../../assets/cardsbeat.png';
 
 import {
   Box,
@@ -38,8 +35,16 @@ const Login: React.FC = () => {
 
   const handleLogin = () => {
     const data = { email: email, password: password };
-     loginMutation(data);
+    loginMutation(data);
   };
+
+  useEffect(() => {
+    const styleCards = document.querySelectorAll('.taskCardStyle');
+    //console.log('styleCards', styleCards);
+    styleCards.forEach((card) => {
+      card.classList.add('movecard');
+    });
+  }, []);
   return (
     <form
       className='login'
@@ -55,14 +60,16 @@ const Login: React.FC = () => {
       {/* <Header boardName={null} /> */}
 
       <div
+        className='taskCardStyle'
         style={{
           position: 'absolute',
           right: '15rem',
           transformStyle: 'preserve-3d',
           transform: 'perspective(1500px) rotateZ(2deg)  rotateX(40deg)',
-          opacity: 0.7,
         }}>
         <TaskCardStyle
+          chipLabelOne={'Cake'}
+          chipLabelTwo={'Reception'}
           headingText={'Wedding Party'}
           imgUrl={
             'https://images.pexels.com/photos/1047442/pexels-photo-1047442.jpeg?auto=compress&cs=tinysrgb&w=600'
@@ -75,10 +82,10 @@ const Login: React.FC = () => {
           left: '14rem',
           transformStyle: 'preserve-3d',
           transform: 'perspective(1500px) rotateZ(2deg)  rotateX(40deg)',
-          opacity: .7,
-
         }}>
         <TaskCardStyle
+          chipLabelOne={'Tractor'}
+          chipLabelTwo={'Labour'}
           headingText={'Farm clearance'}
           imgUrl={
             'https://images.pexels.com/photos/162639/digger-machine-machinery-construction-162639.jpeg?auto=compress&cs=tinysrgb&w=600'
@@ -113,6 +120,7 @@ const Login: React.FC = () => {
             onChange={handleEmailInputChange}
             label=''
             fullWidth
+            autoComplete='username'
             value={email}
             type='email'
             placeholder='Email'
@@ -134,6 +142,7 @@ const Login: React.FC = () => {
               onChange={handlePasswordInputChange}
               value={password}
               type='password'
+              autoComplete='current-password'
               fullWidth
               InputProps={{
                 startAdornment: (
@@ -187,12 +196,31 @@ const Login: React.FC = () => {
           right: '12rem',
           transformStyle: 'preserve-3d',
           transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
-          opacity: 0.7,
         }}>
         <TaskCardStyle
+          chipLabelOne={'Warehouse'}
+          chipLabelTwo={'Transport'}
           headingText={'Logistics'}
           imgUrl={
             'https://images.pexels.com/photos/104826/aircraft-holiday-sun-tourism-104826.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '23rem',
+          left: '27rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
+        }}>
+        <TaskCardStyle
+          chipLabelOne={'Holidays'}
+          chipLabelTwo={'Absences'}
+          headingText={'Shift planning'}
+          imgUrl={
+            'https://images.pexels.com/photos/2312369/pexels-photo-2312369.jpeg?auto=compress&cs=tinysrgb&w=600'
           }
         />
       </div>
@@ -204,9 +232,10 @@ const Login: React.FC = () => {
           right: '40rem',
           transformStyle: 'preserve-3d',
           transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
-          opacity: 0.7,
         }}>
         <TaskCardStyle
+          chipLabelOne={'Equipment'}
+          chipLabelTwo={'Clearance'}
           headingText={'Road Contruction'}
           imgUrl={
             'https://images.pexels.com/photos/315938/pexels-photo-315938.jpeg?auto=compress&cs=tinysrgb&w=600'
@@ -221,9 +250,10 @@ const Login: React.FC = () => {
           left: '30rem',
           transformStyle: 'preserve-3d',
           transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
-          opacity: 0.7,
         }}>
         <TaskCardStyle
+          chipLabelOne={'Components'}
+          chipLabelTwo={'Shopping'}
           headingText={'PC build project'}
           imgUrl={
             'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=600'
@@ -237,12 +267,31 @@ const Login: React.FC = () => {
           left: '6rem',
           transformStyle: 'preserve-3d',
           transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
-          opacity: 0.7,
         }}>
         <TaskCardStyle
-          headingText={'Shift planning'}
+          headingText={'Catering'}
+          chipLabelOne={'Shopping list'}
+          chipLabelTwo={'Chef'}
           imgUrl={
-            'https://images.pexels.com/photos/2312369/pexels-photo-2312369.jpeg?auto=compress&cs=tinysrgb&w=600'
+            'https://images.pexels.com/photos/1291712/pexels-photo-1291712.jpeg?auto=compress&cs=tinysrgb&w=600'
+          }
+        />
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '23rem',
+          right: '27rem',
+          transformStyle: 'preserve-3d',
+          transform: 'perspective(1500px) rotateZ(2deg)  rotateX(51deg)',
+        }}>
+        <TaskCardStyle
+          chipLabelOne={'Physics'}
+          chipLabelTwo={'Mathematics'}
+          headingText={'Homework'}
+          imgUrl={
+            'https://images.pexels.com/photos/5185093/pexels-photo-5185093.jpeg?auto=compress&cs=tinysrgb&w=600'
           }
         />
       </div>

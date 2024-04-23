@@ -1,21 +1,26 @@
 import {
+  Avatar,
+  AvatarGroup,
   Card,
   CardContent,
   CardMedia,
+  Chip,
   IconButton,
   Stack,
   Typography,
 } from '@mui/material';
 import BackHandIcon from '@mui/icons-material/BackHand';
+import AddIcon from '@mui/icons-material/Add';
 
-const TaskCardStyle = ({ imgUrl, headingText }) => {
+const TaskCardStyle = ({ imgUrl, headingText, chipLabelOne, chipLabelTwo }) => {
   return (
-    <div>
+    <div className='taskCardStyle'>
       <Card
         sx={{
           maxWidth: 243,
           height: 290,
           // boxShadow: '0 0 5px rgba(0, 0, 0,.2)',
+          opacity: 1,
           borderRadius: '12px',
           transformStyle: 'preserve-3d',
           boxShadow:
@@ -40,46 +45,39 @@ const TaskCardStyle = ({ imgUrl, headingText }) => {
             component='div'
             sx={{ display: 'flex', alignItems: 'center', gap: '.3rem' }}>
             <BackHandIcon sx={{ fontSize: '1rem', fill: '#5C4033' }} />
-            {headingText ||'Move anything ready here'}
+            {headingText || 'Move anything ready here'}
           </Typography>
           <Stack direction='row' spacing={1} sx={{ marginBlockEnd: '1.2rem' }}>
-            {/* <Chips taskType={'Design'} /> */}
-            {/* {labels &&
-              labels.map((label) => (
-                <Chips
-                  key={`label${label?.id}`}
-                  label={label?.label}
-                  labelColor={label?.labelColor}
-                  chip={chipColor(label?.labelColor)}
-                />
-              ))} */}
+            <Chip label={chipLabelOne || 'Clickable'} />
+            <Chip label={chipLabelTwo || 'Clickable'} />
           </Stack>
           <Stack
             direction='row'
             spacing={1}
-            justifyContent='space-between'
+            justifyContent='flex-start'
             alignItems='centre'>
-            <Stack direction='row' spacing={1} alignItems={'center'}>
-              {/* <MiniCard height={28} width={28} src='' />
-              {users.map((user) => (
-                <MiniCard height={28} width={28} src={user?.imgUrl} />
-              ))} */}
-              {/* <AddButton
-                  width={28}
-                  height={28}
-                  onClick={handleAddUserButton}
-                /> */}
-            </Stack>
-            {/* <Stack direction='row' spacing={1} alignItems={'center'}>
-              <IconButton>
-                <CommentIcon sx={{ width: '12px', marginRight: '.5rem' }} />
-                <Typography sx={{ fontSize: '10px' }}>{chatCount}</Typography>
-              </IconButton>
-              <IconButton>
-                <AttachFileIcon sx={{ width: '12px', marginRight: '.5rem' }} />
-                <Typography sx={{ fontSize: '10px' }}>{assetCount}</Typography>
-              </IconButton>
-            </Stack> */}
+            <AvatarGroup>
+              <Avatar
+                variant='square'
+                sx={{ width: '1.8rem', height: '1.8rem', borderRadius: '8px' }}
+                src='https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=600'
+              />
+              <Avatar
+                variant='square'
+                sx={{ width: '1.8rem', height: '1.8rem', borderRadius: '8px' }}
+                src='https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=600'
+              />
+            </AvatarGroup>
+            <IconButton aria-label='delete' sx={{ borderRadius: '8px' }}>
+              <AddIcon
+                sx={{
+                  backgroundColor: '#2F80ED',
+                  color: 'white',
+                  width: '1.8rem',
+                  height: '1.8rem',
+                }}
+              />
+            </IconButton>
           </Stack>
         </CardContent>
       </Card>

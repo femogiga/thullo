@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family:'Poppins',Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   scroll-behavior: smooth;
 
@@ -211,6 +211,29 @@ img {
   opacity: 1;
 }
 
-.paneldescription{
+.paneldescription {
   font-family: 'Noto Sans';
+}
+
+
+@keyframes move {
+  from {
+    transform: translateY(-500px) rotateZ(40deg) rotateX(0deg);
+    opacity: 0;
+  }
+}
+
+to {
+  transform: rotate(40deg) scale(1.5) translateY(500px);
+
+}
+
+
+.movecard {
+  animation: move 1000ms ease-in 300ms alternate;
+}
+
+
+.taskCardStyle:hover {
+  transform: perspective(1500px) rotateZ(-5deg) rotateX(-40deg)
 }
