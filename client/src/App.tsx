@@ -29,7 +29,10 @@ const App: React.FC = () => {
       {/* <BoardInformation /> */}
       {/* <QuillInput/> */}
       {/* <AddCardInput /> */}
-      <Register/>
+
+
+        <Register />
+     
     </div>
   );
 };

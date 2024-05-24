@@ -33,9 +33,9 @@ const Login: React.FC = () => {
     //console.log('password', password);
   };
 
-  const handleLogin = () => {
+  const handleLogin =async() => {
     const data = { email: email, password: password };
-    loginMutation(data);
+    const res = await loginMutation(data);
   };
 
   useEffect(() => {
