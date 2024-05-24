@@ -1,8 +1,12 @@
-import { Button, Stack, Typography } from '@mui/material';
-import FeedIcon from '@mui/icons-material/Feed';
-const IconLabel = ({ labelText, icon }) => {
+import {  Stack, Typography } from '@mui/material';
+
+interface IIconLabel {
+  labelText:string;
+  icon:React.ReactNode
+}
+const IconLabel: React.FC<IIconLabel> = ({ labelText, icon }) => {
   return (
-    <div>
+    <div style={{ minWidth: '4.4rem' }}>
       <Stack direction='row' spacing='1rem'>
         <Stack
           direction='row'

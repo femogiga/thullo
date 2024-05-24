@@ -2,7 +2,7 @@ const { knex } = require('../Knex');
 
 const getAllPanel = async (req, res) => {
   try {
-    const result = await knex.from('Panel').select('*');
+    const result = await knex.from('Panel').select('*').orderBy('id', 'asc');
     console.log(result);
     res.status(200).json(result);
   } catch (error) {
@@ -15,7 +15,8 @@ const getPanelById = async (req, res) => {
     const result = await knex
       .from('Panel')
       .select('*')
-      .where('id', '=', parseInt(req.params.id));
+      .where('id', '=', parseInt(req.params.id))
+      .orderBy('id', 'asc');
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -27,7 +28,9 @@ const getPanelByBoardId = async (req, res) => {
     const result = await knex
       .from('Panel')
       .select('*')
-      .where('boardId', '=', parseInt(req.params.boardId));
+      .where('boardId', '=', parseInt(req.params.boardId))
+      .orderBy('id', 'asc');
+
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -46,6 +49,25 @@ const updatePanel = async (req, res) => {
 
     res.status(200).json({ result, message: 'successfully updated' });
   } catch (error) {
+        console.eror(error);
+
+    res.status(500).json(error);
+  }
+};
+
+const updatePanelByPanelId = async (req, res) => {
+  const { title, boardId, panelId } = req.body;
+  try {
+    const result = await knex('Panel')
+      .where('id', '=', parseInt(panelId))
+      .andWhere('boardId', '=', parseInt(boardId))
+      .update({
+        title: title,
+      });
+
+    res.status(200).json({ result, message: 'successfully updated' });
+  } catch (error) {
+    console.eror(error);
     res.status(500).json(error);
   }
 };
@@ -68,7 +90,22 @@ const deletePanel = async (req, res) => {
   try {
     const result = await knex
       .from('Panel')
-      .where('id', '=', parseInt(req.params.id))
+      .where('id', '=', parseInt(req.params.panelId))
+      .delete('*');
+
+    res.status(200).json({ result, message: 'successfully deleted' });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const deletePanelTwo = async (req, res) => {
+  const { panelId, boardId } = req.body;
+  try {
+    const result = await knex
+      .from('Panel')
+      .where('id', '=', parseInt(panelId))
+      .andWhere(boardId, parseInt(boardId))
       .delete('*');
 
     res.status(200).json({ result, message: 'successfully deleted' });
@@ -84,4 +121,6 @@ module.exports = {
   updatePanel,
   createPanel,
   deletePanel,
+  updatePanelByPanelId,
+  deletePanelTwo,
 };

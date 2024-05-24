@@ -13,8 +13,9 @@ const getTaskById = async (req, res) => {
   try {
     const result = await knex
       .from('Task')
-      .select('*')
-      .where('id', '=', parseInt(req.params.id));
+      .where('id', '=', parseInt(req.params.id))
+      .select('*');
+
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(error);
@@ -39,16 +40,21 @@ const getAllTasksWithUsersAndLabels = async (req, res) => {
       .select(
         'Task.*',
         knex.raw('JSON_AGG(DISTINCT "Label".*) as labels'),
-        knex.raw('JSON_AGG(DISTINCT "User".*) as users')
+        knex.raw('JSON_AGG(DISTINCT "User".*) as users'),
+        knex.raw('COUNT(DISTINCT "Asset".id) as "assetCount"'),
+        knex.raw('COUNT(DISTINCT "Chat".id) as "chatCount"')
       )
       .from('Task')
       .leftJoin('TasksOnLabels', 'Task.id', '=', 'TasksOnLabels.taskId')
       .leftJoin('Label', 'Label.id', '=', 'TasksOnLabels.labelId')
       .leftJoin('UsersOnTasks', 'Task.id', '=', 'UsersOnTasks.taskId')
       .leftJoin('User', 'User.id', '=', 'UsersOnTasks.authorId')
+      .leftJoin('Asset', 'Asset.taskId', '=', 'Task.id')
+      .leftJoin('Chat', 'Chat.taskId', '=', 'Task.id')
+
       .groupBy('Task.id');
 
-    console.log(result);
+    //console.log(result);
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -70,8 +76,9 @@ const updateTask = async (req, res) => {
         panelId: parseInt(panelId),
       });
 
-    res.status(200).json({ result, message: 'successfully updated' });
+    res.status(201).json({ result, message: 'successfully updated' });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };
@@ -89,6 +96,7 @@ const createTask = async (req, res) => {
 
     res.status(201).json({ result, message: 'successfully created' });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };
@@ -106,32 +114,68 @@ const deleteTask = async (req, res) => {
   }
 };
 
+// const updateTaskPosition = async (req, res) => {
+//   const { title, boardId, taskId } = req.body;
+//   console.log('taskId======>', taskId);
+//   console.log('title======>', title);
+//   console.log('boardId======>', boardId);
+
+//   try {
+//     const panel = await knex
+//       .from('Panel')
+//       .where('title', '=', title)
+//       .andWhere('boardId', '=', parseInt(boardId))
+//       // .where('title', '=', 'Completed')
+//       // .andWhere('boardId', '=', 1)
+//       .select('*');
+//     const newPanelId = parseInt(panel[0]?.id);
+//     const task = await knex('Task')
+//       //.where('id', '=', 2)
+//       .where('id', '=', parseInt(taskId))
+//       .update({ panelId: newPanelId });
+//     // .update({ panelId: 2 });
+
+//     console.log('panel=====>', task);
+//     res.status(200).json({ task, message: 'successfully updated' });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json(error);
+//   }
+// };
+
 const updateTaskPosition = async (req, res) => {
   const { title, boardId, taskId } = req.body;
-  console.log('taskId======>', taskId);
-  console.log('title======>', title);
-  console.log('boardId======>', boardId);
+  // console.log('taskId======>', taskId);
+  // console.log('title======>', title);
+  // console.log('boardId======>', boardId);
 
   try {
     const panel = await knex
       .from('Panel')
       .where('title', '=', title)
       .andWhere('boardId', '=', parseInt(boardId))
-      // .where('title', '=', 'Completed')
-      // .andWhere('boardId', '=', 1)
       .select('*');
+
+    if (!panel || panel.length === 0) {
+      return res.status(404).json({ message: 'Panel not found' });
+    }
+
     const newPanelId = parseInt(panel[0]?.id);
+
     const task = await knex('Task')
-      //.where('id', '=', 2)
       .where('id', '=', parseInt(taskId))
       .update({ panelId: newPanelId });
-    // .update({ panelId: 2 });
 
-    console.log('panel=====>', task);
-    res.status(200).json({ task, message: 'successfully updated' });
+    // console.log('task=====>', task);
+
+    if (task === 0) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    res.status(200).json({ task, message: 'Successfully updated' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 

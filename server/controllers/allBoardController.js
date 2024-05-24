@@ -1,5 +1,9 @@
 const { knex } = require('../Knex');
 
+/*
+** This getUserPhoto shuld be get boardDatabyUserIdwith photos
+*
+*/
 const getUserPhoto = async (req, res) => {
   try {
     const result = await knex
@@ -7,6 +11,7 @@ const getUserPhoto = async (req, res) => {
         'Board.id',
         'Board.name',
         'Board.thumbnail',
+        'Board.privacy',
         knex.raw('ARRAY_AGG("User"."imgUrl") as userPhotos')
       )
       .from('Board')
@@ -18,7 +23,7 @@ const getUserPhoto = async (req, res) => {
       .groupBy('Board.id', 'Board.name', 'Board.thumbnail');
     //.select('Board.id', 'Board.name', 'Board.thumbnail', 'User.imgUrl')
 
-    console.log(result);
+    // console.log(result);
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -34,6 +39,8 @@ const AllBoardPage = async (req, res) => {
         'Board.id',
         'Board.name',
         'Board.thumbnail',
+        'Board.adminId',
+        'Board.privacy',
         knex.raw('ARRAY_AGG("User"."imgUrl") as userPhotos')
       )
       .from('Board')
@@ -44,7 +51,7 @@ const AllBoardPage = async (req, res) => {
       .groupBy('Board.id', 'Board.name', 'Board.thumbnail');
     //.select('Board.id', 'Board.name', 'Board.thumbnail', 'User.imgUrl')
 
-    console.log(result);
+    // console.log(result);
     res.status(200).json(result);
   } catch (error) {
     console.error(error);

@@ -1,3 +1,5 @@
+const{checkTasksActions} = require('../authentication/roleMiddleware')
+
 const {
   getAllTask,
   getTaskById,
@@ -9,14 +11,13 @@ const {
   updateTaskPosition,
 } = require('../controllers/taskController');
 const router = require('express').Router();
-
+router.get('/card/:id', getTaskById);
 router.get('/card', getAllTasksWithUsersAndLabels);
 router.get('/:panelId', getTaskByPanelId);
-router.get('/:id', getTaskById);
-router.put('/cardposition', updateTaskPosition);
-router.put('/:id', updateTask);
+router.put('/cardposition',checkTasksActions, updateTaskPosition);
+router.put('/:id',checkTasksActions, updateTask);
 router.get('/', getAllTask);
-router.post('/', createTask);
+router.post('/',checkTasksActions, createTask);
 router.delete('/:id', deleteTask);
 
 module.exports = router;

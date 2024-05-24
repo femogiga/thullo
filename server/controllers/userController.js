@@ -1,4 +1,6 @@
 const { knex } = require('../Knex');
+const bcrypt = require('bcrypt');
+
 
 const getAllUser = async (req, res) => {
   try {
@@ -38,7 +40,7 @@ const getUserByBoardId = async (req, res) => {
       .distinct();
     //.select('id', 'firstname', 'lastname', 'email', 'imgUrl');
 
-    console.log(result);
+    // console.log(result);
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -48,20 +50,23 @@ const getUserByBoardId = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { id, firstname, lastname, email, imgUrl, password } = req.body;
+   const salt = bcrypt.genSaltSync(10);
+   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
     const result = await knex('User')
       .where('id', '=', parseInt(req.params.id))
       //   .andWhere('authorId', '=', req.user.id)
       .update({
-        firstName: firstName,
-        lastName: lastName,
+        firstname: firstname,
+        lastname: lastname,
         email: email,
-        imageUrl: imageUrl,
-        password: password,
+        imgUrl: imgUrl,
+        password: hashedPassword,
       });
 
     res.status(200).json({ result, message: 'successfully updated' });
   } catch (error) {
+    console.error(error);
     res.status(500).json(error);
   }
 };

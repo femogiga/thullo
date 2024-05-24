@@ -15,15 +15,15 @@ export const useAllTaskData = () => {
 };
 
 
-export const useTaskDataId = (id) => {
-    const { isPending, error, data: taskByPanelIdData } = useQuery({
+export const useTaskDataById = (id) => {
+    const { isPending, error, data: taskByIdData } = useQuery({
         queryKey: ['tasksById'],
         queryFn: () =>
             apiService
-                .get(`/tasks/${id}`)
+                .get(`/tasks/card/${id}`)
                 .then((res) => res.data),
     });
-    return { isPending, error, taskByPanelIdData };
+    return { isPending, error, taskByIdData };
 };
 
 
@@ -50,24 +50,81 @@ export const useTaskCardData = () => {
 
 
 export const useTaskCardMutation = () => {
+    const queryClient = useQueryClient()
+
     const { isSuccess, error, mutateAsync } = useMutation({
         mutationFn: async (data) => {
             const response = await apiService.put('/tasks/cardposition', data);
             return response.data;
         },
         onSuccess: (data) => {
-            const queryClient = new QueryClient()
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['taskCard'] })
-            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
-            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['tasksById'] })
 
-            window.location.reload();
+
+           // window.location.reload();
 
 
         }
 
 
     });
+
+
     return { isSuccess, error, mutateAsync };
+};
+
+
+export const useCreateTaskMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: createTaskMutation } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.post('/tasks', data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['tasksById'] })
+
+
+
+        }
+
+
+    });
+
+
+    return { isSuccess, error, createTaskMutation };
+};
+
+
+export const useUpdateTaskMutation = () => {
+    const queryClient = useQueryClient()
+
+    const { isSuccess, error, mutateAsync: updateTaskMutation } = useMutation({
+        mutationFn: async (data) => {
+            const { id } = data
+            const response = await apiService.put(`/tasks/${id}`, data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['taskCard'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['tasksById'] })
+
+
+
+        }
+
+
+    });
+
+
+    return { isSuccess, error, updateTaskMutation };
 };

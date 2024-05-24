@@ -1,14 +1,20 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import FeedIcon from '@mui/icons-material/Feed';
-import EditIcon from '@mui/icons-material/Edit';
+import {  Button, Stack, Typography } from '@mui/material';
 
 interface CrudButtonProps {
   text: string;
-  icon: React.ReactElement<SVGAElement>;
-  colours: { bg: string; color: string };
+  icon: React.ReactNode;
+  colours: { bg: string; color: string } | null;
+  pointer: 'auto' | 'none' |'';
+  onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 
-const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours ,onClick}) => {
+const CrudButton: React.FC<CrudButtonProps> = ({
+  text,
+  icon,
+  colours,
+  pointer,
+  onClick,
+}) => {
   // colours = {
   //   bg: 'blue',
   //   color:'white'
@@ -17,6 +23,7 @@ const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours ,onClick}) 
     <div>
       <Stack direction='row' spacing='1rem'>
         <Button
+
           onClick={onClick}
           sx={{
             textTransform: 'capitalize',
@@ -27,6 +34,7 @@ const CrudButton: React.FC<CrudButtonProps> = ({ text, icon, colours ,onClick}) 
             justifyContent: 'center',
             alignItems: 'center',
             gap: '.3rem',
+            pointerEvents:pointer,
             border: '1px solid #BDBDBD',
             color: colours?.color || '#828282',
             backgroundColor: colours?.bg || '',

@@ -21,9 +21,7 @@ import { useDispatch } from 'react-redux';
 import { useBoardDataId, useBoardUpdateMutation } from '../../api/boardData';
 import { useParams } from 'react-router-dom';
 import DescriptionText from './DescriptionText';
-import AddButton from '../auxillary/AddButton';
-import ActionButton from '../auxillary/ActionButton';
-import CrudButton from '../auxillary/CrudButton';
+
 import { useQueryClient } from '@tanstack/react-query';
 import {
   useAllUserData,
@@ -33,24 +31,37 @@ import {
   useUserDataById,
 } from '../../api/userData';
 import { genFullname } from '../../utility/fullName';
+import { QuillInput } from '../auxillary/QuillInput';
+import {
+  useBoardsOnUsersByboardId,
+  useDeleteBoardsOnUsersMutation,
+} from '../../api/boardsOnUsers';
 
-const BoardInformation = () => {
+
+interface IBoardInformation{
+  pointer:string
+}
+const BoardInformation: React.FC<IBoardInformation> = ({ pointer }) => {
   const queryClient = useQueryClient();
   const { handleShowMenuClose } = usePageInformation();
   const { deleteMutate } = useDeleteBoardUserMutation();
-  const params = useParams();
 
   const { id } = useParams();
+  const params = useParams();
+
+  const { boardsOnUsersData } = useBoardsOnUsersByboardId(params.id);
+  const { deleteBoardsOnUserMutation } = useDeleteBoardsOnUsersMutation();
+
   const { boardByIdData } = useBoardDataId(id);
-  console.log(boardByIdData);
-  const { boardUsersData } = useGetBoardUsers(1);
-  console.log(boardUsersData);
-  const { allUsersData } = useAllUserData();
-  const { userByIdData } = useUserDataById(3);
+  //console.log('boardIDdata', boardByIdData);
+  const { boardUsersData } = useGetBoardUsers(id);
+ // console.log(boardUsersData);
+  //const { allUsersData } = useAllUserData();
+  //const { userByIdData } = useUserDataById(3);
   const { adminUserData } = useGetAdmin(id);
   const adminUser = adminUserData && adminUserData[0];
   const fullName = adminUser?.firstname + ' ' + adminUser?.lastname;
-  console.table(allUsersData);
+  //console.table(allUsersData);
   //
   console.log('userByIdData', adminUser);
   //
@@ -66,48 +77,48 @@ const BoardInformation = () => {
     (state) => state.visibility.descriptionTextVisible
   );
   useEffect(() => {}, [value, description]);
-  const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
-  Quill.register(
-    {
-      'formats/emoji': EmojiBlot,
-      'modules/emoji-shortname': ShortNameEmoji,
-      'modules/emoji-toolbar': ToolbarEmoji,
-      'modules/emoji-textarea': TextAreaEmoji,
-    },
-    true
-  );
+  //const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
+  // Quill.register(
+  //   {
+  //     'formats/emoji': EmojiBlot,
+  //     'modules/emoji-shortname': ShortNameEmoji,
+  //     'modules/emoji-toolbar': ToolbarEmoji,
+  //     'modules/emoji-textarea': TextAreaEmoji,
+  //   },
+  //   true
+  // );
 
-  const quillModules = {
-    'emoji-toolbar': true,
-    'emoji-textarea': true,
-    'emoji-shortname': true,
-    location: 0,
-    toolbar: [
-      [
-        { header: [1, 2, 3, 4, 5, 6, false] },
+  // const quillModules = {
+  //   'emoji-toolbar': true,
+  //   'emoji-textarea': true,
+  //   'emoji-shortname': true,
+  //   location: 0,
+  //   toolbar: [
+  //     [
+  //       { header: [1, 2, 3, 4, 5, 6, false] },
 
-        { size: ['small', false, 'large', 'huge'] },
-      ],
-      ['emoji'],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote', 'color'],
+  //       { size: ['small', false, 'large', 'huge'] },
+  //     ],
+  //     ['emoji'],
+  //     ['bold', 'italic', 'underline', 'strike', 'blockquote', 'color'],
 
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-        { font: [] },
-      ],
-      ['link'],
+  //     [
+  //       { list: 'ordered' },
+  //       { list: 'bullet' },
+  //       { indent: '-1' },
+  //       { indent: '+1' },
+  //       { font: [] },
+  //     ],
+  //     ['link'],
 
-      [{ color: [] }, { background: [] }],
+  //     [{ color: [] }, { background: [] }],
 
-      ['clean'],
-    ],
-    // 'emoji-toolbar': true,
-    // 'emoji-textarea': true,
-    // 'emoji-shortname': true,
-  };
+  //     ['clean'],
+  //   ],
+  //   // 'emoji-toolbar': true,
+  //   // 'emoji-textarea': true,
+  //   // 'emoji-shortname': true,
+  // };
 
   const handleSave = () => {
     // const queryClient = new QueryClient();
@@ -123,10 +134,15 @@ const BoardInformation = () => {
   const handleDeleteUser = (e, authorId) => {
     e.preventDefault();
     const boardId = parseInt(params?.id);
-    const data ={authorId,boardId}
+    const data = { authorId, boardId };
     deleteMutate(data);
     queryClient.invalidateQueries({ queryKey: ['boardUsers'] });
+  };
 
+  const handleDelete = (e, authorId) => {
+    e.preventDefault();
+    const data = { boardId: params.id, userId: authorId };
+    deleteBoardsOnUserMutation(data);
   };
   const handleCancel = (e) => {
     e.preventDefault();
@@ -139,8 +155,8 @@ const BoardInformation = () => {
     dispatch(setEditOpen(true));
     dispatch(setDescriptionTextVisible(false));
   };
-  console.log(value);
-  console.log('descriptionTextVisible', descriptionTextVisible);
+  //console.log(value);
+  //console.log('descriptionTextVisible', descriptionTextVisible);
   return (
     <article
       className='boardInformation'
@@ -152,13 +168,14 @@ const BoardInformation = () => {
         padding: '1rem 2rem',
         boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
         backgroundColor: 'rgba(255,255,255)',
+        minHeight: '90vh',
 
         // opacity:0
       }}>
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography
           sx={{ color: 'black', fontWeight: '600', fontSize: '12px' }}>
-          Devchallenges Board
+          {(boardByIdData && boardByIdData[0]?.name) || 'Devchallenges Board'}
         </Typography>
         <IconButton
           aria-label='close'
@@ -202,6 +219,7 @@ const BoardInformation = () => {
             gap: '.3rem',
             border: '1px solid #BDBDBD',
             color: '#828282',
+            pointerEvents: pointer,
           }}>
           <EditIcon sx={{ fontSize: '10px' }} />
           <Typography sx={{ fontSize: '10px' }}>Edit</Typography>
@@ -245,16 +263,22 @@ const BoardInformation = () => {
           <DescriptionText description={description} />
         )}
         {editOpen && (
-          <ReactQuill
-            theme='snow'
+          // <ReactQuill
+          //   theme='snow'
+          //   value={value}
+          //   onChange={setValue}
+          //   modules={quillModules}
+          // />
+          <QuillInput
             value={value}
             onChange={setValue}
-            modules={quillModules}
+            onSave={handleSave}
+            onCancel={handleCancel}
           />
         )}
       </div>
 
-      {editOpen && (
+      {/* {editOpen && (
         <Stack
           direction={'row'}
           columnGap={'1rem'}
@@ -272,7 +296,7 @@ const BoardInformation = () => {
             onClick={handleCancel}
           />
         </Stack>
-      )}
+      )} */}
       <Stack direction='row' alignItems='center' justifyContent='' gap='.3rem'>
         <FeedIcon sx={{ fontSize: '10px' }} />
         <Typography sx={{ fontSize: '10px' }}>Team</Typography>
@@ -313,16 +337,18 @@ const BoardInformation = () => {
         text='Admin'
         variant='withLabel'
       />
-      {boardUsersData &&
-        boardUsersData.map((user) => (
+      {boardsOnUsersData &&
+        boardsOnUsersData.map((user) => (
           <NameAvatar
             id={`avatar-${user?.id}`}
             userOnTaskId={user?.id}
             src={user?.imgUrl}
-            onClick={(e)=> handleDeleteUser(e, user?.id)}
+            //onClick={(e) => handleDeleteUser(e, user?.id)}
+            onClick={(e) => handleDelete(e, user?.id)}
             text='Delete'
             variant='withLabel'
             fullName={genFullname(user?.firstname, user?.lastname)}
+            pointer={pointer}
           />
         ))}
     </article>

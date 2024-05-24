@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 
 const useUserHook = () => {
-    const dispatch = useDispatch()
     const [show, setShow] = useState(false)
     useEffect(() => {
 

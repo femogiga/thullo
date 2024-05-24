@@ -2,13 +2,26 @@ import { Button, Stack, Typography } from '@mui/material';
 import MiniCard from '../minicard/MiniCard';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-const NameAvatar = ({
+interface INameAvatar{
+  src:string;
+  text:string;
+  variant:string
+  fullName:string;
+  userOnTaskId:number
+  onClick:() => void;
+  pointer:string;
+};
+
+
+
+const NameAvatar: React.FC<INameAvatar> = ({
   src,
   text,
   variant,
   fullName,
   userOnTaskId,
   onClick,
+  pointer,
 }) => {
   const borderStyle =
     text === 'Admin'
@@ -42,6 +55,7 @@ const NameAvatar = ({
               borderColor: borderStyle.color,
               color: borderStyle.color || '#828282',
               marginBlockEnd: '1rem',
+              pointerEvents: pointer,
             }}>
             {text === 'Admin' ? (
               <MoreHorizIcon sx={{ fontSize: '10px', color: '#BDBDBD' }} />

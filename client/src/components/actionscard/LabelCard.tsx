@@ -8,23 +8,70 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import LabelIcon from '@mui/icons-material/Label';
 //import {testtData} from '../../tests/testData'
 import { photo } from './../../tests/testData';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ColorSelectCard from './auxillary/ColorSelectCard';
 import { colors } from './auxillary/colors';
 import IconLabel from '../auxillary/IconLabel';
 import Chips from '../taskcard/auxillary/Chips';
 import CrudButton from '../auxillary/CrudButton';
-const LabelCard = () => {
-    /**
-     ** LabelCard is used to apply color , labels and classification   in task
-     *
-     *
-     */
+import {
+  useLabelByIdData,
+  useLabelByTaskIdData,
+  useLabelMutation,
+} from '../../api/labelData';
+import { useSelector } from 'react-redux';
+import { useTaskOnLabelMutation } from '../../api/TasksOnLabelsData';
+import { setColorCardVisible } from '../../features/PageInformationSlice';
+import { useDispatch } from 'react-redux';
+const LabelCard: React.FC = ({ taskId }) => {
+  /**
+   ** LabelCard is used to apply color , labels and classification   in task
+   *
+   *
+   */
+  const dispatch = useDispatch();
+  const params = useParams()
+  const { labelMutation } = useLabelMutation();
+  const { taskOnLabelMutation } = useTaskOnLabelMutation();
+  const { labelByTaskIdData } = useLabelByTaskIdData(taskId);
+
+  const [label, setLabel] = useState('');
+  const [color, setColor] = useState('');
+
+  const handleLabelInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLabel(e.target.value);
+  };
+
+  const handleColorClick = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setColor(e.currentTarget.name);
+  };
+
+  console.log('params',params.id)
+
+  const handleAddLabel = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const data = { label, labelColor: color };
+    console.log('chipData----->', data);
+    const res = labelMutation(data);
+    res
+      .then((res) => {
+        const result = res.result[0];
+        const taskonLabelDataToSend = { labelId: result.id, taskId: taskId ,boardId:params.id};
+
+        taskOnLabelMutation(taskonLabelDataToSend);
+        dispatch(setColorCardVisible(false));
+        console.log('taskonLabel', taskonLabelDataToSend);
+      })
+      .then((res) => console.log(res));
+  };
+  // const data = { label, color };
+  useEffect(() => {}, [color]);
   return (
     <Card
       className='cover-card'
@@ -36,9 +83,7 @@ const LabelCard = () => {
         display: 'flex',
         borderRadius: '8px',
         position: 'absolute',
-          zIndex: '4',
-
-
+        zIndex: '4',
       }}>
       <CardContent>
         <FormControl sx={{ marginBlockEnd: '.2rem' }}>
@@ -55,7 +100,13 @@ const LabelCard = () => {
           </Typography>
 
           <Box sx={{ marginBlockEnd: 'rem', position: 'relative' }}>
-            <TextField className='user-input' rows={1} placeholder='Label...' />
+            <TextField
+              value={label}
+              className='user-input'
+              rows={1}
+              placeholder='Label...'
+              onChange={handleLabelInputChange}
+            />
           </Box>
         </FormControl>
         <Paper
@@ -86,22 +137,39 @@ const LabelCard = () => {
             <ColorSelectCard bgColor={'#219653'} /> */}
 
             {colors.map((color) => (
-              <ColorSelectCard key={color.code} bgColor={color.code} />
+              <ColorSelectCard
+                key={color.code}
+                bgColor={color.code}
+                onClick={handleColorClick}
+                name={color.code}
+              />
             ))}
           </Stack>
           <IconLabel
             labelText={'Available'}
             icon={<LabelIcon sx={{ fontSize: '14px' }} />}
           />
-          <Stack direction='row' spacing={1} sx={{ marginBlockEnd: '1rem' }}>
-            <Chips taskType={'Technical'} />
-            <Chips taskType={'Design'} />
+          <Stack
+            direction='row'
+            spacing={1}
+            flexWrap={'wrap'}
+            sx={{ marginBlockEnd: '1rem' }}>
+            {labelByTaskIdData &&
+              labelByTaskIdData.map((chipItem) => (
+                <Chips
+                  label={chipItem?.label}
+                  chip={{ bgColor: chipItem?.labelColor }}
+                />
+              ))}
+            {/* / <Chips label={'Design'} /> */}
+            <Chips label={label} chip={{ bgColor: color }} />
           </Stack>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <CrudButton
               text={'Add'}
               colours={{ color: 'white', bg: '#2F80ED' }}
               icon={null}
+              onClick={handleAddLabel}
             />
           </Box>
         </Paper>

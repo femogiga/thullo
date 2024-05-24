@@ -16,6 +16,14 @@ export const useAllBoardData = () => {
 };
 
 
+export const useAllBoardDataWithUser = () => {
+    const { isPending : allBoardPagePending, error, data:allBoardDataWithUser } = useQuery({
+        queryKey: ['allBoardWithData'],
+        queryFn: () => apiService.get('/boards').then((res) => res.data),
+    });
+    return { allBoardPagePending, error,  allBoardDataWithUser };
+};
+
 export const useBoardDataId = (id) => {
     const { isPending, error, data: boardByIdData } = useQuery({
         queryKey: ['boardDataById'],
@@ -40,7 +48,7 @@ export const useBoardUpdateMutation = () => {
 
             queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
             queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
-            queryClient.invalidateQueries({ queryKey: ['allBoard'] })
+            queryClient.invalidateQueries({ queryKey: ['panelById'] })
 
             //window.location.reload();
 
@@ -50,4 +58,28 @@ export const useBoardUpdateMutation = () => {
 
     });
     return { isSuccess, error, mutateAsync };
+};
+
+
+export const useCreateBoardMutation = () => {
+    const queryClient = useQueryClient();
+    const { isSuccess, error, mutateAsync:createBoardMutate } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiService.post(`/boards`, data);
+            return response.data;
+        },
+        onSettled: (data) => {
+
+            queryClient.invalidateQueries({ queryKey: ['panelByBoardId'] })
+            queryClient.invalidateQueries({ queryKey: ['boardDataById'] })
+            queryClient.invalidateQueries({ queryKey: ['panelById'] })
+
+            //window.location.reload();
+
+
+        }
+
+
+    });
+    return { isSuccess, error, createBoardMutate };
 };

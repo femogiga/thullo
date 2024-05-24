@@ -1,3 +1,5 @@
+const{checkUserOnTasksAction} = require('../authentication/roleMiddleware')
+
 const {
   getAllUsersOnTasks,
   getUsersOnTasksById,
@@ -8,7 +10,7 @@ const {
 const router = require('express').Router();
 
 
-router.delete('/:boardIndex/users/:authorId', deleteUsersOnTasks);
+router.delete('/:boardIndex/users/:authorId',checkUserOnTasksAction, deleteUsersOnTasks);
 router.get('/:id', getUsersOnTasksById);
 //router.put('/:id', updateUsersOnTasks);
 router.get('/', getAllUsersOnTasks);

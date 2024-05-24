@@ -1,16 +1,20 @@
 import { Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-
-const AddCardButton = ({ buttonText }) => {
+interface IAddCardButton{
+  buttonText: string;
+  onClick:()=>void
+}
+const AddCardButton:React.FC<IAddCardButton> = ({ buttonText, onClick }) => {
   /**
    ** Button with deault text whose text can be changed
-  * @param {buttonText}
+   * @param {buttonText}
    *
    *
    */
   return (
     <div>
       <Button
+        onClick={onClick}
         sx={{
           width: '100%',
           maxWidth: '244px',

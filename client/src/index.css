@@ -13,13 +13,14 @@
 }
 
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
+  scroll-behavior: smooth;
 
 }
 
 .container {
-  padding-inline: 2rem;
+  padding-inline: 0rem;
   width: 86%;
   margin-inline: auto;
   position: relative;
@@ -121,13 +122,118 @@ img {
   /* height:.5rem; */
   height: .18rem
 }
-.add-board-modal input{
+
+.add-board-modal input {
   /* width:210; */
-height:3rem
+  height: 3rem
 }
 
 
-.board-card .MuiAvatarGroup .MuiAvatar-root{
-  width:28px;
+.board-card .MuiAvatarGroup .MuiAvatar-root {
+  width: 28px;
   height: 28px;
+}
+
+/* @keyframes bgImageAnim {
+  from {
+    transform: translateY(100vh);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+} */
+
+/* src/styles/index.css */
+/* .login::after {
+  content: "";
+  background: url('./assets/cardsbeat.png') repeat;
+  position: absolute;
+  right: 7rem;
+  top: -0rem;
+  width: 30%;
+  height: 100%;
+  z-index: -2;
+  transform: skewY(1deg) rotateZ(-30deg);
+  overflow: hidden;
+  animation: bgImageAnim 4s 200ms linear;
+}
+
+.login::before {
+  content: "";
+  background: url('./assets/cardsbeat.png') repeat;
+  position: absolute;
+  left: 6rem;
+  width: 30%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  transform: skew(1deg) rotate(30deg);
+  animation: bgImageAnim 4s 200ms linear;
+}
+
+.login::before:hover {
+  width: 30%
+} */
+
+
+.buttonlink {
+  padding-inline: .6rem;
+  padding-block: .2rem;
+  min-width: 3rem;
+  border-radius: 6px;
+  opacity: 0;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .2);
+}
+
+.hypen {
+  opacity: 0
+}
+
+
+.edit {
+  /* border: 1px solid #ADD8E6; */
+  color: #2F80ED;
+  background-color: rgba(87, 160, 211, .1);
+}
+
+
+
+
+.delete {
+  /* border: 1px solid rgba(235, 87, 87, .5); */
+  background-color: rgba(235, 87, 87, .1);
+  color: red;
+}
+
+.commentcard:hover .buttonlink,
+.commentcard:hover .hypen {
+  opacity: 1;
+}
+
+.paneldescription {
+  font-family: 'Noto Sans';
+}
+
+
+@keyframes move {
+  from {
+    transform: translateY(-500px) rotateZ(40deg) rotateX(0deg);
+    opacity: 0;
+  }
+}
+
+to {
+  transform: rotate(40deg) scale(1.5) translateY(500px);
+
+}
+
+
+.movecard {
+  animation: move 1000ms ease-in 300ms alternate;
+}
+
+
+.taskCardStyle:hover {
+  transform: perspective(1500px) rotateZ(-5deg) rotateX(-40deg)
 }

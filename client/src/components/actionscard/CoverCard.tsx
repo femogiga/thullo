@@ -9,15 +9,30 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import MemberSelect from './auxillary/MemberSelect';
 import CrudButton from '../auxillary/CrudButton';
 import MiniCard from '../minicard/MiniCard';
 //import {testtData} from '../../tests/testData'
 import { photo } from './../../tests/testData';
+import { usePexelSearchData } from '../../api/pexelData';
+import { Link } from 'react-router-dom';
 
-export const CoverCard: React.FC = () => {
+export const CoverCard: React.FC = ({ onImageSelect }) => {
+  const [searchTerm, setSearchTerm] = useState('PC');
+
+  const { coverPhotoData } = usePexelSearchData(searchTerm || 'PC');
+  console.log(coverPhotoData);
+  useEffect(() => {}, [searchTerm, coverPhotoData]);
+  console.log(searchTerm);
+  const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+  //console.log(searchTerm)
+  const handleSearch = (e) => {
+    e.preventDefault();
+  }; //////
   return (
     <Card
       className='cover-card'
@@ -34,7 +49,7 @@ export const CoverCard: React.FC = () => {
       <CardContent>
         <FormControl sx={{ marginBlockEnd: '.2rem' }}>
           <Typography sx={{ fontSize: '12px', fontWeight: '600' }}>
-            Members
+            Photo Search
           </Typography>
           <Typography
             sx={{
@@ -42,16 +57,19 @@ export const CoverCard: React.FC = () => {
               marginBlockEnd: '.5rem',
               color: '#828282',
             }}>
-            Assign members to this card
+            Search Pexel for photos
           </Typography>
 
           <Box sx={{ marginBlockEnd: 'rem', position: 'relative' }}>
             <TextField
+              value={searchTerm}
+              onChange={handleSearchInputChange}
               className='user-input'
               rows={1}
               placeholder='Keywords...'
             />
             <IconButton
+              onClick={handleSearch}
               sx={{
                 borderRadius: '8px',
                 backgroundColor: '#2F80ED',
@@ -78,7 +96,17 @@ export const CoverCard: React.FC = () => {
             flexWrap={'wrap'}
             width='90%'
             justifyContent={'space-between'}>
-            <MiniCard src={photo?.one} width={'50px'} height={'50px'} />
+            {coverPhotoData &&
+              coverPhotoData.photos.map((photo) => (
+                <Link to={''} id={photo?.src?.original} onClick={onImageSelect}>
+                  <MiniCard
+                    src={photo?.src?.small}
+                    width={'50px'}
+                    height={'50px'}
+                  />
+                </Link>
+              ))}
+            {/* <MiniCard src={photo?.one} width={'50px'} height={'50px'} />
             <MiniCard src={photo?.two} width={'50px'} height={'50px'} />
             <MiniCard src={photo?.three} width={'50px'} height={'50px'} />
             <MiniCard src={photo?.four} width={'50px'} height={'50px'} />
@@ -89,7 +117,7 @@ export const CoverCard: React.FC = () => {
             <MiniCard src={photo?.nine} width={'50px'} height={'50px'} />
             <MiniCard src={photo?.ten} width={'50px'} height={'50px'} />
             <MiniCard src={photo?.eleven} width={'50px'} height={'50px'} />
-            <MiniCard src={photo?.twelve} width={'50px'} height={'50px'} />
+            <MiniCard src={photo?.twelve} width={'50px'} height={'50px'} /> */}
           </Stack>
         </Paper>
       </CardContent>

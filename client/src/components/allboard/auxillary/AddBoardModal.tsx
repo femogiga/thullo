@@ -15,8 +15,55 @@ import ImageIcon from '@mui/icons-material/Image';
 import LockIcon from '@mui/icons-material/Lock';
 import AddIcon from '@mui/icons-material/Add';
 import CrudButton from '../../auxillary/CrudButton';
+import { useState } from 'react';
+import { useCreateBoardMutation } from '../../../api/boardData';
+import { useDispatch } from 'react-redux';
+import {
+  setAddBoardCoverOpen,
+  setCreateBoardOpen,
+} from '../../../features/visibilitySlice';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
-const AddBoardModal = () => {
+const AddBoardModal: React.FC = ({ onCancel, onCover, coverImage }) => {
+  // const dataToCreateBoard = { coverImage };
+  const [privacy, setPrivacy] = useState<string>('private');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [boardname, setBoardname] = useState('');
+  const { createBoardMutate } = useCreateBoardMutation();
+  const adminId = useSelector((state: RootState) => state.auth.user.id);
+
+  //console.log('adminId', adminId);
+
+  const handleCreateBoard = () => {
+    const data = {
+      name: boardname,
+      adminId: adminId,
+      thumbnail: coverImage,
+      privacy: privacy.toUpperCase(),
+    };
+    const res = createBoardMutate(data);
+    //console.log(data);
+    dispatch(setAddBoardCoverOpen(false));
+    dispatch(setCreateBoardOpen(false));
+    //console.log(res);
+    res
+      .then((data) => data.result[0])
+      .then((data) => navigate(`/boards/${data.id}`));
+    //navigate('/boards')
+  };
+
+  const handlePrivacy = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (privacy === 'private') {
+      setPrivacy('public');
+    } else {
+      setPrivacy('private');
+    }
+  };
+  //console.log(boardname);
   return (
     <Box
       sx={{
@@ -24,7 +71,7 @@ const AddBoardModal = () => {
         padding: '1rem',
         borderRadius: '12px',
         boxShadow: '0 2px 4px 1px rgba(0,0,0,.1)',
-        backgroundColor: 'rgba(255,255,255)'
+        backgroundColor: 'rgba(255,255,255)',
       }}>
       <div style={{ marginBlockEnd: '1rem' }}>
         <img
@@ -35,11 +82,16 @@ const AddBoardModal = () => {
             objectFit: 'cover',
             borderRadius: '8px',
           }}
-          src='https://images.pexels.com/photos/18262756/pexels-photo-18262756/free-photo-of-smiling-woman-carrying-basket-on-back-with-flowers.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
+          src={
+            coverImage ||
+            'https://images.pexels.com/photos/18262756/pexels-photo-18262756/free-photo-of-smiling-woman-carrying-basket-on-back-with-flowers.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
+          }
         />
       </div>
       <Box sx={{ marginBlockEnd: '1rem' }}>
         <input
+          value={boardname}
+          onChange={(e) => setBoardname(e.target.value)}
           type='text'
           style={{
             width: '100%',
@@ -54,10 +106,10 @@ const AddBoardModal = () => {
       <Stack
         direction={'row'}
         spacing={2}
-        sx={{ textTransform: 'capitalize' }}
-        justifyContent={'space-between'}
-        sx={{ marginBlockEnd: '1rem' }}>
+        sx={{ textTransform: 'capitalize', marginBlockEnd: '1rem' }}
+        justifyContent={'space-between'}>
         <Button
+          onClick={onCover}
           sx={{
             textTransform: 'capitalize',
             backgroundColor: '#F2F2F2',
@@ -69,6 +121,7 @@ const AddBoardModal = () => {
           Cover
         </Button>
         <Button
+          onClick={handlePrivacy}
           sx={{
             textTransform: 'capitalize',
             backgroundColor: '#F2F2F2',
@@ -79,7 +132,7 @@ const AddBoardModal = () => {
             alignItems: 'center',
           }}
           startIcon={<LockIcon sx={{ fontSize: 11 }} />}>
-          Private
+          {privacy}
         </Button>
       </Stack>
       <Stack
@@ -88,6 +141,7 @@ const AddBoardModal = () => {
         spacing={2}
         alignItems={'center'}>
         <Button
+          onClick={onCancel}
           sx={{
             textTransform: 'capitalize',
             color: '#828282',
@@ -95,9 +149,10 @@ const AddBoardModal = () => {
           Cancel
         </Button>
         <CrudButton
-          icon={<AddIcon sx={{ fontSize: 12 }} />}
+          icon={<AddIcon sx={{ fontSize: 9 }} />}
           text={'Create'}
           colours={{ color: 'white', bg: '#2F80ED' }}
+          onClick={handleCreateBoard}
         />
         {/* <Button
           sx={{
