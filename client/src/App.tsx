@@ -29,7 +29,10 @@ const App: React.FC = () => {
       {/* <BoardInformation /> */}
       {/* <QuillInput/> */}
       {/* <AddCardInput /> */}
-      <Register/>
+      <div>
+        <Header boardName={ 'happy'} />
+        <Register />
+      </div>
     </div>
   );
 };
